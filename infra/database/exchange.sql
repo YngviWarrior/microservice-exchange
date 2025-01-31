@@ -1,4 +1,6 @@
+DROP DATABASE IF EXISTS `exchange`;
 CREATE DATABASE IF NOT EXISTS `exchange`;
+USE `exchange`;
 
 CREATE TABLE `coin`(
     `coin` INT(11) auto_increment,
@@ -29,7 +31,7 @@ VALUES ("BINANCE"), ("BYBIT"), ("TESTER");
 
 CREATE TABLE `wallet` (
     `wallet` BIGINT(11) auto_increment,
-    `exchange` BIGINT(11) NOT NULL,
+    `exchange` INT(11) NOT NULL,
     `coin` INT(11) NOT NULL,
     `amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
     PRIMARY KEY(`wallet`),
@@ -37,10 +39,7 @@ CREATE TABLE `wallet` (
     FOREIGN KEY(`coin`) REFERENCES `coin`(`coin`)
 );
 
-ALTER TABLE `wallet` ADD COLUMN `exchange` INT(11) NOT NULL AFTER `wallet`;
-ALTER TABLE `wallet` ADD CONSTRAINT `fk_exchange_id` FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`);
-
-INSERT INTO `wallet`(`user`, `exchange`, `coin`, `amount`) VALUES (1, 2, 4, 0), (1, 2, 1, 2), (1, 2, 1, 3);
+-- INSERT INTO `wallet`(`exchange`, `coin`, `amount`) VALUES (2, 4, 0), (2, 1, 2), (2, 1, 3);
 
 CREATE TABLE `transaction_type` (
     `transaction_type` INT(11) auto_increment,
@@ -63,7 +62,6 @@ CREATE TABLE `transaction` (
     FOREIGN KEY(`wallet_received`) REFERENCES `wallet`(`wallet`)
 );
 
-DROP TABLE `candle`;
 CREATE TABLE `candle`(
     `parity` INT(11) NOT NULL,
     `exchange` INT(11) NOT NULL,
@@ -73,101 +71,18 @@ CREATE TABLE `candle`(
     `high` DECIMAL(60,8) NOT NULL,
     `low` DECIMAL(60,8) NOT NULL,
     `volume` DECIMAL(60,8) NOT NULL,
-    PRIMARY KEY (`parity`, `exchange`, `mts`)
+    PRIMARY KEY (`parity`, `exchange`, `mts`),
+    FOREIGN KEY(`exchange`) REFERENCES `exchange`(`exchange`)
 );
 
-ALTER TABLE `candle` ADD COLUMN `exchange` INT(11) NOT NULL AFTER `parity`;
-ALTER TABLE `candle` ADD CONSTRAINT `fk_candle_exchange` FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`);
-
-DROP TABLE IF EXISTS `operation`;
-CREATE TABLE `operation`(
-    `operation` BIGINT(20) auto_increment,
-    `user` BIGINT(11) NOT NULL,
-    `parity` INT(11) NOT NULL,
-    `exchange` INT(11) NOT NULL,
-    `strategy` INT(11) NOT NULL,
-    `strategy_variant` INT(11) NOT NULL,
-    `mts_start` BIGINT(20) NOT NULL,
-    `mts_finish` BIGINT(20) NOT NULL DEFAULT 0,
-    `open_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `close_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `invested_amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `profit_amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `profit` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `closed` TINYINT(1) NOT NULL DEFAULT 0,
-    `audit` TINYINT(1) NOT NULL DEFAULT 0,
-    `enabled` TINYINT(1) NOT NULL DEFAULT 0,
-    `times_canceled` INT(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY(`operation`),
-    FOREIGN KEY (`parity`) REFERENCES `parity`(`parity`),
-    FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`)
-);
-
-
-ALTER TABLE `operation` ADD COLUMN `times_canceled` INT(11) NOT NULL DEFAULT 0;
-ALTER TABLE `operation` ADD COLUMN `audit` TINYINT(1) NOT NULL DEFAULT 0 after `closed`;
-ALTER TABLE `operation` ADD COLUMN `enabled` TINYINT(1) NOT NULL DEFAULT 0 after `audit`;
-ALTER TABLE `operation` ADD COLUMN `invested_amount` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `close_price`;
-ALTER TABLE `operation` ADD COLUMN `profit_amount` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `invested_amount`;
-ALTER TABLE `operation` ADD COLUMN `exchange` INT(11) NOT NULL AFTER `parity`;
-ALTER TABLE `operation` ADD CONSTRAINT `fk_exchange_operation` FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`);
-ALTER TABLE `operation` ADD COLUMN `strategy` INT(11) NOT NULL DEFAULT 2 AFTER `exchange`;
-ALTER TABLE `operation` ADD CONSTRAINT `fk_strategy_operation` FOREIGN KEY (`strategy`) REFERENCES `strategy`(`strategy`);
-ALTER TABLE `operation` ADD COLUMN `strategy_variant` INT(11) NOT NULL DEFAULT 1 AFTER `strategy`;
-ALTER TABLE `operation` ADD CONSTRAINT `fk_strategy_variant_operation` FOREIGN KEY (`strategy_variant`) REFERENCES `strategy_variant`(`strategy_variant`);
-
-DROP TABLE IF EXISTS `operation_exchange_status`;
-CREATE TABLE `operation_exchange_status`(
-    `operation_exchange_status` INT(11) NOT NULL auto_increment,
-    `exchange` INT(11) NOT NULL,
-    `description` VARCHAR(200) NOT NULL,
-    PRIMARY KEY (`operation_exchange_status`),
-    FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`)
-);
-
-INSERT INTO `operation_exchange_status`(`description`, `exchange`) VALUES
-('NEW', 2), ('PARTIALLY_FILLED', 2), ('FILLED', 2), ('CANCELED', 2), ('PENDING_CANCEL', 2), ('PENDING_NEW', 2), ('REJECTED', 2), 
-('ORDER_NEW', 2), ('ORDER_CANCELED', 2), ('ORDER_FILLED', 2), ('ORDER_FAILED', 2);
-
-DROP TABLE IF EXISTS `operation_history`;
-CREATE TABLE `operation_history`(
-    `operation_history` BIGINT(20) auto_increment,
-    `operation` BIGINT(20) NOT NULL,
-    `transaction_type` INT(11) NOT NULL,
-    `coin_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `coin_quantity` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `stable_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `stable_quantity` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `fee` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `operation_exchange_id` VARCHAR(200) NOT NULL,
-    `operation_exchange_status` INT(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY(`operation_history`),
-    FOREIGN KEY (`operation`) REFERENCES `operation`(`operation`),
-    FOREIGN KEY (`transaction_type`) REFERENCES `transaction_type`(`transaction_type`)
-);
-
-ALTER TABLE `operation_history` ADD COLUMN `order_id` VARCHAR(200) NOT NULL AFTER `fee`;
-ALTER TABLE `operation_history` RENAME COLUMN `order_id` TO `operation_exchange_id`;
-ALTER TABLE `operation_history` ADD COLUMN `operation_exchange_status` INT(11) NOT NULL DEFAULT 1;
-ALTER TABLE `operation_history` ADD CONSTRAINT `fk_operation_exchange_status_id` FOREIGN KEY (`operation_exchange_status`) REFERENCES `operation_exchange_status`(`operation_exchange_status`);
-
--- DROP TABLE IF EXISTS `config`;
--- CREATE TABLE `config` (
---     `max_trade_transactions` INT(11) NOT NULL DEFAULT 0,
---     `max_wallet_limit_value` DECIMAL(60,8) NOT NULL DEFAULT 0,
---     `min_profit_to_sell` DECIMAL(60,8) NOT NULL DEFAULT 0,
---     `buy_value` DECIMAL(60,8) NOT NULL DEFAULT 0
--- );
-
--- INSERT INTO `config`(`max_trade_transactions`, `max_wallet_limit_value`, `min_profit_to_sell`, `buy_value`) VALUES (4, 65, 200, 15);
-
-----------------------------------------------------------------
+-- ALTER TABLE `candle` ADD COLUMN `exchange` INT(11) NOT NULL AFTER `parity`;
+-- ALTER TABLE `candle` ADD CONSTRAINT `fk_candle_exchange` FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`);
 DROP TABLE IF EXISTS `modality`;
 CREATE TABLE `modality` (
     `modality` INT(11) NOT NULL auto_increment,
     `name` VARCHAR(200) NOT NULL,
     `enable` TINYINT(1) NOT NULL DEFAULT 0,
-    PRIMARY KEY(`modality`)a
+    PRIMARY KEY(`modality`)
 );
 
 INSERT INTO `modality`(`name`) VALUES ('Spot');
@@ -202,6 +117,71 @@ INSERT INTO `strategy_variant` (`strategy`, `name`) VALUES
 (1, 'Month Average Price'),
 (1, 'SMA 200');
 
+
+DROP TABLE IF EXISTS `operation`;
+CREATE TABLE `operation`(
+    `operation` BIGINT(20) auto_increment,
+    `user` BIGINT(11) NOT NULL,
+    `parity` INT(11) NOT NULL,
+    `exchange` INT(11) NOT NULL,
+    `strategy` INT(11) NOT NULL,
+    `strategy_variant` INT(11) NOT NULL,
+    `mts_start` BIGINT(20) NOT NULL,
+    `mts_finish` BIGINT(20) NOT NULL DEFAULT 0,
+    `open_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `close_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `invested_amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `profit_amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `profit` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `closed` TINYINT(1) NOT NULL DEFAULT 0,
+    `audit` TINYINT(1) NOT NULL DEFAULT 0,
+    `enabled` TINYINT(1) NOT NULL DEFAULT 0,
+    `times_canceled` INT(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY(`operation`),
+    FOREIGN KEY (`parity`) REFERENCES `parity`(`parity`),
+    FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`),
+    FOREIGN KEY(`strategy`) REFERENCES `strategy`(`strategy`),
+    FOREIGN KEY(`strategy_variant`) REFERENCES `strategy_variant`(`strategy_variant`)
+);
+
+DROP TABLE IF EXISTS `operation_exchange_status`;
+CREATE TABLE `operation_exchange_status`(
+    `operation_exchange_status` INT(11) NOT NULL auto_increment,
+    `exchange` INT(11) NOT NULL,
+    `description` VARCHAR(200) NOT NULL,
+    PRIMARY KEY (`operation_exchange_status`),
+    FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`)
+);
+
+INSERT INTO `operation_exchange_status`(`description`, `exchange`) VALUES
+('NEW', 2), ('PARTIALLY_FILLED', 2), ('FILLED', 2), ('CANCELED', 2), ('PENDING_CANCEL', 2), ('PENDING_NEW', 2), ('REJECTED', 2), 
+('ORDER_NEW', 2), ('ORDER_CANCELED', 2), ('ORDER_FILLED', 2), ('ORDER_FAILED', 2);
+
+DROP TABLE IF EXISTS `operation_history`;
+CREATE TABLE `operation_history`(
+    `operation_history` BIGINT(20) auto_increment,
+    `operation` BIGINT(20) NOT NULL,
+    `transaction_type` INT(11) NOT NULL,
+    `coin_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `coin_quantity` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `stable_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `stable_quantity` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `fee` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `operation_exchange_id` VARCHAR(200) NOT NULL,
+    `operation_exchange_status` INT(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY(`operation_history`),
+    FOREIGN KEY (`operation`) REFERENCES `operation`(`operation`),
+    FOREIGN KEY (`transaction_type`) REFERENCES `transaction_type`(`transaction_type`),
+    FOREIGN KEY (`operation_exchange_status`) REFERENCES `operation_exchange_status`(`operation_exchange_status`)
+);
+
+-- ALTER TABLE `operation_history` ADD COLUMN `order_id` VARCHAR(200) NOT NULL AFTER `fee`;
+-- ALTER TABLE `operation_history` RENAME COLUMN `order_id` TO `operation_exchange_id`;
+-- ALTER TABLE `operation_history` ADD COLUMN `operation_exchange_status` INT(11) NOT NULL DEFAULT 1;
+-- ALTER TABLE `operation_history` ADD CONSTRAINT `fk_operation_exchange_status_id` FOREIGN KEY (`operation_exchange_status`) REFERENCES `operation_exchange_status`(`operation_exchange_status`);
+
+-- --------------------------------------------------------------
+
 DROP TABLE IF EXISTS `average_price`;
 CREATE TABLE `average_price` (
     `parity` INT(11) NOT NULL,
@@ -219,16 +199,16 @@ CREATE TABLE `average_price` (
     FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`)
 );
 
-ALTER TABLE `average_price` ADD COLUMN `sma` DECIMAL(60,8) NOT NULL DEFAULT 0;
-ALTER TABLE `average_price` ADD COLUMN `sma_update_timestamp` BIGINT(20) NOT NULL DEFAULT 0;
+-- ALTER TABLE `average_price` ADD COLUMN `sma` DECIMAL(60,8) NOT NULL DEFAULT 0;
+-- ALTER TABLE `average_price` ADD COLUMN `sma_update_timestamp` BIGINT(20) NOT NULL DEFAULT 0;
 ALTER TABLE `average_price` ADD COLUMN `day_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `day`;
 ALTER TABLE `average_price` ADD COLUMN `week_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `week`;
 ALTER TABLE `average_price` ADD COLUMN `month_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `month`;
 ALTER TABLE `average_price` ADD COLUMN `sma_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `sma`;
-ALTER TABLE `average_price` DROP COLUMN `roc`;
+-- ALTER TABLE `average_price` DROP COLUMN `roc`;
 
-INSERT INTO `average_price`(`parity`)
-VALUES (1),(4);
+-- INSERT INTO `average_price`(`parity`)
+-- VALUES (1),(4);
 
 DROP TABLE IF EXISTS `operation_meta_data_fast_trade`;
 CREATE TABLE `operation_meta_data_fast_trade` (

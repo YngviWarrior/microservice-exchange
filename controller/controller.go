@@ -11,10 +11,17 @@ type ControllerInterface interface {
 }
 
 type controller struct {
-	UseCases *usecases.UseCasesInterface
+	UseCases usecases.UseCasesInterface
 }
 
-func InitController(allUseCases *usecases.UseCasesInterface) ControllerInterface {
+type outputControllerDto struct {
+	Status  int64    `json:"status,omitempty"`
+	Message string   `json:"message,omitempty"`
+	Data    any      `json:"data,omitempty"`
+	Errors  []string `json:"errors,omitempty"`
+}
+
+func InitController(allUseCases usecases.UseCasesInterface) ControllerInterface {
 	return &controller{
 		UseCases: allUseCases,
 	}
