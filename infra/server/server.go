@@ -31,12 +31,8 @@ func (s *server) InitServer(controllers controller.ControllerInterface) {
 
 	r := mux.NewRouter()
 
-	// controllers := controller.InitController()
-
-	// r.HandleFunc("/signin", controllersInterface.HandlerSignIn).Methods("POST")
 	// r.HandleFunc("/exchange/balances/sync", controllersInterface.HandlerSyncBalances).Methods("GET")
 	r.HandleFunc("/exchange", controllers.ListExchange).Methods("GET")
-	// r.HandleFunc("/exchange/keys/add", controllersInterface.HandlerAddApiKeys).Methods("GET")
 	// r.HandleFunc("/bot/health", controllersInterface.HandlerBotHealth).Methods("GET")
 	// r.HandleFunc("/bot/sell-cotation", controllersInterface.HandlerBotHealth).Methods("GET")
 
