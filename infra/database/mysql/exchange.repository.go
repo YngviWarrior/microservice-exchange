@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"log"
 
-	entity "github.com/YngviWarrior/microservice-exchange/entities/exchange"
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
+	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql/repositorydto"
 )
 
 type exchangeRepository struct {
@@ -14,7 +14,7 @@ type exchangeRepository struct {
 }
 
 type ExchangeRepositoryInterface interface {
-	List() (list []*entity.Exchange)
+	List() (list []*repositorydto.OutputExchangeDto)
 }
 
 func NewExchangeRepository(db database.DatabaseInterface) ExchangeRepositoryInterface {
@@ -23,7 +23,7 @@ func NewExchangeRepository(db database.DatabaseInterface) ExchangeRepositoryInte
 	}
 }
 
-func (e *exchangeRepository) List() (list []*entity.Exchange) {
+func (e *exchangeRepository) List() (list []*repositorydto.OutputExchangeDto) {
 	tx, err := e.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
 		log.Panicln("ERL 00 :", err)
@@ -51,7 +51,7 @@ func (e *exchangeRepository) List() (list []*entity.Exchange) {
 	defer res.Close()
 
 	for res.Next() {
-		var u entity.Exchange
+		var u repositorydto.OutputExchangeDto
 
 		err := res.Scan(&u.Exchange, &u.Name)
 

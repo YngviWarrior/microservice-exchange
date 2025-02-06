@@ -1,6 +1,6 @@
 package usecasedto
 
-type ListExchangeDto struct {
+type OutputListExchangeDto struct {
 	Exchange int64  `json:"exchange"`
 	Name     string `json:"name"`
 }

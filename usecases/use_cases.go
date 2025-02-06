@@ -6,17 +6,22 @@ import (
 )
 
 type UseCasesInterface interface {
-	ListExchanges() ([]*usecasedto.ListExchangeDto, error)
+	ListExchanges() ([]*usecasedto.OutputListExchangeDto, error)
+	CreateTradeConfig(*usecasedto.InputTradeConfigDto) (bool, error)
+	ListTradeConfig() ([]*usecasedto.OutputTradeConfigDto, error)
 }
 
 type usecases struct {
-	ExchangeRepo mysql.ExchangeRepositoryInterface
+	ExchangeRepo    mysql.ExchangeRepositoryInterface
+	TradeConfigRepo mysql.TradeConfigRepositoryInterface
 }
 
 func InitUseCases(
 	exchangeRepo mysql.ExchangeRepositoryInterface,
+	tradeConfigRepo mysql.TradeConfigRepositoryInterface,
 ) UseCasesInterface {
 	return &usecases{
-		ExchangeRepo: exchangeRepo,
+		ExchangeRepo:    exchangeRepo,
+		TradeConfigRepo: tradeConfigRepo,
 	}
 }

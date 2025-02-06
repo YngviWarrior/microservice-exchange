@@ -25,10 +25,12 @@ func main() {
 	database := database.NewDatabase()
 
 	exchangeRepo := mysql.NewExchangeRepository(database)
+	tradeConfigRepo := mysql.NewTradeConfigRepository(database)
 
 	// should return all usecases
 	allUseCases := usecases.InitUseCases(
 		exchangeRepo,
+		tradeConfigRepo,
 	)
 	// should return all controllers
 	controllers := controller.InitController(allUseCases)
