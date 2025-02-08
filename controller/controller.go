@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	validator "github.com/YngviWarrior/data-validator"
-	"github.com/YngviWarrior/microservice-exchange/usecases"
+	"github.com/YngviWarrior/microservice-exchange/usecase"
 )
 
 type ControllerInterface interface {
@@ -15,7 +15,7 @@ type ControllerInterface interface {
 }
 
 type controller struct {
-	UseCases usecases.UseCasesInterface
+	UseCases usecase.UseCaseInterface
 }
 
 type outputControllerDto struct {
@@ -25,7 +25,7 @@ type outputControllerDto struct {
 	Errors  []string `json:"errors,omitempty"`
 }
 
-func InitController(allUseCases usecases.UseCasesInterface) ControllerInterface {
+func NewController(allUseCases usecase.UseCaseInterface) ControllerInterface {
 	return &controller{
 		UseCases: allUseCases,
 	}

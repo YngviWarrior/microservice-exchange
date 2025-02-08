@@ -1,12 +1,12 @@
-package usecases
+package usecase
 
 import (
 	"log"
 
-	"github.com/YngviWarrior/microservice-exchange/usecases/usecasedto"
+	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
-func (u *usecases) ListTradeConfig() (out []*usecasedto.OutputTradeConfigDto, err error) {
+func (u *usecase) ListTradeConfig() (out []*usecasedto.OutputTradeConfigDto, err error) {
 	response, err := u.TradeConfigRepo.List()
 	if err != nil {
 		log.Panicln("LTC 00: ", err)

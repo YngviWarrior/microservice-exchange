@@ -1,26 +1,28 @@
-package usecases
+package usecase
 
 import (
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql"
-	"github.com/YngviWarrior/microservice-exchange/usecases/usecasedto"
+	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
-type UseCasesInterface interface {
+type UseCaseInterface interface {
 	ListExchanges() ([]*usecasedto.OutputListExchangeDto, error)
 	CreateTradeConfig(*usecasedto.InputTradeConfigDto) (bool, error)
 	ListTradeConfig() ([]*usecasedto.OutputTradeConfigDto, error)
 }
 
-type usecases struct {
+// CreateTradeConfig implements usecases.UseCasesInterface.
+
+type usecase struct {
 	ExchangeRepo    mysql.ExchangeRepositoryInterface
 	TradeConfigRepo mysql.TradeConfigRepositoryInterface
 }
 
-func InitUseCases(
+func NewUsecase(
 	exchangeRepo mysql.ExchangeRepositoryInterface,
 	tradeConfigRepo mysql.TradeConfigRepositoryInterface,
-) UseCasesInterface {
-	return &usecases{
+) UseCaseInterface {
+	return &usecase{
 		ExchangeRepo:    exchangeRepo,
 		TradeConfigRepo: tradeConfigRepo,
 	}

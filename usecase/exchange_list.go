@@ -1,10 +1,10 @@
-package usecases
+package usecase
 
 import (
-	"github.com/YngviWarrior/microservice-exchange/usecases/usecasedto"
+	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
-func (u *usecases) ListExchanges() ([]*usecasedto.OutputListExchangeDto, error) {
+func (u *usecase) ListExchanges() ([]*usecasedto.OutputListExchangeDto, error) {
 	response := []*usecasedto.OutputListExchangeDto{}
 	list := u.ExchangeRepo.List()
 

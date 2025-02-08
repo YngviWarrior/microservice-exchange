@@ -1,13 +1,13 @@
-package usecases
+package usecase
 
 import (
 	"log"
 
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql/repositorydto"
-	"github.com/YngviWarrior/microservice-exchange/usecases/usecasedto"
+	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
-func (u *usecases) CreateTradeConfig(in *usecasedto.InputTradeConfigDto) (response bool, err error) {
+func (u *usecase) CreateTradeConfig(in *usecasedto.InputTradeConfigDto) (response bool, err error) {
 	response = u.TradeConfigRepo.Create(&repositorydto.InputTradeConfigDto{
 		Modality:                in.Modality,
 		Strategy:                in.Strategy,

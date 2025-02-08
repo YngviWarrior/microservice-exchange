@@ -9,7 +9,7 @@ import (
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql"
 	"github.com/YngviWarrior/microservice-exchange/infra/server"
-	"github.com/YngviWarrior/microservice-exchange/usecases"
+	"github.com/YngviWarrior/microservice-exchange/usecase"
 	"github.com/joho/godotenv"
 )
 
@@ -28,12 +28,12 @@ func main() {
 	tradeConfigRepo := mysql.NewTradeConfigRepository(database)
 
 	// should return all usecases
-	allUseCases := usecases.InitUseCases(
+	allUseCases := usecase.NewUsecase(
 		exchangeRepo,
 		tradeConfigRepo,
 	)
 	// should return all controllers
-	controllers := controller.InitController(allUseCases)
+	controllers := controller.NewController(allUseCases)
 
 	switch os.Getenv("ENVIROMENT") {
 	case "local":

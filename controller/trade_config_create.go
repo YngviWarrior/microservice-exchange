@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	controllerdto "github.com/YngviWarrior/microservice-exchange/controller/controller_dto"
-	"github.com/YngviWarrior/microservice-exchange/usecases/usecasedto"
+	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
 func (c *controller) CreateTradeConfig(w http.ResponseWriter, r *http.Request) {
