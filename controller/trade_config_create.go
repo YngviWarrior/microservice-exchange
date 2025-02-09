@@ -20,13 +20,7 @@ func (c *controller) CreateTradeConfig(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 
 		send.Errors = append(send.Errors, "invalid primitive type")
-		jsonResp, err := json.Marshal(send)
-
-		if err != nil {
-			log.Fatalf("CCTC00.1: %s", err)
-		}
-
-		w.Write(jsonResp)
+		c.FormatResponse(w, send)
 		return
 	}
 
@@ -57,11 +51,5 @@ func (c *controller) CreateTradeConfig(w http.ResponseWriter, r *http.Request) {
 		send.Data = output
 	}
 
-	jsonResp, err := json.Marshal(send)
-
-	if err != nil {
-		log.Panicf("CLE 01: %s", err)
-	}
-
-	w.Write(jsonResp)
+	c.FormatResponse(w, send)
 }

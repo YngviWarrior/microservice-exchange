@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -22,11 +20,5 @@ func (c *controller) ListTradeConfig(w http.ResponseWriter, r *http.Request) {
 		send.Data = output
 	}
 
-	jsonResp, err := json.Marshal(send)
-
-	if err != nil {
-		log.Panicf("CLTC 01: %s", err)
-	}
-
-	w.Write(jsonResp)
+	c.FormatResponse(w, send)
 }

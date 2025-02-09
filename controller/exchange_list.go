@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
+
+	controllerdto "github.com/YngviWarrior/microservice-exchange/controller/controller_dto"
 )
 
 func (c *controller) ListExchange(w http.ResponseWriter, r *http.Request) {
@@ -12,6 +12,14 @@ func (c *controller) ListExchange(w http.ResponseWriter, r *http.Request) {
 
 	output, err := c.UseCases.ListExchanges()
 
+	var out []controllerdto.OutputListExchange
+	for _, v := range output {
+		out = append(out, controllerdto.OutputListExchange{
+			Exchange: v.Exchange,
+			Name:     v.Name,
+		})
+	}
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		send.Status = 0
@@ -19,14 +27,8 @@ func (c *controller) ListExchange(w http.ResponseWriter, r *http.Request) {
 	} else {
 		send.Status = 1
 		send.Message = "Success"
-		send.Data = output
+		send.Data = out
 	}
 
-	jsonResp, err := json.Marshal(send)
-
-	if err != nil {
-		log.Panicf("CLE 01: %s", err)
-	}
-
-	w.Write(jsonResp)
+	c.FormatResponse(w, send)
 }
