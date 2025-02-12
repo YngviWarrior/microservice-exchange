@@ -31,10 +31,9 @@ func (s *server) InitServer(controllers controller.ControllerInterface) {
 
 	r := mux.NewRouter()
 
-	// r.HandleFunc("/exchange/balances/sync", controllersInterface.HandlerSyncBalances).Methods("GET")
+	r.HandleFunc("/tradeconfig", controllers.CreateTradeConfig).Methods("POST")
+	r.HandleFunc("/tradeconfig", controllers.ListTradeConfig).Methods("GET")
 	r.HandleFunc("/exchange", controllers.ListExchange).Methods("GET")
-	// r.HandleFunc("/bot/health", controllersInterface.HandlerBotHealth).Methods("GET")
-	// r.HandleFunc("/bot/sell-cotation", controllersInterface.HandlerBotHealth).Methods("GET")
 
 	log.Printf("Running on port %s", os.Getenv("PORT"))
 	err := http.ListenAndServe(os.Getenv("PORT"), c.Handler(r))

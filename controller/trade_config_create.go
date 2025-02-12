@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	controllerdto "github.com/YngviWarrior/microservice-exchange/controller/controller_dto"
@@ -16,7 +15,6 @@ func (c *controller) CreateTradeConfig(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
-		log.Panicf("CCTC 00: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
 
 		send.Errors = append(send.Errors, "invalid primitive type")
@@ -28,7 +26,7 @@ func (c *controller) CreateTradeConfig(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	output, err := c.UseCases.CreateTradeConfig(&usecasedto.InputTradeConfigDto{
+	_, err = c.UseCases.CreateTradeConfig(&usecasedto.InputTradeConfigDto{
 		Modality:                *input.Modality,
 		Strategy:                *input.Strategy,
 		StrategyVariant:         *input.StrategyVariant,
@@ -48,7 +46,7 @@ func (c *controller) CreateTradeConfig(w http.ResponseWriter, r *http.Request) {
 	} else {
 		send.Status = 1
 		send.Message = "Success"
-		send.Data = output
+		// send.Data = out
 	}
 
 	c.FormatResponse(w, send)

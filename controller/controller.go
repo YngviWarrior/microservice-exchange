@@ -12,6 +12,7 @@ import (
 type ControllerInterface interface {
 	ListExchange(w http.ResponseWriter, r *http.Request)
 	ListTradeConfig(w http.ResponseWriter, r *http.Request)
+	CreateTradeConfig(w http.ResponseWriter, r *http.Request)
 }
 
 type controller struct {

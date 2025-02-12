@@ -84,7 +84,7 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 	}
 
 	stmt, err := tx.Prepare(`
-		INSERT INTO tradeconfig (
+		INSERT INTO trade_config (
 			modality,
 			strategy,
 			strategy_variant,
@@ -119,6 +119,11 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 
 	if err != nil {
 		log.Panicln("TCRC 02: ", err)
+		return false
+	}
+
+	err = tx.Commit()
+	if err != nil {
 		return false
 	}
 
