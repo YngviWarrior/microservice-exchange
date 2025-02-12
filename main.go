@@ -2,15 +2,16 @@ package main
 
 import (
 	"log"
+	"net"
 	"os"
 	"time"
 
-	"github.com/YngviWarrior/microservice-exchange/controller"
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
-	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql"
-	"github.com/YngviWarrior/microservice-exchange/infra/server"
-	"github.com/YngviWarrior/microservice-exchange/usecase"
+	grpcserver "github.com/YngviWarrior/microservice-exchange/infra/grpcServer"
+	"github.com/YngviWarrior/microservice-exchange/infra/grpcServer/pb"
 	"github.com/joho/godotenv"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -21,20 +22,6 @@ func main() {
 	}
 
 	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-
-	database := database.NewDatabase()
-
-	exchangeRepo := mysql.NewExchangeRepository(database)
-	tradeConfigRepo := mysql.NewTradeConfigRepository(database)
-
-	// should return all usecases
-	allUseCases := usecase.NewUsecase(
-		exchangeRepo,
-		tradeConfigRepo,
-	)
-	// should return all controllers
-	controllers := controller.NewController(allUseCases)
-
 	switch os.Getenv("ENVIROMENT") {
 	case "local":
 		log.SetOutput(os.Stdout)
@@ -50,9 +37,39 @@ func main() {
 		log.SetOutput(file)
 	}
 
+	database := database.NewDatabase()
+
+	exchangeService := grpcserver.NewGrpcServer(database)
+
+	grpcServer := grpc.NewServer()
+
+	pb.RegisterExchangeServiceServer(grpcServer, exchangeService)
+	reflection.Register(grpcServer)
+
+	lis, err := net.Listen("tcp", os.Getenv("port"))
 	if err != nil {
-		log.Printf("%v", err)
+		panic(err)
 	}
 
-	server.NewServer().InitServer(controllers)
+	log.Println("Running at port ", os.Getenv("port"))
+	if err := grpcServer.Serve(lis); err != nil {
+		panic(err)
+	}
+
+	// exchangeRepo := mysql.NewExchangeRepository(database)
+	// tradeConfigRepo := mysql.NewTradeConfigRepository(database)
+
+	// // should return all usecases
+	// allUseCases := usecase.NewUsecase(
+	// 	exchangeRepo,
+	// 	tradeConfigRepo,
+	// )
+	// // should return all controllers
+	// controllers := controller.NewController(allUseCases)
+
+	// if err != nil {
+	// 	log.Printf("%v", err)
+	// }
+
+	// server.NewServer().InitServer(controllers)
 }

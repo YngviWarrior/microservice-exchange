@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message TradeConfig {
+    int64 trade_config = 11;
+    int64 modality = 1;
+    int64 strategy = 2;
+    int64 strategy_variant = 3;
+    int64 parity = 4;
+    int64 exchange = 5;
+    int64 operation_quantity = 6;
+    double operation_amount = 7;
+    double default_profit_percentage = 8;
+    double wallet_value_limit = 9;
+    bool enabled = 10;
+}
+
+message TradeConfigResponse {
+    TradeConfig trade_config = 1;
+}
+
+message CreateTradeConfig {
+    int64 modality = 1;
+    int64 strategy = 2;
+    int64 strategy_variant = 3;
+    int64 parity = 4;
+    int64 exchange = 5;
+    int64 operation_quantity = 6;
+    double operation_amount = 7;
+    double default_profit_percentage = 8;
+    double wallet_value_limit = 9;
+    bool enabled = 10;
+}
+
+message ListTradeConfig {}
