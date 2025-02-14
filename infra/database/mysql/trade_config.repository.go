@@ -54,6 +54,7 @@ func (t *tradeConfigRepository) List() (out []*repositorydto.OutputTradeConfigDt
 
 		err = res.Scan(
 			&u.TradeConfig,
+			&u.User,
 			&u.Modality,
 			&u.Strategy,
 			&u.StrategyVariant,
@@ -86,6 +87,7 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 	stmt, err := tx.Prepare(`
 		INSERT INTO trade_config (
 			modality,
+			user,
 			strategy,
 			strategy_variant,
 			parity,
@@ -95,7 +97,7 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 			default_profit_percentage,
 			wallet_value_limit,
 			enabled
-		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 	`)
 
 	if err != nil {
@@ -106,6 +108,7 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 
 	_, err = stmt.Exec(
 		in.Modality,
+		in.User,
 		in.Strategy,
 		in.StrategyVariant,
 		in.Parity,
@@ -124,6 +127,7 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 
 	err = tx.Commit()
 	if err != nil {
+		log.Panicln("TCRC 03: ", err)
 		return false
 	}
 

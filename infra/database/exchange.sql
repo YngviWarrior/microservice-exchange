@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `modality`;
 CREATE TABLE `modality` (
     `modality` INT(11) NOT NULL auto_increment,
     `name` VARCHAR(200) NOT NULL,
-    `enable` TINYINT(1) NOT NULL DEFAULT 0,
+    `enabled` TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY(`modality`)
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE `strategy` (
     `strategy` INT(11) NOT NULL auto_increment,
     `modality` INT(11) NOT NULL,
     `name` VARCHAR(200) NOT NULL,
-    `enable` TINYINT(1) NOT NULL DEFAULT 0,
+    `enabled` TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY(`strategy`),
     FOREIGN KEY (`modality`) REFERENCES `modality`(`modality`)
 );
@@ -227,9 +227,10 @@ ALTER TABLE `operation_meta_data_fast_trade` RENAME COLUMN `minumum_price` TO `m
 DROP TABLE IF EXISTS `trade_config`;
 CREATE TABLE `trade_config` (
     `trade_config` BIGINT(20) NOT NULL UNIQUE auto_increment,
-    `modality` INT(11) NOT NULL,
+    `user` BIGINT(20) NOT NULL,
     `strategy` INT(11) NOT NULL,
     `strategy_variant` INT(11) NOT NULL,
+    `modality` INT(11) NOT NULL,
     `parity` INT(11) NOT NULL,
     `exchange` INT(11) NOT NULL,
     `operation_quantity` INT(11) NOT NULL DEFAULT 0,
@@ -237,5 +238,5 @@ CREATE TABLE `trade_config` (
     `default_profit_percentage` DECIMAL(60,8) NOT NULL DEFAULT 0,
     `wallet_value_limit` DECIMAL(60,8) NOT NULL DEFAULT 0,
     `enabled` TINYINT(1) NOT NULL DEFAULT 0,
-    PRIMARY KEY(`modality`, `strategy`, `strategy_variant`, `parity`, `exchange`)
+    PRIMARY KEY(`user`, `modality`, `strategy`, `strategy_variant`, `parity`, `exchange`)
 );

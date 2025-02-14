@@ -5,6 +5,7 @@ WORKDIR /app
 COPY . /app/
 
 RUN go mod tidy
+RUN go install github.com/air-verse/air@latest
 
 EXPOSE 3001
-ENTRYPOINT [ "go","run","main.go" ]
+ENTRYPOINT [ "go", "run", "." ]

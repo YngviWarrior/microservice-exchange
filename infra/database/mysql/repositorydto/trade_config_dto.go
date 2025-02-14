@@ -1,6 +1,7 @@
 package repositorydto
 
 type InputTradeConfigDto struct {
+	User                    int64
 	Modality                int64
 	Strategy                int64
 	StrategyVariant         int64
@@ -14,6 +15,7 @@ type InputTradeConfigDto struct {
 }
 
 type OutputTradeConfigDto struct {
+	User                    int64
 	TradeConfig             int64
 	Modality                int64
 	Strategy                int64

@@ -14,7 +14,7 @@ type exchangeRepository struct {
 }
 
 type ExchangeRepositoryInterface interface {
-	List() (list []*repositorydto.OutputExchangeDto)
+	List(repositorydto.InputExchangeDto) (list []*repositorydto.OutputExchangeDto)
 }
 
 func NewExchangeRepository(db database.DatabaseInterface) ExchangeRepositoryInterface {
@@ -23,7 +23,7 @@ func NewExchangeRepository(db database.DatabaseInterface) ExchangeRepositoryInte
 	}
 }
 
-func (e *exchangeRepository) List() (list []*repositorydto.OutputExchangeDto) {
+func (e *exchangeRepository) List(in repositorydto.InputExchangeDto) (list []*repositorydto.OutputExchangeDto) {
 	tx, err := e.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
 		log.Panicln("ERL 00 :", err)

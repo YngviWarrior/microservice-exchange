@@ -15,6 +15,7 @@ func (u *usecase) ListTradeConfig() (out []*usecasedto.OutputTradeConfigDto, err
 	o := &usecasedto.OutputTradeConfigDto{}
 	for _, v := range response {
 		o.TradeConfig = v.TradeConfig
+		o.User = v.User
 		o.Modality = v.Modality
 		o.Strategy = v.Strategy
 		o.StrategyVariant = v.StrategyVariant

@@ -2,7 +2,7 @@ package grpcserver
 
 import (
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
-	"github.com/YngviWarrior/microservice-exchange/infra/grpcServer/pb"
+	"github.com/YngviWarrior/microservice-exchange/infra/grpcServer/proto/pb"
 )
 
 type grpcServer struct {

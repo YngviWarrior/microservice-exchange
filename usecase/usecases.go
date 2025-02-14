@@ -16,14 +16,20 @@ type UseCaseInterface interface {
 type usecase struct {
 	ExchangeRepo    mysql.ExchangeRepositoryInterface
 	TradeConfigRepo mysql.TradeConfigRepositoryInterface
+	ModalityRepo    mysql.ModalityRepositoryInterface
+	StrategyRepo    mysql.StrategyRepositoryInterface
 }
 
 func NewUsecase(
 	exchangeRepo mysql.ExchangeRepositoryInterface,
 	tradeConfigRepo mysql.TradeConfigRepositoryInterface,
+	modalityRepo mysql.ModalityRepositoryInterface,
+	strategyRepo mysql.StrategyRepositoryInterface,
 ) UseCaseInterface {
 	return &usecase{
 		ExchangeRepo:    exchangeRepo,
 		TradeConfigRepo: tradeConfigRepo,
+		ModalityRepo:    modalityRepo,
+		StrategyRepo:    strategyRepo,
 	}
 }

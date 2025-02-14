@@ -1,6 +1,7 @@
 package usecasedto
 
 type InputTradeConfigDto struct {
+	User                    int64   `json:"user"`
 	Modality                int64   `json:"modality"`
 	Strategy                int64   `json:"strategy"`
 	StrategyVariant         int64   `json:"strategy_variant"`
@@ -15,6 +16,7 @@ type InputTradeConfigDto struct {
 
 type OutputTradeConfigDto struct {
 	TradeConfig             int64   `json:"trade_config"`
+	User                    int64   `json:"user"`
 	Modality                int64   `json:"modality"`
 	Strategy                int64   `json:"strategy"`
 	StrategyVariant         int64   `json:"strategy_variant"`

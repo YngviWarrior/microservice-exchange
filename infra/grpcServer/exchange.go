@@ -4,15 +4,15 @@ import (
 	"context"
 
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql"
-	"github.com/YngviWarrior/microservice-exchange/infra/grpcServer/pb"
+	"github.com/YngviWarrior/microservice-exchange/infra/grpcServer/proto/pb"
 	"github.com/YngviWarrior/microservice-exchange/usecase"
 )
 
 func (g *grpcServer) ListExchange(ctx context.Context, in *pb.ListExchangeRequest) (out *pb.ExchangeResponse, err error) {
 	exchangeRepo := mysql.NewExchangeRepository(g.Db)
-	exchangeUseCase := usecase.NewUsecase(exchangeRepo, nil)
+	useCases := usecase.NewUsecase(exchangeRepo, nil, nil, nil)
 
-	response, err := exchangeUseCase.ListExchanges()
+	response, err := useCases.ListExchanges()
 	if err != nil {
 		return
 	}

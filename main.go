@@ -8,7 +8,7 @@ import (
 
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
 	grpcserver "github.com/YngviWarrior/microservice-exchange/infra/grpcServer"
-	"github.com/YngviWarrior/microservice-exchange/infra/grpcServer/pb"
+	"github.com/YngviWarrior/microservice-exchange/infra/grpcServer/proto/pb"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -46,12 +46,12 @@ func main() {
 	pb.RegisterExchangeServiceServer(grpcServer, exchangeService)
 	reflection.Register(grpcServer)
 
-	lis, err := net.Listen("tcp", os.Getenv("port"))
+	lis, err := net.Listen("tcp", os.Getenv("PORT"))
 	if err != nil {
 		panic(err)
 	}
 
-	log.Println("Running at port ", os.Getenv("port"))
+	log.Println("Running at port ", os.Getenv("PORT"))
 	if err := grpcServer.Serve(lis); err != nil {
 		panic(err)
 	}
