@@ -1,11 +1,29 @@
 package usecase
 
 import (
+	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql"
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql/repositorydto"
 	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
-func (u *usecase) ListExchanges() ([]*usecasedto.OutputListExchangeDto, error) {
+type usecaseListExchange struct {
+	TradeConfigRepo mysql.TradeConfigRepositoryInterface
+	ExchangeRepo    mysql.ExchangeRepositoryInterface
+	ModalityRepo    mysql.ModalityRepositoryInterface
+	StrategyRepo    mysql.StrategyRepositoryInterface
+}
+
+type UsecaseListExchangeInterface interface {
+	ListExchange() ([]*usecasedto.OutputListExchangeDto, error)
+}
+
+func NewListExchangeUsecase(exchangeRepo mysql.ExchangeRepositoryInterface) UsecaseListExchangeInterface {
+	return &usecaseListExchange{
+		ExchangeRepo: exchangeRepo,
+	}
+}
+
+func (u *usecaseListExchange) ListExchange() ([]*usecasedto.OutputListExchangeDto, error) {
 	response := []*usecasedto.OutputListExchangeDto{}
 	list := u.ExchangeRepo.List(repositorydto.InputExchangeDto{})
 

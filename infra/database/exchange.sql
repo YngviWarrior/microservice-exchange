@@ -105,7 +105,7 @@ CREATE TABLE `strategy_variant` (
     `strategy_variant` INT(11) NOT NULL auto_increment,
     `strategy` INT(11) NOT NULL,
     `name` VARCHAR(200) NOT NULL,
-    `enable` TINYINT(1) NOT NULL DEFAULT 0,
+    `enabled` TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY(`strategy_variant`),
     FOREIGN KEY (`strategy`) REFERENCES `strategy`(`strategy`)
 );

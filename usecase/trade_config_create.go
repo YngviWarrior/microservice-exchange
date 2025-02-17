@@ -4,16 +4,37 @@ import (
 	"errors"
 	"log"
 
+	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql"
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql/repositorydto"
 	"github.com/YngviWarrior/microservice-exchange/infra/external"
 	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
-func (u *usecase) CreateTradeConfig(in *usecasedto.InputTradeConfigDto) (response bool, err error) {
-	modalityList := u.ModalityRepo.List(repositorydto.InputModalityDto{})
+type usecaseCreateTradeConfig struct {
+	TradeConfigRepo mysql.TradeConfigRepositoryInterface
+	ExchangeRepo    mysql.ExchangeRepositoryInterface
+	ModalityRepo    mysql.ModalityRepositoryInterface
+	StrategyRepo    mysql.StrategyRepositoryInterface
+}
+
+type UsecaseCreateTradeConfigInterface interface {
+	CreateTradeConfig(in *usecasedto.InputTradeConfigDto) (response bool, err error)
+}
+
+func NewCreateTradeConfigUsecase(tradeConfigRepo mysql.TradeConfigRepositoryInterface, exchangeRepo mysql.ExchangeRepositoryInterface, modalityRepo mysql.ModalityRepositoryInterface, strategyRepo mysql.StrategyRepositoryInterface) UsecaseCreateTradeConfigInterface {
+	return &usecaseCreateTradeConfig{
+		TradeConfigRepo: tradeConfigRepo,
+		ExchangeRepo:    exchangeRepo,
+		ModalityRepo:    modalityRepo,
+		StrategyRepo:    strategyRepo,
+	}
+}
+
+func (u *usecaseCreateTradeConfig) CreateTradeConfig(in *usecasedto.InputTradeConfigDto) (response bool, err error) {
+	modality := u.ModalityRepo.List(repositorydto.InputModalityDto{})
 
 	var exist bool
-	for _, v := range modalityList {
+	for _, v := range modality {
 		if v.Modality == in.Modality {
 			exist = true
 		}
@@ -23,9 +44,9 @@ func (u *usecase) CreateTradeConfig(in *usecasedto.InputTradeConfigDto) (respons
 		return false, errors.New("invalid modality")
 	}
 
-	exchangeList := u.ExchangeRepo.List(repositorydto.InputExchangeDto{})
+	exchange := u.ExchangeRepo.List(repositorydto.InputExchangeDto{})
 
-	for _, v := range exchangeList {
+	for _, v := range exchange {
 		if v.Exchange == in.Exchange {
 			exist = true
 		}
@@ -35,9 +56,9 @@ func (u *usecase) CreateTradeConfig(in *usecasedto.InputTradeConfigDto) (respons
 		return false, errors.New("invalid exchange")
 	}
 
-	repositoryList := u.StrategyRepo.List(repositorydto.InputStrategyDto{})
+	strategy := u.StrategyRepo.List(repositorydto.InputStrategyDto{})
 
-	for _, v := range repositoryList {
+	for _, v := range strategy {
 		if v.Strategy == in.Strategy {
 			exist = true
 		}

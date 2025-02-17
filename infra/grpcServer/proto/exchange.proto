@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package pb;
 option go_package = "./pb";
-import "trade_config.proto";
 
 message Exchange {
     uint64 Exchange = 1;
@@ -14,9 +13,3 @@ message ExchangeResponse {
 }
 
 message ListExchangeRequest {}
-
-service ExchangeService {
-    rpc ListExchange(ListExchangeRequest) returns (ExchangeResponse) {} 
-    rpc ListTradeConfig(ListTradeConfigRequest) returns (TradeConfigResponse) {}
-    rpc CreateTradeConfig(CreateTradeConfigRequest) returns (TradeConfigResponse) {}
-}

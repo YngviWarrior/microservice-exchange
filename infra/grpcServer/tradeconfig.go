@@ -11,7 +11,7 @@ import (
 
 func (g *grpcServer) ListTradeConfig(ctx context.Context, in *pb.ListTradeConfigRequest) (out *pb.TradeConfigResponse, err error) {
 	tradeConfigRepo := mysql.NewTradeConfigRepository(g.Db)
-	useCases := usecase.NewUsecase(nil, tradeConfigRepo, nil, nil)
+	useCases := usecase.NewListTradeConfigUsecase(tradeConfigRepo)
 
 	response, err := useCases.ListTradeConfig()
 	if err != nil {
@@ -28,14 +28,22 @@ func (g *grpcServer) ListTradeConfig(ctx context.Context, in *pb.ListTradeConfig
 		o.User = v.User
 		o.Modality = v.Modality
 		o.Strategy = v.Strategy
+		o.StrategyEnabled = v.StrategyEnabled
 		o.StrategyVariant = v.StrategyVariant
 		o.Parity = v.Parity
 		o.Exchange = v.Exchange
 		o.OperationQuantity = v.OperationQuantity
 		o.OperationAmount = v.OperationAmount
+		o.Enabled = v.Enabled
 		o.DefaultProfitPercentage = v.DefaultProfitPercentage
 		o.WalletValueLimit = v.WalletValueLimit
-		o.Enabled = v.Enabled
+		o.UserName = v.UserName
+		o.ModalityName = v.ModalityName
+		o.StrategyName = v.StrategyName
+		o.StrategyVariantName = v.StrategyVariantName
+		o.StrategyVariantEnabled = v.StrategyVariantEnabled
+		o.ParitySymbol = v.ParitySymbol
+		o.ExchangeName = v.ExchangeName
 
 		out.TradeConfig = append(out.TradeConfig, &o)
 	}
@@ -48,7 +56,7 @@ func (g *grpcServer) CreateTradeConfig(ctx context.Context, in *pb.CreateTradeCo
 	modalityRepo := mysql.NewModalityRepository(g.Db)
 	exchangeRepo := mysql.NewExchangeRepository(g.Db)
 	strategyRepo := mysql.NewStrategyRepository(g.Db)
-	useCases := usecase.NewUsecase(exchangeRepo, tradeConfigRepo, modalityRepo, strategyRepo)
+	useCases := usecase.NewCreateTradeConfigUsecase(tradeConfigRepo, exchangeRepo, modalityRepo, strategyRepo)
 
 	_, err = useCases.CreateTradeConfig(&usecasedto.InputTradeConfigDto{
 		User:                    in.User,

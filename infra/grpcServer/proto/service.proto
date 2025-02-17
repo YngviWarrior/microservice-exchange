@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+import "trade_config.proto";
+import "user.proto";
+import "exchange.proto";
+import "wallet.proto";
+
+service UserService {
+    rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
+    rpc GetUserByEmail(GetUserByEmailRequest) returns (UserResponse) {}
+    rpc GetUserById(GetUserByIdRequest) returns (UserResponse) {}
+}
+
+service ExchangeService {
+    rpc ListExchange(ListExchangeRequest) returns (ExchangeResponse) {} 
+    rpc ListTradeConfig(ListTradeConfigRequest) returns (TradeConfigResponse) {}
+    rpc CreateTradeConfig(CreateTradeConfigRequest) returns (TradeConfigResponse) {}
+
+    rpc GetWalletWithCoin(GetWalletWithCoinRequest) returns (GetWalletWithCoinResponse) {}
+}

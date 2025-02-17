@@ -10,9 +10,9 @@ import (
 
 func (g *grpcServer) ListExchange(ctx context.Context, in *pb.ListExchangeRequest) (out *pb.ExchangeResponse, err error) {
 	exchangeRepo := mysql.NewExchangeRepository(g.Db)
-	useCases := usecase.NewUsecase(exchangeRepo, nil, nil, nil)
+	useCases := usecase.NewListExchangeUsecase(exchangeRepo)
 
-	response, err := useCases.ListExchanges()
+	response, err := useCases.ListExchange()
 	if err != nil {
 		return
 	}

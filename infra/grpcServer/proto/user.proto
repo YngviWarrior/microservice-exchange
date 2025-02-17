@@ -27,9 +27,3 @@ message GetUserByEmailRequest {
 message GetUserByIdRequest {
     uint64 id = 1;
 }
-
-service UserService {
-    rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
-    rpc GetUserByEmail(GetUserByEmailRequest) returns (UserResponse) {}
-    rpc GetUserById(GetUserByIdRequest) returns (UserResponse) {}
-}

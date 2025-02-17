@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message Wallet {
+    uint64 wallet = 1;
+    uint64 exchange = 2;
+    uint64 coin = 3;
+    double amount = 4;
+}
+
+message GetWalletWithCoinResponse {
+    Wallet wallet = 1;
+    uint64 coin = 2;
+    string symbol = 3;
+    bool active = 4;
+}
+
+message GetWalletWithCoinRequest {
+    uint64 exchange = 1;
+    uint64 coin = 2;
+}

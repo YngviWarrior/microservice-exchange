@@ -15,16 +15,24 @@ type InputTradeConfigDto struct {
 }
 
 type OutputTradeConfigDto struct {
-	User                    int64
 	TradeConfig             int64
+	User                    int64
 	Modality                int64
 	Strategy                int64
+	StrategyEnabled         bool
 	StrategyVariant         int64
 	Parity                  int64
 	Exchange                int64
 	OperationQuantity       int64
 	OperationAmount         float64
+	Enabled                 bool
 	DefaultProfitPercentage float64
 	WalletValueLimit        float64
-	Enabled                 bool
+	UserName                string
+	ModalityName            string
+	StrategyName            string
+	StrategyVariantName     string
+	StrategyVariantEnabled  bool
+	ParitySymbol            string
+	ExchangeName            string
 }
