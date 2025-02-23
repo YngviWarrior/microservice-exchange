@@ -46,3 +46,13 @@ message CreateTradeConfigRequest {
 }
 
 message ListTradeConfigRequest {}
+
+message UpdateTradeConfigRequest {
+    bool enabled = 1;
+    uint64 strategy = 2;
+    uint64 parity = 3;    
+}
+
+message UpdateTradeConfigResponse {
+    TradeConfig tradeconfig = 1;
+}

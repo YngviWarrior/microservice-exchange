@@ -10,6 +10,15 @@ message Wallet {
     double amount = 4;
 }
 
+message WalletWithCoin {
+    uint64 wallet = 1;
+    uint64 exchange = 2;
+    uint64 coin = 3;
+    double amount = 4;
+    string symbol = 6;
+    bool active = 7;
+}
+
 message GetWalletWithCoinResponse {
     Wallet wallet = 1;
     uint64 coin = 2;
@@ -20,4 +29,31 @@ message GetWalletWithCoinResponse {
 message GetWalletWithCoinRequest {
     uint64 exchange = 1;
     uint64 coin = 2;
+}
+
+message ListWalletWithCoinResponse {
+    repeated WalletWithCoin wallet = 1;
+}
+
+message ListWalletWithCoinRequest {
+    uint64 exchange = 1;
+}
+
+message CreateWalletRequest {
+    uint64 wallet = 1;
+    uint64 exchange = 2;
+    uint64 coin = 3;
+    double amount = 4;
+}
+
+message CreateWalletResponse {
+    Wallet wallet = 1;
+}
+
+message UpdateWalletRequest {
+    repeated Wallet wallet = 1;
+}
+
+message UpdateWalletResponse {
+    repeated Wallet wallet = 1;
 }

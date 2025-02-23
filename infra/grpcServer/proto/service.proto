@@ -5,8 +5,12 @@ option go_package = "./pb";
 
 import "trade_config.proto";
 import "user.proto";
-import "exchange.proto";
+import "user_strategy.proto";
 import "wallet.proto";
+import "coin.proto";
+import "candle.proto";
+import "parity.proto";
+import "operation.proto";
 
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
@@ -15,9 +19,26 @@ service UserService {
 }
 
 service ExchangeService {
-    rpc ListExchange(ListExchangeRequest) returns (ExchangeResponse) {} 
     rpc ListTradeConfig(ListTradeConfigRequest) returns (TradeConfigResponse) {}
     rpc CreateTradeConfig(CreateTradeConfigRequest) returns (TradeConfigResponse) {}
+    rpc UpdateTradeConfig(UpdateTradeConfigRequest) returns (UpdateTradeConfigResponse) {}
+
+    rpc CreateUserStrategy(CreateUserStrategyRequest) returns (UserStrategyResponse) {}
+    rpc ListUserStrategy(ListUserStrategyRequest) returns (UserStrategyResponse) {}
+
+    rpc ListParity(ListParityRequest) returns (ListParityResponse) {}
+    rpc ListCoin(ListCoinRequest) returns (ListCoinResponse) {}
 
     rpc GetWalletWithCoin(GetWalletWithCoinRequest) returns (GetWalletWithCoinResponse) {}
+    rpc ListWalletWithCoin(ListWalletWithCoinRequest) returns (ListWalletWithCoinResponse) {}
+    rpc CreateWallet(CreateWalletRequest) returns (CreateWalletResponse) {}
+    rpc UpdateWallet(UpdateWalletRequest) returns (UpdateWalletResponse) {} 
+
+    rpc GetCandleFirstMts(GetCandleFirstMtsRequest) returns (GetCandleFirstMtsResponse) {} 
+    rpc GetLastTwoCandles(GetCandleFirstMtsRequest) returns (GetCandleFirstMtsResponse) {}
+    rpc CreateCandles(CreateCandlesRequest) returns (CreateCandlesResponse) {}
+    rpc ListCandleLimit(ListCandleLimitRequest) returns (ListCandleLimitResponse) {}
+    
+    rpc ListOperation(ListOperationRequest) returns (ListOperationResponse) {} 
+    rpc ListOperationByPeriod(ListOperationByPeriodRequest) returns (ListOperationByPeriodResponse) {} 
 }

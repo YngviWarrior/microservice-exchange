@@ -56,20 +56,4 @@ func main() {
 		panic(err)
 	}
 
-	// exchangeRepo := mysql.NewExchangeRepository(database)
-	// tradeConfigRepo := mysql.NewTradeConfigRepository(database)
-
-	// // should return all usecases
-	// allUseCases := usecase.NewUsecase(
-	// 	exchangeRepo,
-	// 	tradeConfigRepo,
-	// )
-	// // should return all controllers
-	// controllers := controller.NewController(allUseCases)
-
-	// if err != nil {
-	// 	log.Printf("%v", err)
-	// }
-
-	// server.NewServer().InitServer(controllers)
 }

@@ -197,20 +197,46 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	ExchangeService_ListExchange_FullMethodName      = "/pb.ExchangeService/ListExchange"
-	ExchangeService_ListTradeConfig_FullMethodName   = "/pb.ExchangeService/ListTradeConfig"
-	ExchangeService_CreateTradeConfig_FullMethodName = "/pb.ExchangeService/CreateTradeConfig"
-	ExchangeService_GetWalletWithCoin_FullMethodName = "/pb.ExchangeService/GetWalletWithCoin"
+	ExchangeService_ListTradeConfig_FullMethodName       = "/pb.ExchangeService/ListTradeConfig"
+	ExchangeService_CreateTradeConfig_FullMethodName     = "/pb.ExchangeService/CreateTradeConfig"
+	ExchangeService_UpdateTradeConfig_FullMethodName     = "/pb.ExchangeService/UpdateTradeConfig"
+	ExchangeService_CreateUserStrategy_FullMethodName    = "/pb.ExchangeService/CreateUserStrategy"
+	ExchangeService_ListUserStrategy_FullMethodName      = "/pb.ExchangeService/ListUserStrategy"
+	ExchangeService_ListParity_FullMethodName            = "/pb.ExchangeService/ListParity"
+	ExchangeService_ListCoin_FullMethodName              = "/pb.ExchangeService/ListCoin"
+	ExchangeService_GetWalletWithCoin_FullMethodName     = "/pb.ExchangeService/GetWalletWithCoin"
+	ExchangeService_ListWalletWithCoin_FullMethodName    = "/pb.ExchangeService/ListWalletWithCoin"
+	ExchangeService_CreateWallet_FullMethodName          = "/pb.ExchangeService/CreateWallet"
+	ExchangeService_UpdateWallet_FullMethodName          = "/pb.ExchangeService/UpdateWallet"
+	ExchangeService_GetCandleFirstMts_FullMethodName     = "/pb.ExchangeService/GetCandleFirstMts"
+	ExchangeService_GetLastTwoCandles_FullMethodName     = "/pb.ExchangeService/GetLastTwoCandles"
+	ExchangeService_CreateCandles_FullMethodName         = "/pb.ExchangeService/CreateCandles"
+	ExchangeService_ListCandleLimit_FullMethodName       = "/pb.ExchangeService/ListCandleLimit"
+	ExchangeService_ListOperation_FullMethodName         = "/pb.ExchangeService/ListOperation"
+	ExchangeService_ListOperationByPeriod_FullMethodName = "/pb.ExchangeService/ListOperationByPeriod"
 )
 
 // ExchangeServiceClient is the client API for ExchangeService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ExchangeServiceClient interface {
-	ListExchange(ctx context.Context, in *ListExchangeRequest, opts ...grpc.CallOption) (*ExchangeResponse, error)
 	ListTradeConfig(ctx context.Context, in *ListTradeConfigRequest, opts ...grpc.CallOption) (*TradeConfigResponse, error)
 	CreateTradeConfig(ctx context.Context, in *CreateTradeConfigRequest, opts ...grpc.CallOption) (*TradeConfigResponse, error)
+	UpdateTradeConfig(ctx context.Context, in *UpdateTradeConfigRequest, opts ...grpc.CallOption) (*UpdateTradeConfigResponse, error)
+	CreateUserStrategy(ctx context.Context, in *CreateUserStrategyRequest, opts ...grpc.CallOption) (*UserStrategyResponse, error)
+	ListUserStrategy(ctx context.Context, in *ListUserStrategyRequest, opts ...grpc.CallOption) (*UserStrategyResponse, error)
+	ListParity(ctx context.Context, in *ListParityRequest, opts ...grpc.CallOption) (*ListParityResponse, error)
+	ListCoin(ctx context.Context, in *ListCoinRequest, opts ...grpc.CallOption) (*ListCoinResponse, error)
 	GetWalletWithCoin(ctx context.Context, in *GetWalletWithCoinRequest, opts ...grpc.CallOption) (*GetWalletWithCoinResponse, error)
+	ListWalletWithCoin(ctx context.Context, in *ListWalletWithCoinRequest, opts ...grpc.CallOption) (*ListWalletWithCoinResponse, error)
+	CreateWallet(ctx context.Context, in *CreateWalletRequest, opts ...grpc.CallOption) (*CreateWalletResponse, error)
+	UpdateWallet(ctx context.Context, in *UpdateWalletRequest, opts ...grpc.CallOption) (*UpdateWalletResponse, error)
+	GetCandleFirstMts(ctx context.Context, in *GetCandleFirstMtsRequest, opts ...grpc.CallOption) (*GetCandleFirstMtsResponse, error)
+	GetLastTwoCandles(ctx context.Context, in *GetCandleFirstMtsRequest, opts ...grpc.CallOption) (*GetCandleFirstMtsResponse, error)
+	CreateCandles(ctx context.Context, in *CreateCandlesRequest, opts ...grpc.CallOption) (*CreateCandlesResponse, error)
+	ListCandleLimit(ctx context.Context, in *ListCandleLimitRequest, opts ...grpc.CallOption) (*ListCandleLimitResponse, error)
+	ListOperation(ctx context.Context, in *ListOperationRequest, opts ...grpc.CallOption) (*ListOperationResponse, error)
+	ListOperationByPeriod(ctx context.Context, in *ListOperationByPeriodRequest, opts ...grpc.CallOption) (*ListOperationByPeriodResponse, error)
 }
 
 type exchangeServiceClient struct {
@@ -219,16 +245,6 @@ type exchangeServiceClient struct {
 
 func NewExchangeServiceClient(cc grpc.ClientConnInterface) ExchangeServiceClient {
 	return &exchangeServiceClient{cc}
-}
-
-func (c *exchangeServiceClient) ListExchange(ctx context.Context, in *ListExchangeRequest, opts ...grpc.CallOption) (*ExchangeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ExchangeResponse)
-	err := c.cc.Invoke(ctx, ExchangeService_ListExchange_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *exchangeServiceClient) ListTradeConfig(ctx context.Context, in *ListTradeConfigRequest, opts ...grpc.CallOption) (*TradeConfigResponse, error) {
@@ -251,6 +267,56 @@ func (c *exchangeServiceClient) CreateTradeConfig(ctx context.Context, in *Creat
 	return out, nil
 }
 
+func (c *exchangeServiceClient) UpdateTradeConfig(ctx context.Context, in *UpdateTradeConfigRequest, opts ...grpc.CallOption) (*UpdateTradeConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateTradeConfigResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_UpdateTradeConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) CreateUserStrategy(ctx context.Context, in *CreateUserStrategyRequest, opts ...grpc.CallOption) (*UserStrategyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserStrategyResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_CreateUserStrategy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListUserStrategy(ctx context.Context, in *ListUserStrategyRequest, opts ...grpc.CallOption) (*UserStrategyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserStrategyResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListUserStrategy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListParity(ctx context.Context, in *ListParityRequest, opts ...grpc.CallOption) (*ListParityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListParityResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListParity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListCoin(ctx context.Context, in *ListCoinRequest, opts ...grpc.CallOption) (*ListCoinResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCoinResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListCoin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *exchangeServiceClient) GetWalletWithCoin(ctx context.Context, in *GetWalletWithCoinRequest, opts ...grpc.CallOption) (*GetWalletWithCoinResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetWalletWithCoinResponse)
@@ -261,14 +327,117 @@ func (c *exchangeServiceClient) GetWalletWithCoin(ctx context.Context, in *GetWa
 	return out, nil
 }
 
+func (c *exchangeServiceClient) ListWalletWithCoin(ctx context.Context, in *ListWalletWithCoinRequest, opts ...grpc.CallOption) (*ListWalletWithCoinResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListWalletWithCoinResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListWalletWithCoin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) CreateWallet(ctx context.Context, in *CreateWalletRequest, opts ...grpc.CallOption) (*CreateWalletResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateWalletResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_CreateWallet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) UpdateWallet(ctx context.Context, in *UpdateWalletRequest, opts ...grpc.CallOption) (*UpdateWalletResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateWalletResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_UpdateWallet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) GetCandleFirstMts(ctx context.Context, in *GetCandleFirstMtsRequest, opts ...grpc.CallOption) (*GetCandleFirstMtsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCandleFirstMtsResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_GetCandleFirstMts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) GetLastTwoCandles(ctx context.Context, in *GetCandleFirstMtsRequest, opts ...grpc.CallOption) (*GetCandleFirstMtsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCandleFirstMtsResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_GetLastTwoCandles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) CreateCandles(ctx context.Context, in *CreateCandlesRequest, opts ...grpc.CallOption) (*CreateCandlesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateCandlesResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_CreateCandles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListCandleLimit(ctx context.Context, in *ListCandleLimitRequest, opts ...grpc.CallOption) (*ListCandleLimitResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCandleLimitResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListCandleLimit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListOperation(ctx context.Context, in *ListOperationRequest, opts ...grpc.CallOption) (*ListOperationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListOperationResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListOperationByPeriod(ctx context.Context, in *ListOperationByPeriodRequest, opts ...grpc.CallOption) (*ListOperationByPeriodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListOperationByPeriodResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListOperationByPeriod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExchangeServiceServer is the server API for ExchangeService service.
 // All implementations must embed UnimplementedExchangeServiceServer
 // for forward compatibility.
 type ExchangeServiceServer interface {
-	ListExchange(context.Context, *ListExchangeRequest) (*ExchangeResponse, error)
 	ListTradeConfig(context.Context, *ListTradeConfigRequest) (*TradeConfigResponse, error)
 	CreateTradeConfig(context.Context, *CreateTradeConfigRequest) (*TradeConfigResponse, error)
+	UpdateTradeConfig(context.Context, *UpdateTradeConfigRequest) (*UpdateTradeConfigResponse, error)
+	CreateUserStrategy(context.Context, *CreateUserStrategyRequest) (*UserStrategyResponse, error)
+	ListUserStrategy(context.Context, *ListUserStrategyRequest) (*UserStrategyResponse, error)
+	ListParity(context.Context, *ListParityRequest) (*ListParityResponse, error)
+	ListCoin(context.Context, *ListCoinRequest) (*ListCoinResponse, error)
 	GetWalletWithCoin(context.Context, *GetWalletWithCoinRequest) (*GetWalletWithCoinResponse, error)
+	ListWalletWithCoin(context.Context, *ListWalletWithCoinRequest) (*ListWalletWithCoinResponse, error)
+	CreateWallet(context.Context, *CreateWalletRequest) (*CreateWalletResponse, error)
+	UpdateWallet(context.Context, *UpdateWalletRequest) (*UpdateWalletResponse, error)
+	GetCandleFirstMts(context.Context, *GetCandleFirstMtsRequest) (*GetCandleFirstMtsResponse, error)
+	GetLastTwoCandles(context.Context, *GetCandleFirstMtsRequest) (*GetCandleFirstMtsResponse, error)
+	CreateCandles(context.Context, *CreateCandlesRequest) (*CreateCandlesResponse, error)
+	ListCandleLimit(context.Context, *ListCandleLimitRequest) (*ListCandleLimitResponse, error)
+	ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error)
+	ListOperationByPeriod(context.Context, *ListOperationByPeriodRequest) (*ListOperationByPeriodResponse, error)
 	mustEmbedUnimplementedExchangeServiceServer()
 }
 
@@ -279,17 +448,56 @@ type ExchangeServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedExchangeServiceServer struct{}
 
-func (UnimplementedExchangeServiceServer) ListExchange(context.Context, *ListExchangeRequest) (*ExchangeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListExchange not implemented")
-}
 func (UnimplementedExchangeServiceServer) ListTradeConfig(context.Context, *ListTradeConfigRequest) (*TradeConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTradeConfig not implemented")
 }
 func (UnimplementedExchangeServiceServer) CreateTradeConfig(context.Context, *CreateTradeConfigRequest) (*TradeConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTradeConfig not implemented")
 }
+func (UnimplementedExchangeServiceServer) UpdateTradeConfig(context.Context, *UpdateTradeConfigRequest) (*UpdateTradeConfigResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTradeConfig not implemented")
+}
+func (UnimplementedExchangeServiceServer) CreateUserStrategy(context.Context, *CreateUserStrategyRequest) (*UserStrategyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUserStrategy not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListUserStrategy(context.Context, *ListUserStrategyRequest) (*UserStrategyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUserStrategy not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListParity(context.Context, *ListParityRequest) (*ListParityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListParity not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListCoin(context.Context, *ListCoinRequest) (*ListCoinResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCoin not implemented")
+}
 func (UnimplementedExchangeServiceServer) GetWalletWithCoin(context.Context, *GetWalletWithCoinRequest) (*GetWalletWithCoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWalletWithCoin not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListWalletWithCoin(context.Context, *ListWalletWithCoinRequest) (*ListWalletWithCoinResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListWalletWithCoin not implemented")
+}
+func (UnimplementedExchangeServiceServer) CreateWallet(context.Context, *CreateWalletRequest) (*CreateWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateWallet not implemented")
+}
+func (UnimplementedExchangeServiceServer) UpdateWallet(context.Context, *UpdateWalletRequest) (*UpdateWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateWallet not implemented")
+}
+func (UnimplementedExchangeServiceServer) GetCandleFirstMts(context.Context, *GetCandleFirstMtsRequest) (*GetCandleFirstMtsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCandleFirstMts not implemented")
+}
+func (UnimplementedExchangeServiceServer) GetLastTwoCandles(context.Context, *GetCandleFirstMtsRequest) (*GetCandleFirstMtsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLastTwoCandles not implemented")
+}
+func (UnimplementedExchangeServiceServer) CreateCandles(context.Context, *CreateCandlesRequest) (*CreateCandlesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCandles not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListCandleLimit(context.Context, *ListCandleLimitRequest) (*ListCandleLimitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCandleLimit not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOperation not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListOperationByPeriod(context.Context, *ListOperationByPeriodRequest) (*ListOperationByPeriodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOperationByPeriod not implemented")
 }
 func (UnimplementedExchangeServiceServer) mustEmbedUnimplementedExchangeServiceServer() {}
 func (UnimplementedExchangeServiceServer) testEmbeddedByValue()                         {}
@@ -310,24 +518,6 @@ func RegisterExchangeServiceServer(s grpc.ServiceRegistrar, srv ExchangeServiceS
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&ExchangeService_ServiceDesc, srv)
-}
-
-func _ExchangeService_ListExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListExchangeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExchangeServiceServer).ListExchange(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ExchangeService_ListExchange_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExchangeServiceServer).ListExchange(ctx, req.(*ListExchangeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _ExchangeService_ListTradeConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -366,6 +556,96 @@ func _ExchangeService_CreateTradeConfig_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_UpdateTradeConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTradeConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).UpdateTradeConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_UpdateTradeConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).UpdateTradeConfig(ctx, req.(*UpdateTradeConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_CreateUserStrategy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUserStrategyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).CreateUserStrategy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_CreateUserStrategy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).CreateUserStrategy(ctx, req.(*CreateUserStrategyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListUserStrategy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUserStrategyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListUserStrategy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListUserStrategy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListUserStrategy(ctx, req.(*ListUserStrategyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListParity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListParityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListParity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListParity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListParity(ctx, req.(*ListParityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListCoin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCoinRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListCoin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListCoin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListCoin(ctx, req.(*ListCoinRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ExchangeService_GetWalletWithCoin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetWalletWithCoinRequest)
 	if err := dec(in); err != nil {
@@ -384,6 +664,168 @@ func _ExchangeService_GetWalletWithCoin_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_ListWalletWithCoin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListWalletWithCoinRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListWalletWithCoin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListWalletWithCoin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListWalletWithCoin(ctx, req.(*ListWalletWithCoinRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_CreateWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).CreateWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_CreateWallet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).CreateWallet(ctx, req.(*CreateWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_UpdateWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).UpdateWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_UpdateWallet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).UpdateWallet(ctx, req.(*UpdateWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_GetCandleFirstMts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCandleFirstMtsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).GetCandleFirstMts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_GetCandleFirstMts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).GetCandleFirstMts(ctx, req.(*GetCandleFirstMtsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_GetLastTwoCandles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCandleFirstMtsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).GetLastTwoCandles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_GetLastTwoCandles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).GetLastTwoCandles(ctx, req.(*GetCandleFirstMtsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_CreateCandles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCandlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).CreateCandles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_CreateCandles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).CreateCandles(ctx, req.(*CreateCandlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListCandleLimit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCandleLimitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListCandleLimit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListCandleLimit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListCandleLimit(ctx, req.(*ListCandleLimitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOperationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListOperation(ctx, req.(*ListOperationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListOperationByPeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOperationByPeriodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListOperationByPeriod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListOperationByPeriod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListOperationByPeriod(ctx, req.(*ListOperationByPeriodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExchangeService_ServiceDesc is the grpc.ServiceDesc for ExchangeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -391,10 +833,6 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.ExchangeService",
 	HandlerType: (*ExchangeServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "ListExchange",
-			Handler:    _ExchangeService_ListExchange_Handler,
-		},
 		{
 			MethodName: "ListTradeConfig",
 			Handler:    _ExchangeService_ListTradeConfig_Handler,
@@ -404,8 +842,64 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ExchangeService_CreateTradeConfig_Handler,
 		},
 		{
+			MethodName: "UpdateTradeConfig",
+			Handler:    _ExchangeService_UpdateTradeConfig_Handler,
+		},
+		{
+			MethodName: "CreateUserStrategy",
+			Handler:    _ExchangeService_CreateUserStrategy_Handler,
+		},
+		{
+			MethodName: "ListUserStrategy",
+			Handler:    _ExchangeService_ListUserStrategy_Handler,
+		},
+		{
+			MethodName: "ListParity",
+			Handler:    _ExchangeService_ListParity_Handler,
+		},
+		{
+			MethodName: "ListCoin",
+			Handler:    _ExchangeService_ListCoin_Handler,
+		},
+		{
 			MethodName: "GetWalletWithCoin",
 			Handler:    _ExchangeService_GetWalletWithCoin_Handler,
+		},
+		{
+			MethodName: "ListWalletWithCoin",
+			Handler:    _ExchangeService_ListWalletWithCoin_Handler,
+		},
+		{
+			MethodName: "CreateWallet",
+			Handler:    _ExchangeService_CreateWallet_Handler,
+		},
+		{
+			MethodName: "UpdateWallet",
+			Handler:    _ExchangeService_UpdateWallet_Handler,
+		},
+		{
+			MethodName: "GetCandleFirstMts",
+			Handler:    _ExchangeService_GetCandleFirstMts_Handler,
+		},
+		{
+			MethodName: "GetLastTwoCandles",
+			Handler:    _ExchangeService_GetLastTwoCandles_Handler,
+		},
+		{
+			MethodName: "CreateCandles",
+			Handler:    _ExchangeService_CreateCandles_Handler,
+		},
+		{
+			MethodName: "ListCandleLimit",
+			Handler:    _ExchangeService_ListCandleLimit_Handler,
+		},
+		{
+			MethodName: "ListOperation",
+			Handler:    _ExchangeService_ListOperation_Handler,
+		},
+		{
+			MethodName: "ListOperationByPeriod",
+			Handler:    _ExchangeService_ListOperationByPeriod_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

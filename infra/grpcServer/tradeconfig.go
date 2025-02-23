@@ -37,7 +37,6 @@ func (g *grpcServer) ListTradeConfig(ctx context.Context, in *pb.ListTradeConfig
 		o.Enabled = v.Enabled
 		o.DefaultProfitPercentage = v.DefaultProfitPercentage
 		o.WalletValueLimit = v.WalletValueLimit
-		o.UserName = v.UserName
 		o.ModalityName = v.ModalityName
 		o.StrategyName = v.StrategyName
 		o.StrategyVariantName = v.StrategyVariantName

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message Parity {
+    uint64 Parity = 1;
+	string Symbol = 2;
+	bool Active = 3;
+}
+
+message ListParityRequest {}
+
+message ListParityResponse {
+    repeated Parity parities = 1;
+}

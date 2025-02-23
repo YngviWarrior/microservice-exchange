@@ -33,7 +33,7 @@ func NewDatabase() DatabaseInterface {
 		log.Fatal("ND 01: ", err.Error())
 	}
 
-	db.SetConnMaxLifetime(time.Second * 5)
+	db.SetConnMaxLifetime(time.Second)
 	db.SetMaxOpenConns(0)
 
 	return &database{

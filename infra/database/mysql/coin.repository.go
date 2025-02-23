@@ -17,6 +17,12 @@ type CoinRepositoryInterface interface {
 	List() (list []*repositorydto.OutputCoinDto)
 }
 
+func NewCoinRepository(db database.DatabaseInterface) CoinRepositoryInterface {
+	return &coinRepository{
+		Db: db,
+	}
+}
+
 func (c *coinRepository) List() (list []*repositorydto.OutputCoinDto) {
 	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {

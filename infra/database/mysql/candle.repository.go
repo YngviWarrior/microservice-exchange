@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql/repositorydto"
@@ -15,17 +16,24 @@ type candleRepository struct {
 }
 
 type CandleRepositoryInterface interface {
-	FindLastPrice(parity, exchange uint64) (close float64)
-	FindLastPriceConn(parity, exchange uint64) (close float64)
-	FindLimit(parity, exchange, limit int64) (list []*repositorydto.OutputCandleDto)
-	FindFirstMts(parity, exchange int64) (c repositorydto.OutputCandleDto)
-	FindFirst(parity, exchange, from int64) (c repositorydto.OutputCandleDto)
-	FindAvg(from, to int64) (list []*repositorydto.OutputCandleDto)
-	Create(candle *repositorydto.OutputCandleDto) bool
-	CreateDirect(candle *repositorydto.OutputCandleDto) bool
+	GetLastPrice(parity, exchange uint64) (close float64)
+	GetLastPriceConn(parity, exchange uint64) (close float64)
+	ListLimit(parity, exchange, limit int64) (list []*repositorydto.OutputCandleDto)
+	GetFirstMts(parity, exchange int64) (c repositorydto.OutputCandleDto)
+	GetFirst(parity, exchange, from int64) (c repositorydto.OutputCandleDto)
+	GetAvg(from, to int64) (list []*repositorydto.OutputCandleDto)
+	Create(candle *repositorydto.InputCandleDto) bool
+	CreateDirect(candle *repositorydto.InputCandleDto) bool
+	CreateList(candles []*repositorydto.InputCandleDto) bool
 }
 
-func (c *candleRepository) FindLastPriceConn(parity, exchange uint64) (close float64) {
+func NewCandleRepository(db database.DatabaseInterface) CandleRepositoryInterface {
+	return &candleRepository{
+		Db: db,
+	}
+}
+
+func (c *candleRepository) GetLastPriceConn(parity, exchange uint64) (close float64) {
 	stmt, err := c.Db.CreateConnection().PrepareContext(context.TODO(), `
 		SELECT close
 		FROM candle 
@@ -53,7 +61,7 @@ func (c *candleRepository) FindLastPriceConn(parity, exchange uint64) (close flo
 	return
 }
 
-func (c *candleRepository) FindLastPrice(parity, exchange uint64) (close float64) {
+func (c *candleRepository) GetLastPrice(parity, exchange uint64) (close float64) {
 	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
 		log.Panicln("CRFLP 00: ", err)
@@ -87,7 +95,57 @@ func (c *candleRepository) FindLastPrice(parity, exchange uint64) (close float64
 	return
 }
 
-func (c *candleRepository) Create(candle *repositorydto.OutputCandleDto) bool {
+func (c *candleRepository) CreateList(candles []*repositorydto.InputCandleDto) bool {
+	if len(candles) == 0 {
+		return true
+	}
+
+	query := `INSERT INTO candle(parity, exchange, mts, open, close, high, low, volume) VALUES `
+	values := []string{}
+	args := []any{}
+
+	for _, candle := range candles {
+		values = append(values, "(?, ?, ?, ?, ?, ?, ?, ?)")
+		args = append(args, candle.Parity, candle.Exchange, candle.Mts*1000, candle.Open, candle.Close, candle.High, candle.Low, candle.Volume)
+	}
+
+	query += strings.Join(values, ",")
+	query += ` ON DUPLICATE KEY UPDATE 
+    parity = VALUES(parity), 
+    exchange = VALUES(exchange), 
+    mts = VALUES(mts), 
+    open = VALUES(open), 
+    close = VALUES(close), 
+    high = VALUES(high), 
+    low = VALUES(low), 
+    volume = VALUES(volume)`
+
+	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
+	if err != nil {
+		log.Panicln("CRC 00: ", err)
+		return false
+	}
+
+	stmt, err := tx.Prepare(query)
+
+	if err != nil {
+		log.Panicln("CRC 01: ", err)
+		return false
+	}
+
+	defer stmt.Close()
+	_, err = stmt.Exec(args...)
+
+	if err != nil {
+		log.Panicln("CRC 02: ", err)
+		return false
+	}
+
+	tx.Commit()
+	return true
+}
+
+func (c *candleRepository) Create(candle *repositorydto.InputCandleDto) bool {
 	constraint := `
 		ON DUPLICATE KEY UPDATE 
 		parity = ` + fmt.Sprintf("%v", candle.Parity) + `,
@@ -124,7 +182,7 @@ func (c *candleRepository) Create(candle *repositorydto.OutputCandleDto) bool {
 	return true
 }
 
-func (c *candleRepository) CreateDirect(candle *repositorydto.OutputCandleDto) bool {
+func (c *candleRepository) CreateDirect(candle *repositorydto.InputCandleDto) bool {
 	constraint := `
 		ON DUPLICATE KEY UPDATE 
 		parity = ` + fmt.Sprintf("%v", candle.Parity) + `,
@@ -158,13 +216,14 @@ func (c *candleRepository) CreateDirect(candle *repositorydto.OutputCandleDto) b
 		return false
 	}
 
+	tx.Commit()
 	return true
 }
 
-func (c *candleRepository) FindLimit(parity, exchange, limit int64) (list []*repositorydto.OutputCandleDto) {
+func (c *candleRepository) ListLimit(parity, exchange, limit int64) (list []*repositorydto.OutputCandleDto) {
 	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
-		log.Panicln("CRCD 00: ", err)
+		log.Panicln("CRLL 00: ", err)
 		return
 	}
 
@@ -177,7 +236,7 @@ func (c *candleRepository) FindLimit(parity, exchange, limit int64) (list []*rep
 	`)
 
 	if err != nil {
-		log.Panicln("CRFL 01: ", err)
+		log.Panicln("CRLL 01: ", err)
 		return
 	}
 
@@ -188,7 +247,7 @@ func (c *candleRepository) FindLimit(parity, exchange, limit int64) (list []*rep
 	switch {
 	case err == sql.ErrNoRows:
 	case err != nil:
-		log.Panicln("CRFL 02: ", err)
+		log.Panicln("CRLL 02: ", err)
 		return
 	}
 
@@ -198,7 +257,7 @@ func (c *candleRepository) FindLimit(parity, exchange, limit int64) (list []*rep
 		err := res.Scan(&c.Parity, &c.Exchange, &c.Close, &c.Mts)
 
 		if err != nil {
-			log.Panic("CRFL 03: ", err)
+			log.Panic("CRLL 03: ", err)
 		}
 
 		list = append(list, &c)
@@ -207,7 +266,7 @@ func (c *candleRepository) FindLimit(parity, exchange, limit int64) (list []*rep
 	return
 }
 
-func (c *candleRepository) FindFirstMts(parity, exchange int64) (out repositorydto.OutputCandleDto) {
+func (c *candleRepository) GetFirstMts(parity, exchange int64) (out repositorydto.OutputCandleDto) {
 	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
 		log.Panicln("CRFFM 00: ", err)
@@ -241,7 +300,7 @@ func (c *candleRepository) FindFirstMts(parity, exchange int64) (out repositoryd
 	return
 }
 
-func (c *candleRepository) FindFirst(parity, exchange, from int64) (out repositorydto.OutputCandleDto) {
+func (c *candleRepository) GetFirst(parity, exchange, from int64) (out repositorydto.OutputCandleDto) {
 	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
 		log.Panicln("CRFF 00: ", err)
@@ -274,7 +333,7 @@ func (c *candleRepository) FindFirst(parity, exchange, from int64) (out reposito
 	return
 }
 
-func (c *candleRepository) FindAvg(from, to int64) (list []*repositorydto.OutputCandleDto) {
+func (c *candleRepository) GetAvg(from, to int64) (list []*repositorydto.OutputCandleDto) {
 	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
 		log.Panicln("CRFA 00: ", err)

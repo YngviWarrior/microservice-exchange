@@ -33,7 +33,7 @@ func (t *tradeConfigRepository) List() (out []*repositorydto.OutputTradeConfigDt
 	stmt, err := tx.Prepare(`
 		SELECT tc.trade_config, tc.user, tc.modality, tc.strategy, tc.strategy_variant, tc.parity, tc.exchange,
 			tc.operation_quantity, tc.operation_amount, tc.enabled, tc.default_profit_percentage, tc.wallet_value_limit,
-			u.name as user_name, m.name modality_name, s.name strategy_name, s.enable strategy_enabled, sv.name strategy_variant_name, sv.enable strategy_variant_enabled, 
+			m.name modality_name, s.name strategy_name, s.enabled strategy_enabled, sv.name strategy_variant_name, sv.enabled as strategy_variant_enabled, 
 			p.symbol symbol_name, e.name exchange_name
 		FROM trade_config tc
 		JOIN modality m ON m.modality = tc.modality
@@ -74,7 +74,6 @@ func (t *tradeConfigRepository) List() (out []*repositorydto.OutputTradeConfigDt
 			&u.Enabled,
 			&u.DefaultProfitPercentage,
 			&u.WalletValueLimit,
-			&u.UserName,
 			&u.ModalityName,
 			&u.StrategyName,
 			&u.StrategyEnabled,

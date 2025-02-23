@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message Operation {
+    uint64 operation       = 1;
+	uint64 user            = 2;
+	uint64 parity          = 3;
+	uint64 exchange        = 4;
+	uint64 strategy        = 5;
+	uint64 strategy_variant = 6;
+	uint64 mts_start        = 7;
+	uint64 mts_finish       = 8;
+	double open_price       = 9;
+	double close_price      = 10;
+	double invested_amount  = 11;
+	double profit_amount    = 12;
+	double profit          = 13;
+	bool closed          = 14;
+	bool audit           = 15;
+	bool enabled         = 16;
+	double times_canceled   = 17;
+}
+
+message ListOperationRequest {
+    uint64 user = 1;
+    uint64 strategy = 2;
+    uint64 strategy_variant = 3;
+    uint64 parity = 4;
+    uint64 exchange = 5;
+    bool closed = 6;
+    bool enabled = 7;
+}
+
+message ListOperationResponse {
+    repeated Operation operations = 1;
+}
+
+message ListOperationByPeriodRequest {
+    uint64 mts_start = 1;
+    uint64 mts_end = 2;
+}
+
+message ListOperationByPeriodResponse {
+    repeated Operation operations = 1;
+}

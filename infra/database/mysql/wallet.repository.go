@@ -18,7 +18,7 @@ type WalletRepositoryInterface interface {
 	UpdateAmount(values string) bool
 	Create(exchange uint64, coin int64, amount float64) bool
 	GetWithCoin(exchange, coin uint64) (out repositorydto.OutputWalletWithCoinDto, err error)
-	ListWithCoin(userId, exchange uint64) (list []*repositorydto.OutputWalletWithCoinDto)
+	ListWithCoin(exchange uint64) (list []*repositorydto.OutputWalletWithCoinDto)
 }
 
 func NewWalletRepository(db database.DatabaseInterface) WalletRepositoryInterface {
@@ -97,6 +97,7 @@ func (w *walletRepository) Create(exchange uint64, coin int64, amount float64) b
 		return false
 	}
 
+	tx.Commit()
 	return true
 }
 
@@ -122,7 +123,7 @@ func (w *walletRepository) GetWithCoin(exchange, coin uint64) (out repositorydto
 
 	err = stmt.QueryRow(exchange, coin).Scan(&out.Wallet, &out.Exchange, &out.Coin, &out.Amount, &out.Symbol, &out.Active)
 
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		log.Panicln("WRGWC 02: ", err)
 		return
 	}
@@ -131,7 +132,7 @@ func (w *walletRepository) GetWithCoin(exchange, coin uint64) (out repositorydto
 	return
 }
 
-func (w *walletRepository) ListWithCoin(userId, exchange uint64) (list []*repositorydto.OutputWalletWithCoinDto) {
+func (w *walletRepository) ListWithCoin(exchange uint64) (list []*repositorydto.OutputWalletWithCoinDto) {
 	tx, err := w.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
 	if err != nil {
 		log.Println("WRLWC 00: ", err)
@@ -151,7 +152,7 @@ func (w *walletRepository) ListWithCoin(userId, exchange uint64) (list []*reposi
 
 	defer stmt.Close()
 
-	res, err := stmt.Query(userId, exchange)
+	res, err := stmt.Query(exchange)
 
 	if err != nil {
 		log.Panicln("WRLWC 02: ", err)
@@ -184,7 +185,7 @@ func (w *walletRepository) UpdateAmount(values string) bool {
 		return false
 	}
 
-	query := `INSERT INTO wallet(wallet, exchange, user, coin, amount) VALUES ` + values
+	query := `INSERT INTO wallet(wallet, exchange, coin, amount) VALUES ` + values
 	query += ` ON DUPLICATE KEY UPDATE amount = VALUES(amount)`
 
 	stmt, err := tx.Prepare(query)

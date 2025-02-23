@@ -28,7 +28,6 @@ type OutputTradeConfigDto struct {
 	Enabled                 bool
 	DefaultProfitPercentage float64
 	WalletValueLimit        float64
-	UserName                string
 	ModalityName            string
 	StrategyName            string
 	StrategyVariantName     string

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message Coin {
+    uint64 Coin = 1;
+	string Symbol = 2;
+	bool Active = 3;
+}
+
+message ListCoinRequest {}
+message ListCoinResponse {
+    repeated Coin coin = 1;
+}

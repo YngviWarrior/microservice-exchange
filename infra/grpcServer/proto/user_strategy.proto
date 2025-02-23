@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message UserStrategy {
+    uint64 user_strategy = 1;
+    uint64 user = 2;
+    string trade_config = 3;
+}
+
+message UserStrategyResponse {
+    repeated UserStrategy user_strategy = 1;
+}
+
+message CreateUserStrategyRequest {
+    uint64 user = 1;
+    string trade_config = 2;
+}
+
+message ListUserStrategyRequest {}

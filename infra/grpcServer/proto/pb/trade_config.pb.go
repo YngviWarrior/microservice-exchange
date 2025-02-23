@@ -429,6 +429,110 @@ func (*ListTradeConfigRequest) Descriptor() ([]byte, []int) {
 	return file_trade_config_proto_rawDescGZIP(), []int{3}
 }
 
+type UpdateTradeConfigRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Enabled       bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Strategy      uint64                 `protobuf:"varint,2,opt,name=strategy,proto3" json:"strategy,omitempty"`
+	Parity        uint64                 `protobuf:"varint,3,opt,name=parity,proto3" json:"parity,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateTradeConfigRequest) Reset() {
+	*x = UpdateTradeConfigRequest{}
+	mi := &file_trade_config_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateTradeConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTradeConfigRequest) ProtoMessage() {}
+
+func (x *UpdateTradeConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_trade_config_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTradeConfigRequest.ProtoReflect.Descriptor instead.
+func (*UpdateTradeConfigRequest) Descriptor() ([]byte, []int) {
+	return file_trade_config_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *UpdateTradeConfigRequest) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *UpdateTradeConfigRequest) GetStrategy() uint64 {
+	if x != nil {
+		return x.Strategy
+	}
+	return 0
+}
+
+func (x *UpdateTradeConfigRequest) GetParity() uint64 {
+	if x != nil {
+		return x.Parity
+	}
+	return 0
+}
+
+type UpdateTradeConfigResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tradeconfig   *TradeConfig           `protobuf:"bytes,1,opt,name=tradeconfig,proto3" json:"tradeconfig,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateTradeConfigResponse) Reset() {
+	*x = UpdateTradeConfigResponse{}
+	mi := &file_trade_config_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateTradeConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTradeConfigResponse) ProtoMessage() {}
+
+func (x *UpdateTradeConfigResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_trade_config_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTradeConfigResponse.ProtoReflect.Descriptor instead.
+func (*UpdateTradeConfigResponse) Descriptor() ([]byte, []int) {
+	return file_trade_config_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UpdateTradeConfigResponse) GetTradeconfig() *TradeConfig {
+	if x != nil {
+		return x.Tradeconfig
+	}
+	return nil
+}
+
 var File_trade_config_proto protoreflect.FileDescriptor
 
 var file_trade_config_proto_rawDesc = string([]byte{
@@ -516,8 +620,20 @@ var file_trade_config_proto_rawDesc = string([]byte{
 	0x01, 0x28, 0x08, 0x52, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x12, 0x12, 0x0a, 0x04,
 	0x75, 0x73, 0x65, 0x72, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72,
 	0x22, 0x18, 0x0a, 0x16, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x43, 0x6f, 0x6e,
-	0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f,
-	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x68, 0x0a, 0x18, 0x55, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x54, 0x72, 0x61, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64,
+	0x12, 0x1a, 0x0a, 0x08, 0x73, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x04, 0x52, 0x08, 0x73, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x12, 0x16, 0x0a, 0x06,
+	0x70, 0x61, 0x72, 0x69, 0x74, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x70, 0x61,
+	0x72, 0x69, 0x74, 0x79, 0x22, 0x4e, 0x0a, 0x19, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x72,
+	0x61, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x31, 0x0a, 0x0b, 0x74, 0x72, 0x61, 0x64, 0x65, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x72, 0x61, 0x64,
+	0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x64, 0x65, 0x63, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -532,20 +648,23 @@ func file_trade_config_proto_rawDescGZIP() []byte {
 	return file_trade_config_proto_rawDescData
 }
 
-var file_trade_config_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_trade_config_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_trade_config_proto_goTypes = []any{
-	(*TradeConfig)(nil),              // 0: pb.TradeConfig
-	(*TradeConfigResponse)(nil),      // 1: pb.TradeConfigResponse
-	(*CreateTradeConfigRequest)(nil), // 2: pb.CreateTradeConfigRequest
-	(*ListTradeConfigRequest)(nil),   // 3: pb.ListTradeConfigRequest
+	(*TradeConfig)(nil),               // 0: pb.TradeConfig
+	(*TradeConfigResponse)(nil),       // 1: pb.TradeConfigResponse
+	(*CreateTradeConfigRequest)(nil),  // 2: pb.CreateTradeConfigRequest
+	(*ListTradeConfigRequest)(nil),    // 3: pb.ListTradeConfigRequest
+	(*UpdateTradeConfigRequest)(nil),  // 4: pb.UpdateTradeConfigRequest
+	(*UpdateTradeConfigResponse)(nil), // 5: pb.UpdateTradeConfigResponse
 }
 var file_trade_config_proto_depIdxs = []int32{
 	0, // 0: pb.TradeConfigResponse.trade_config:type_name -> pb.TradeConfig
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 1: pb.UpdateTradeConfigResponse.tradeconfig:type_name -> pb.TradeConfig
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_trade_config_proto_init() }
@@ -559,7 +678,7 @@ func file_trade_config_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_trade_config_proto_rawDesc), len(file_trade_config_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

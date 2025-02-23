@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package pb;
+option go_package ="./pb";
+
+
+message Candle {
+    uint64 Parity   = 1;
+	uint64 Exchange = 2;
+	uint64 Mts      = 3;
+	double Open     = 4;
+	double Close    = 5;
+	double High     = 6;
+	double Low      = 7;
+	double Volume   = 8;
+	double Roc      = 9;
+}
+
+message GetCandleFirstMtsRequest {
+	uint64 parity = 1;
+    uint64 exchange = 2;
+}
+
+message GetCandleFirstMtsResponse {
+    repeated Candle candles = 1;
+}
+
+message GetLastTwoCandlesRequest {
+	uint64 parity = 1;
+    uint64 exchange = 2;
+}
+
+message GetLastTwoCandlesResponse {
+    repeated Candle candles = 1;
+}
+
+message CreateCandlesRequest {
+	repeated Candle candles = 1;
+}
+
+message CreateCandlesResponse {
+	repeated Candle candles = 1;
+}
+
+message ListCandleLimitRequest {
+	uint64 parity = 1;
+	uint64 exchange = 2;
+	uint64 limit = 3;
+}
+
+message ListCandleLimitResponse {
+	repeated Candle candles = 1;
+}

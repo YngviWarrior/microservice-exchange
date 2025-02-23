@@ -28,7 +28,6 @@ type OutputTradeConfigDto struct {
 	Enabled                 bool    `json:"enabled"`
 	DefaultProfitPercentage float64 `json:"default_profit_percentage"`
 	WalletValueLimit        float64 `json:"wallet_value_limit"`
-	UserName                string  `json:"user_name"`
 	ModalityName            string  `json:"modality_name"`
 	StrategyName            string  `json:"strategy_name"`
 	StrategyVariantName     string  `json:"strategy_variant_name"`
