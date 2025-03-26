@@ -19,6 +19,7 @@ type OperationRepositoryInterface interface {
 	Create(userId uint64, parity int64, exchange, strategy, strategyVariant int64, investedAmount float64, enabled bool) int64
 	Count(userId uint64, parity int64) int64
 	List(in *repositorydto.InputOperationDto) (list []*repositorydto.OjoinOMDFT)
+	Get(operation int64) (out *repositorydto.OutputOperationDto)
 	ListAll() (list []*repositorydto.OutputOperationWStrategyDto)
 	ListByPeriod(from, to int64) (list []*repositorydto.OutputOperationWStrategyDto)
 	Update(p *repositorydto.InputOperationDto) bool
@@ -162,7 +163,7 @@ func (o *operationRepository) ListAll() (list []*repositorydto.OutputOperationWS
 	}
 
 	stmt, err := tx.Prepare(`
-		SELECT o.OutputOperationDto, o.user, o.parity, o.exchange, o.strategy, s.name as strategy_name, o.strategy_variant, sv.name as strategy_variant_name, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
+		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, s.name as strategy_name, o.strategy_variant, sv.name as strategy_variant_name, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
 		FROM operation o
 		JOIN strategy s ON o.strategy = s.strategy
 		JOIN strategy_variant sv ON o.strategy_variant = sv.strategy_variant
@@ -211,9 +212,9 @@ func (o *operationRepository) List(in *repositorydto.InputOperationDto) (list []
 	}
 
 	stmt, err := tx.Prepare(`
-		SELECT o.OutputOperationDto, o.user, o.parity, o.exchange, o.strategy, o.strategy_variant, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled, om.OutputOperationDto_meta_data_fast_trade, om.minimum_price, om.maximum_price, om.last_price, om.is_receding
+		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, o.strategy_variant, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled, om.operation_meta_data_fast_trade, om.minimum_price, om.maximum_price, om.last_price, om.is_receding
 		FROM operation o
-		LEFT JOIN operation_meta_data_fast_trade om ON o.OutputOperationDto = om.OutputOperationDto
+		LEFT JOIN operation_meta_data_fast_trade om ON o.operation = om.operation
 		WHERE user = ? AND parity = ? AND exchange = ? 
 		AND strategy = ? AND strategy_variant = ? 
 		AND closed = ? AND enabled = ?
@@ -248,6 +249,39 @@ func (o *operationRepository) List(in *repositorydto.InputOperationDto) (list []
 		}
 
 		list = append(list, &o)
+	}
+
+	tx.Commit()
+	return
+}
+
+func (o *operationRepository) Get(operation int64) (out *repositorydto.OutputOperationDto) {
+	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
+	if err != nil {
+		log.Println("ORF 00: ", err)
+		return
+	}
+
+	stmt, err := tx.Prepare(`
+		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, o.strategy_variant, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
+		FROM operation o
+		WHERE o.operation = ?
+	`)
+
+	if err != nil {
+		log.Panic("ORF 01: ", err)
+		return
+	}
+
+	defer stmt.Close()
+
+	err = stmt.QueryRow(operation).Scan(&out.Operation, &out.User, &out.Parity, &out.Exchange, &out.Strategy, &out.StrategyVariant, &out.MtsStart, &out.MtsFinish, &out.Profit, &out.InvestedAmount, &out.OpenPrice, &out.ClosePrice, &out.Closed, &out.Audit, &out.Enabled)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("ORL 02: ", err)
+		return
 	}
 
 	tx.Commit()

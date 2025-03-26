@@ -23,6 +23,30 @@ message Operation {
 	double times_canceled   = 17;
 }
 
+
+message OperationJoin {
+    uint64 operation       = 1;
+	uint64 user            = 2;
+	uint64 parity          = 3;
+	uint64 exchange        = 4;
+	uint64 strategy        = 5;
+	uint64 strategy_variant = 6;
+	uint64 mts_start        = 7;
+	uint64 mts_finish       = 8;
+	double open_price       = 9;
+	double close_price      = 10;
+	double invested_amount  = 11;
+	double profit_amount    = 12;
+	double profit          = 13;
+	bool closed          = 14;
+	bool audit           = 15;
+	bool enabled         = 16;
+	double times_canceled   = 17;
+	
+	uint64 strategy_name        = 18;
+	uint64 strategy_variant_name        = 19;
+}
+
 message ListOperationRequest {
     uint64 user = 1;
     uint64 strategy = 2;
@@ -44,4 +68,18 @@ message ListOperationByPeriodRequest {
 
 message ListOperationByPeriodResponse {
     repeated Operation operations = 1;
+}
+
+message ListAllOperationRequest {}
+
+message ListAllOperationResponse {
+    repeated OperationJoin operations = 1;
+}
+
+message UpdateOperationRequest {
+	Operation operation = 1;
+}
+
+message UpdateOperationResponse {
+    Operation operation = 1;
 }

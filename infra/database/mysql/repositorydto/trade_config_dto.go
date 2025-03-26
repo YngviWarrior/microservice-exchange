@@ -1,6 +1,7 @@
 package repositorydto
 
 type InputTradeConfigDto struct {
+	TradeConfig             int64
 	User                    int64
 	Modality                int64
 	Strategy                int64

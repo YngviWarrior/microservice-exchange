@@ -16,6 +16,7 @@ type tradeConfigRepository struct {
 type TradeConfigRepositoryInterface interface {
 	Create(*repositorydto.InputTradeConfigDto) bool
 	List() (out []*repositorydto.OutputTradeConfigDto, err error)
+	Update(in *repositorydto.InputTradeConfigDto) bool
 }
 
 func NewTradeConfigRepository(db database.DatabaseInterface) TradeConfigRepositoryInterface {
@@ -148,4 +149,61 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 	}
 
 	return true
+}
+
+func (o *tradeConfigRepository) Update(in *repositorydto.InputTradeConfigDto) bool {
+	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
+	if err != nil {
+		log.Println("TRU 00: ", err)
+		return false
+	}
+
+	stmt, err := tx.Prepare(`
+		UPDATE trade_config 
+		SET modality = ?,
+			user = ?,
+			strategy = ?,
+			strategy_variant = ?,
+			parity = ?,
+			exchange = ?,
+			operation_quantity = ?,
+			operation_amount = ?,
+			default_profit_percentage = ?,
+			wallet_value_limit = ?,
+			enabled = ?
+		WHERE trade_config = ?
+	`)
+
+	if err != nil {
+		log.Panicln("TRU 01: ", err)
+		return false
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(
+		in.Modality,
+		in.User,
+		in.Strategy,
+		in.StrategyVariant,
+		in.Parity,
+		in.Exchange,
+		in.OperationQuantity,
+		in.OperationAmount,
+		in.DefaultProfitPercentage,
+		in.WalletValueLimit,
+		in.Enabled,
+		in.TradeConfig,
+	)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("TRU 02: ", err)
+		return false
+	}
+
+	tx.Commit()
+	return true
+
 }

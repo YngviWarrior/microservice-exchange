@@ -48,11 +48,32 @@ message CreateTradeConfigRequest {
 message ListTradeConfigRequest {}
 
 message UpdateTradeConfigRequest {
-    bool enabled = 1;
-    uint64 strategy = 2;
-    uint64 parity = 3;    
+    uint64 tradeConfig = 1;  
+    uint64 user = 2;
+    uint64 modality = 3;
+    uint64 strategy = 4;
+    uint64 strategy_variant = 5;
+    uint64 parity = 6;    
+    uint64 exchange = 7;
+    uint64 operation_quantity = 8;
+    double operation_amount = 9;
+    double default_profit_percentage = 10;
+    double wallet_value_limit = 11;
+    bool enabled = 13;
 }
 
 message UpdateTradeConfigResponse {
     TradeConfig tradeconfig = 1;
+}
+
+message GetTradeConfigRequest {
+    uint64 user = 1;
+    uint64 strategy = 2;
+    uint64 strategy_variant = 3;
+    uint64 parity = 4;
+    uint64 exchange = 5;
+}
+
+message GetTradeConfigResponse {
+    TradeConfig trade_config = 1;
 }

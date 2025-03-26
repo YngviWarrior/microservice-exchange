@@ -41,4 +41,5 @@ service ExchangeService {
     
     rpc ListOperation(ListOperationRequest) returns (ListOperationResponse) {} 
     rpc ListOperationByPeriod(ListOperationByPeriodRequest) returns (ListOperationByPeriodResponse) {} 
+    rpc ListAllOperation(ListAllOperationRequest) returns (ListAllOperationResponse) {} 
 }
