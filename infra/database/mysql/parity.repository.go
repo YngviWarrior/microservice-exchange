@@ -1,7 +1,6 @@
 package mysql
 
 import (
-	"context"
 	"database/sql"
 	"log"
 
@@ -23,13 +22,8 @@ func NewParityRepository(db database.DatabaseInterface) ParityRepositoryInterfac
 	}
 }
 
-func (p *parityRepository) List(in *repositorydto.InputParityDto) (list []*repositorydto.OutputParityDto) {
-	tx, err := p.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("PRL 00 :", err)
-	}
-
-	res, err := tx.Query(`SELECT parity, symbol, active FROM parity WHERE active = 1`)
+func (t *parityRepository) List(in *repositorydto.InputParityDto) (list []*repositorydto.OutputParityDto) {
+	stmt, err := t.Db.GetDatabase().Query(`SELECT parity, symbol, active FROM parity WHERE active = 1`)
 
 	switch {
 	case err == sql.ErrNoRows:
@@ -38,12 +32,12 @@ func (p *parityRepository) List(in *repositorydto.InputParityDto) (list []*repos
 		return
 	}
 
-	defer res.Close()
+	defer stmt.Close()
 
-	for res.Next() {
+	for stmt.Next() {
 		var c repositorydto.OutputParityDto
 
-		err := res.Scan(&c.Parity, &c.Symbol, &c.Active)
+		err := stmt.Scan(&c.Parity, &c.Symbol, &c.Active)
 
 		if err != nil {
 			log.Panicln("CRL 02: ", err)

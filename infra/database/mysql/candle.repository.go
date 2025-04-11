@@ -25,6 +25,7 @@ type CandleRepositoryInterface interface {
 	Create(candle *repositorydto.InputCandleDto) bool
 	CreateDirect(candle *repositorydto.InputCandleDto) bool
 	CreateList(candles []*repositorydto.InputCandleDto) bool
+	FindFirstPrice(parity, exchange, from uint64) (c repositorydto.OutputCandleDto)
 }
 
 func NewCandleRepository(db database.DatabaseInterface) CandleRepositoryInterface {
@@ -33,8 +34,35 @@ func NewCandleRepository(db database.DatabaseInterface) CandleRepositoryInterfac
 	}
 }
 
-func (c *candleRepository) GetLastPriceConn(parity, exchange uint64) (close float64) {
-	stmt, err := c.Db.CreateConnection().PrepareContext(context.TODO(), `
+func (t *candleRepository) FindFirstPrice(parity, exchange, from uint64) (c repositorydto.OutputCandleDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
+		SELECT parity, exchange, close, mts
+		FROM candle 
+		WHERE mts > ? AND parity = ? AND exchange = ?
+		LIMIT 1
+	`)
+
+	if err != nil {
+		log.Panicln("CFF 01: ", err)
+		return
+	}
+
+	defer stmt.Close()
+
+	err = stmt.QueryRow(from, parity, exchange).Scan(&c.Parity, &c.Exchange, &c.Close, &c.Mts)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("CFF 02: ", err)
+		return
+	}
+
+	return
+}
+
+func (t *candleRepository) GetLastPriceConn(parity, exchange uint64) (close float64) {
+	stmt, err := t.Db.GetDatabase().PrepareContext(context.TODO(), `
 		SELECT close
 		FROM candle 
 		WHERE parity = ? AND exchange = ?
@@ -61,14 +89,8 @@ func (c *candleRepository) GetLastPriceConn(parity, exchange uint64) (close floa
 	return
 }
 
-func (c *candleRepository) GetLastPrice(parity, exchange uint64) (close float64) {
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRFLP 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *candleRepository) GetLastPrice(parity, exchange uint64) (close float64) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT close
 		FROM candle 
 		WHERE parity = ? AND exchange = ?
@@ -95,7 +117,7 @@ func (c *candleRepository) GetLastPrice(parity, exchange uint64) (close float64)
 	return
 }
 
-func (c *candleRepository) CreateList(candles []*repositorydto.InputCandleDto) bool {
+func (t *candleRepository) CreateList(candles []*repositorydto.InputCandleDto) bool {
 	if len(candles) == 0 {
 		return true
 	}
@@ -120,13 +142,7 @@ func (c *candleRepository) CreateList(candles []*repositorydto.InputCandleDto) b
     low = VALUES(low), 
     volume = VALUES(volume)`
 
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRC 00: ", err)
-		return false
-	}
-
-	stmt, err := tx.Prepare(query)
+	stmt, err := t.Db.GetDatabase().Prepare(query)
 
 	if err != nil {
 		log.Panicln("CRC 01: ", err)
@@ -141,11 +157,10 @@ func (c *candleRepository) CreateList(candles []*repositorydto.InputCandleDto) b
 		return false
 	}
 
-	tx.Commit()
 	return true
 }
 
-func (c *candleRepository) Create(candle *repositorydto.InputCandleDto) bool {
+func (t *candleRepository) Create(candle *repositorydto.InputCandleDto) bool {
 	constraint := `
 		ON DUPLICATE KEY UPDATE 
 		parity = ` + fmt.Sprintf("%v", candle.Parity) + `,
@@ -158,13 +173,7 @@ func (c *candleRepository) Create(candle *repositorydto.InputCandleDto) bool {
 	`
 	query := `INSERT INTO candle(parity, exchange, mts, open, close, high, low, volume) VALUES (?, ?, ?, ?, ?, ?, ?, ?)` + constraint
 
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRC 00: ", err)
-		return false
-	}
-
-	stmt, err := tx.Prepare(query)
+	stmt, err := t.Db.GetDatabase().Prepare(query)
 
 	if err != nil {
 		log.Panicln("CRC 01: ", err)
@@ -182,7 +191,7 @@ func (c *candleRepository) Create(candle *repositorydto.InputCandleDto) bool {
 	return true
 }
 
-func (c *candleRepository) CreateDirect(candle *repositorydto.InputCandleDto) bool {
+func (t *candleRepository) CreateDirect(candle *repositorydto.InputCandleDto) bool {
 	constraint := `
 		ON DUPLICATE KEY UPDATE 
 		parity = ` + fmt.Sprintf("%v", candle.Parity) + `,
@@ -195,13 +204,7 @@ func (c *candleRepository) CreateDirect(candle *repositorydto.InputCandleDto) bo
 	`
 	query := `INSERT INTO candle(parity, exchange, mts, open, close, high, low, volume) VALUES (?, ?, ?, ?, ?, ?, ?, ?)` + constraint
 
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRCD 00: ", err)
-		return false
-	}
-
-	stmt, err := tx.Prepare(query)
+	stmt, err := t.Db.GetDatabase().Prepare(query)
 
 	if err != nil {
 		log.Panicln("CRCD 01: ", err)
@@ -216,18 +219,11 @@ func (c *candleRepository) CreateDirect(candle *repositorydto.InputCandleDto) bo
 		return false
 	}
 
-	tx.Commit()
 	return true
 }
 
-func (c *candleRepository) ListLimit(parity, exchange, limit int64) (list []*repositorydto.OutputCandleDto) {
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRLL 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *candleRepository) ListLimit(parity, exchange, limit int64) (list []*repositorydto.OutputCandleDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT parity, exchange, close, mts
 		FROM candle 
 		WHERE parity = ? AND exchange = ?
@@ -266,14 +262,8 @@ func (c *candleRepository) ListLimit(parity, exchange, limit int64) (list []*rep
 	return
 }
 
-func (c *candleRepository) GetFirstMts(parity, exchange int64) (out repositorydto.OutputCandleDto) {
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRFFM 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *candleRepository) GetFirstMts(parity, exchange int64) (out repositorydto.OutputCandleDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT parity, exchange, close, mts
 		FROM candle 
 		WHERE parity = ? AND exchange = ?
@@ -300,14 +290,8 @@ func (c *candleRepository) GetFirstMts(parity, exchange int64) (out repositorydt
 	return
 }
 
-func (c *candleRepository) GetFirst(parity, exchange, from int64) (out repositorydto.OutputCandleDto) {
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRFF 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *candleRepository) GetFirst(parity, exchange, from int64) (out repositorydto.OutputCandleDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT parity, exchange, close, mts
 		FROM candle 
 		WHERE mts > ? AND parity = ? AND exchange = ?
@@ -333,14 +317,8 @@ func (c *candleRepository) GetFirst(parity, exchange, from int64) (out repositor
 	return
 }
 
-func (c *candleRepository) GetAvg(from, to int64) (list []*repositorydto.OutputCandleDto) {
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("CRFA 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *candleRepository) GetAvg(from, to int64) (list []*repositorydto.OutputCandleDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT parity, exchange, AVG(close), (((MIN(close) - MAX(close)) / MAX(close)) * 100) as roc
 		FROM candle 
 		WHERE mts BETWEEN ? AND ?

@@ -1,7 +1,6 @@
 package mysql
 
 import (
-	"context"
 	"database/sql"
 	"log"
 
@@ -27,13 +26,8 @@ func NewWalletRepository(db database.DatabaseInterface) WalletRepositoryInterfac
 	}
 }
 
-func (m *walletRepository) List(in *repositorydto.InputWalletDto) (out []*repositorydto.OutputWalletDto) {
-	tx, err := m.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("WRL 00 :", err)
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *walletRepository) List(in *repositorydto.InputWalletDto) (out []*repositorydto.OutputWalletDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT wallet, exchange, coin, amount
 		FROM wallet
 	`)
@@ -67,21 +61,13 @@ func (m *walletRepository) List(in *repositorydto.InputWalletDto) (out []*reposi
 		out = append(out, &u)
 	}
 
-	tx.Commit()
-
 	return
 }
 
-func (w *walletRepository) Create(exchange uint64, coin int64, amount float64) bool {
-	tx, err := w.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("WRC 00: ", err)
-		return false
-	}
-
+func (t *walletRepository) Create(exchange uint64, coin int64, amount float64) bool {
 	query := `INSERT INTO wallet(exchange,  coin, amount) VALUES (?, ?, ?)`
 
-	stmt, err := tx.Prepare(query)
+	stmt, err := t.Db.GetDatabase().Prepare(query)
 
 	if err != nil {
 		log.Println("WRC 01: ", err)
@@ -97,18 +83,11 @@ func (w *walletRepository) Create(exchange uint64, coin int64, amount float64) b
 		return false
 	}
 
-	tx.Commit()
 	return true
 }
 
-func (w *walletRepository) GetWithCoin(exchange, coin uint64) (out repositorydto.OutputWalletWithCoinDto, err error) {
-	tx, err := w.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("WRGWC 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *walletRepository) GetWithCoin(exchange, coin uint64) (out repositorydto.OutputWalletWithCoinDto, err error) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT w.wallet, w.exchange, w.coin, w.amount, c.symbol, c.active
 		FROM wallet w
 		JOIN coin c ON w.coin = c.coin AND c.active = 1
@@ -128,18 +107,11 @@ func (w *walletRepository) GetWithCoin(exchange, coin uint64) (out repositorydto
 		return
 	}
 
-	tx.Commit()
 	return
 }
 
-func (w *walletRepository) ListWithCoin(exchange uint64) (list []*repositorydto.OutputWalletWithCoinDto) {
-	tx, err := w.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("WRLWC 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *walletRepository) ListWithCoin(exchange uint64) (list []*repositorydto.OutputWalletWithCoinDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT w.wallet, w.exchange,  w.coin, w.amount, c.symbol, c.active
 		FROM wallet w
 		JOIN coin c ON w.coin = c.coin AND c.active = 1
@@ -174,21 +146,14 @@ func (w *walletRepository) ListWithCoin(exchange uint64) (list []*repositorydto.
 		list = append(list, &w)
 	}
 
-	tx.Commit()
 	return
 }
 
-func (w *walletRepository) UpdateAmount(values string) bool {
-	tx, err := w.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("WRUA 00: ", err)
-		return false
-	}
-
+func (t *walletRepository) UpdateAmount(values string) bool {
 	query := `INSERT INTO wallet(wallet, exchange, coin, amount) VALUES ` + values
 	query += ` ON DUPLICATE KEY UPDATE amount = VALUES(amount)`
 
-	stmt, err := tx.Prepare(query)
+	stmt, err := t.Db.GetDatabase().Prepare(query)
 
 	if err != nil {
 		log.Println("WRUA 01: ", err)
@@ -204,6 +169,5 @@ func (w *walletRepository) UpdateAmount(values string) bool {
 		return false
 	}
 
-	tx.Commit()
 	return true
 }

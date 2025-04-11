@@ -1,8 +1,6 @@
 package mysql
 
 import (
-	"context"
-	"database/sql"
 	"log"
 
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
@@ -23,13 +21,8 @@ func NewExchangeRepository(db database.DatabaseInterface) ExchangeRepositoryInte
 	}
 }
 
-func (e *exchangeRepository) List(in repositorydto.InputExchangeDto) (list []*repositorydto.OutputExchangeDto) {
-	tx, err := e.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("ERL 00 :", err)
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *exchangeRepository) List(in repositorydto.InputExchangeDto) (list []*repositorydto.OutputExchangeDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT exchange, name
 		FROM exchange
 	`)
@@ -62,8 +55,6 @@ func (e *exchangeRepository) List(in repositorydto.InputExchangeDto) (list []*re
 
 		list = append(list, &u)
 	}
-
-	tx.Commit()
 
 	return
 }

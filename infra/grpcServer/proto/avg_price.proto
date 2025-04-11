@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message GetAvgPriceByParityExchangeRequest {
+    uint64 Parity = 1;
+    uint64 Exchange = 2;
+}
+
+message GetAvgPriceByParityExchangeResponse {
+    
+}

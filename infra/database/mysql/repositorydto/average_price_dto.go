@@ -1,6 +1,9 @@
 package repositorydto
 
-type InputAveragePriceDto struct{}
+type InputAveragePriceDto struct {
+	Parity   uint64
+	Exchange uint64
+}
 
 type OutputAveragePriceDto struct {
 	Parity               uint64

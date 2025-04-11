@@ -1,7 +1,6 @@
 package mysql
 
 import (
-	"context"
 	"database/sql"
 	"log"
 
@@ -26,12 +25,7 @@ func NewTradeConfigRepository(db database.DatabaseInterface) TradeConfigReposito
 }
 
 func (t *tradeConfigRepository) List() (out []*repositorydto.OutputTradeConfigDto, err error) {
-	tx, err := t.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("TCRL 00: ", err)
-	}
-
-	stmt, err := tx.Prepare(`
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT tc.trade_config, tc.user, tc.modality, tc.strategy, tc.strategy_variant, tc.parity, tc.exchange,
 			tc.operation_quantity, tc.operation_amount, tc.enabled, tc.default_profit_percentage, tc.wallet_value_limit,
 			m.name modality_name, s.name strategy_name, s.enabled strategy_enabled, sv.name strategy_variant_name, sv.enabled as strategy_variant_enabled, 
@@ -96,12 +90,7 @@ func (t *tradeConfigRepository) List() (out []*repositorydto.OutputTradeConfigDt
 }
 
 func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bool {
-	tx, err := t.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("TCRC 00: ", err)
-	}
-
-	stmt, err := tx.Prepare(`
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		INSERT INTO trade_config (
 			modality,
 			user,
@@ -142,7 +131,6 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 		return false
 	}
 
-	err = tx.Commit()
 	if err != nil {
 		log.Panicln("TCRC 03: ", err)
 		return false
@@ -151,14 +139,8 @@ func (t *tradeConfigRepository) Create(in *repositorydto.InputTradeConfigDto) bo
 	return true
 }
 
-func (o *tradeConfigRepository) Update(in *repositorydto.InputTradeConfigDto) bool {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("TRU 00: ", err)
-		return false
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *tradeConfigRepository) Update(in *repositorydto.InputTradeConfigDto) bool {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		UPDATE trade_config 
 		SET modality = ?,
 			user = ?,
@@ -203,7 +185,6 @@ func (o *tradeConfigRepository) Update(in *repositorydto.InputTradeConfigDto) bo
 		return false
 	}
 
-	tx.Commit()
 	return true
 
 }

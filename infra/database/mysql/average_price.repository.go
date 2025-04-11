@@ -1,7 +1,6 @@
 package mysql
 
 import (
-	"context"
 	"database/sql"
 	"log"
 
@@ -15,6 +14,7 @@ type averagePriceRepository struct {
 
 type AveragePriceRepositoryInterface interface {
 	List(repositorydto.InputAveragePriceDto) (list []*repositorydto.OutputAveragePriceDto)
+	FindByParityExchange(*repositorydto.InputAveragePriceDto) *repositorydto.OutputAveragePriceDto
 }
 
 func NewAveragePriceRepository(db database.DatabaseInterface) AveragePriceRepositoryInterface {
@@ -23,13 +23,33 @@ func NewAveragePriceRepository(db database.DatabaseInterface) AveragePriceReposi
 	}
 }
 
-func (e *averagePriceRepository) List(in repositorydto.InputAveragePriceDto) (list []*repositorydto.OutputAveragePriceDto) {
-	tx, err := e.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
+func (t *averagePriceRepository) FindByParityExchange(in *repositorydto.InputAveragePriceDto) (a *repositorydto.OutputAveragePriceDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
+		SELECT parity, exchange, day, day_update_timestamp, week, week_update_timestamp, month, month_update_timestamp
+		FROM average_price
+		WHERE parity = ? and exchange = ?
+	`)
+
 	if err != nil {
-		log.Panicln("APRL 00 :", err)
+		log.Panic("APRFBP 01: ", err)
 	}
 
-	stmt, err := tx.Prepare(`
+	defer stmt.Close()
+
+	err = stmt.QueryRow(in.Parity, in.Exchange).Scan(&a.Parity, &a.Exchange, &a.Day, &a.DayUpdateTimestamp, &a.Week, &a.WeekUpdateTimestamp, &a.Month, &a.MonthUpdateTimestamp)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("APRFBP 02: ", err)
+		return
+	}
+
+	return
+}
+
+func (t *averagePriceRepository) List(in repositorydto.InputAveragePriceDto) (list []*repositorydto.OutputAveragePriceDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT average_price, parity, exchange, day, day_update_timestamp, 
 			week, week_update_timestamp, month, month_update_timestamp, sma, sma_update_timestamp
 		FROM average_price
@@ -78,8 +98,6 @@ func (e *averagePriceRepository) List(in repositorydto.InputAveragePriceDto) (li
 
 		list = append(list, &u)
 	}
-
-	tx.Commit()
 
 	return
 }

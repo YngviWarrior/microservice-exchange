@@ -51,3 +51,22 @@ message ListCandleLimitRequest {
 message ListCandleLimitResponse {
 	repeated Candle candles = 1;
 }
+
+message ListAvgPricesRequest {
+	uint64 to = 1;
+	uint64 from = 2;
+}
+
+message ListAvgPricesResponse {
+	repeated Candle candles = 1;
+}
+
+message GetFirstPriceRequest {
+	uint64 parity = 1;
+	uint64 exchange = 2;
+	uint64 from = 3;
+}
+
+message GetFirstPriceResponse {
+	double price = 1;
+}

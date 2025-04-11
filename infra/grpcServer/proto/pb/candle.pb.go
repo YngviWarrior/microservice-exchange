@@ -513,6 +513,206 @@ func (x *ListCandleLimitResponse) GetCandles() []*Candle {
 	return nil
 }
 
+type ListAvgPricesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	To            uint64                 `protobuf:"varint,1,opt,name=to,proto3" json:"to,omitempty"`
+	From          uint64                 `protobuf:"varint,2,opt,name=from,proto3" json:"from,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListAvgPricesRequest) Reset() {
+	*x = ListAvgPricesRequest{}
+	mi := &file_candle_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAvgPricesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAvgPricesRequest) ProtoMessage() {}
+
+func (x *ListAvgPricesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_candle_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAvgPricesRequest.ProtoReflect.Descriptor instead.
+func (*ListAvgPricesRequest) Descriptor() ([]byte, []int) {
+	return file_candle_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ListAvgPricesRequest) GetTo() uint64 {
+	if x != nil {
+		return x.To
+	}
+	return 0
+}
+
+func (x *ListAvgPricesRequest) GetFrom() uint64 {
+	if x != nil {
+		return x.From
+	}
+	return 0
+}
+
+type ListAvgPricesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Candles       []*Candle              `protobuf:"bytes,1,rep,name=candles,proto3" json:"candles,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListAvgPricesResponse) Reset() {
+	*x = ListAvgPricesResponse{}
+	mi := &file_candle_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAvgPricesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAvgPricesResponse) ProtoMessage() {}
+
+func (x *ListAvgPricesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_candle_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAvgPricesResponse.ProtoReflect.Descriptor instead.
+func (*ListAvgPricesResponse) Descriptor() ([]byte, []int) {
+	return file_candle_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ListAvgPricesResponse) GetCandles() []*Candle {
+	if x != nil {
+		return x.Candles
+	}
+	return nil
+}
+
+type GetFirstPriceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Parity        uint64                 `protobuf:"varint,1,opt,name=parity,proto3" json:"parity,omitempty"`
+	Exchange      uint64                 `protobuf:"varint,2,opt,name=exchange,proto3" json:"exchange,omitempty"`
+	From          uint64                 `protobuf:"varint,3,opt,name=from,proto3" json:"from,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetFirstPriceRequest) Reset() {
+	*x = GetFirstPriceRequest{}
+	mi := &file_candle_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetFirstPriceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetFirstPriceRequest) ProtoMessage() {}
+
+func (x *GetFirstPriceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_candle_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetFirstPriceRequest.ProtoReflect.Descriptor instead.
+func (*GetFirstPriceRequest) Descriptor() ([]byte, []int) {
+	return file_candle_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetFirstPriceRequest) GetParity() uint64 {
+	if x != nil {
+		return x.Parity
+	}
+	return 0
+}
+
+func (x *GetFirstPriceRequest) GetExchange() uint64 {
+	if x != nil {
+		return x.Exchange
+	}
+	return 0
+}
+
+func (x *GetFirstPriceRequest) GetFrom() uint64 {
+	if x != nil {
+		return x.From
+	}
+	return 0
+}
+
+type GetFirstPriceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Price         float64                `protobuf:"fixed64,1,opt,name=price,proto3" json:"price,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetFirstPriceResponse) Reset() {
+	*x = GetFirstPriceResponse{}
+	mi := &file_candle_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetFirstPriceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetFirstPriceResponse) ProtoMessage() {}
+
+func (x *GetFirstPriceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_candle_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetFirstPriceResponse.ProtoReflect.Descriptor instead.
+func (*GetFirstPriceResponse) Descriptor() ([]byte, []int) {
+	return file_candle_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetFirstPriceResponse) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
 var File_candle_proto protoreflect.FileDescriptor
 
 var file_candle_proto_rawDesc = string([]byte{
@@ -566,8 +766,24 @@ var file_candle_proto_rawDesc = string([]byte{
 	0x6c, 0x65, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
 	0x24, 0x0a, 0x07, 0x63, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
 	0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x52, 0x07, 0x63, 0x61,
-	0x6e, 0x64, 0x6c, 0x65, 0x73, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6e, 0x64, 0x6c, 0x65, 0x73, 0x22, 0x3a, 0x0a, 0x14, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x76, 0x67,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a,
+	0x02, 0x74, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x12, 0x0a,
+	0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x66, 0x72, 0x6f,
+	0x6d, 0x22, 0x3d, 0x0a, 0x15, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x76, 0x67, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x24, 0x0a, 0x07, 0x63, 0x61,
+	0x6e, 0x64, 0x6c, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x70, 0x62,
+	0x2e, 0x43, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x52, 0x07, 0x63, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x73,
+	0x22, 0x5e, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x46, 0x69, 0x72, 0x73, 0x74, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x69,
+	0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x70, 0x61, 0x72, 0x69, 0x74, 0x79,
+	0x12, 0x1a, 0x0a, 0x08, 0x65, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x04, 0x52, 0x08, 0x65, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04,
+	0x66, 0x72, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d,
+	0x22, 0x2d, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x46, 0x69, 0x72, 0x73, 0x74, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x42,
+	0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -582,7 +798,7 @@ func file_candle_proto_rawDescGZIP() []byte {
 	return file_candle_proto_rawDescData
 }
 
-var file_candle_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_candle_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_candle_proto_goTypes = []any{
 	(*Candle)(nil),                    // 0: pb.Candle
 	(*GetCandleFirstMtsRequest)(nil),  // 1: pb.GetCandleFirstMtsRequest
@@ -593,6 +809,10 @@ var file_candle_proto_goTypes = []any{
 	(*CreateCandlesResponse)(nil),     // 6: pb.CreateCandlesResponse
 	(*ListCandleLimitRequest)(nil),    // 7: pb.ListCandleLimitRequest
 	(*ListCandleLimitResponse)(nil),   // 8: pb.ListCandleLimitResponse
+	(*ListAvgPricesRequest)(nil),      // 9: pb.ListAvgPricesRequest
+	(*ListAvgPricesResponse)(nil),     // 10: pb.ListAvgPricesResponse
+	(*GetFirstPriceRequest)(nil),      // 11: pb.GetFirstPriceRequest
+	(*GetFirstPriceResponse)(nil),     // 12: pb.GetFirstPriceResponse
 }
 var file_candle_proto_depIdxs = []int32{
 	0, // 0: pb.GetCandleFirstMtsResponse.candles:type_name -> pb.Candle
@@ -600,11 +820,12 @@ var file_candle_proto_depIdxs = []int32{
 	0, // 2: pb.CreateCandlesRequest.candles:type_name -> pb.Candle
 	0, // 3: pb.CreateCandlesResponse.candles:type_name -> pb.Candle
 	0, // 4: pb.ListCandleLimitResponse.candles:type_name -> pb.Candle
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	0, // 5: pb.ListAvgPricesResponse.candles:type_name -> pb.Candle
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_candle_proto_init() }
@@ -618,7 +839,7 @@ func file_candle_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_candle_proto_rawDesc), len(file_candle_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

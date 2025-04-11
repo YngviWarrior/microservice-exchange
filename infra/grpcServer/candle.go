@@ -98,3 +98,24 @@ func (g *grpcServer) GetCandleFirstMts(ctx context.Context, in *pb.GetCandleFirs
 
 	return
 }
+
+func (g *grpcServer) GetFirstPrice(ctx context.Context, in *pb.GetFirstPriceRequest) (out *pb.GetFirstPriceResponse, err error) {
+	candleRepo := mysql.NewCandleRepository(g.Db)
+	usecase := usecase.NewGetFirstPriceUseCase(candleRepo)
+
+	firstPrice, err := usecase.GetFirstPrice(&usecasedto.InputGetFirstPriceDto{
+		Parity:   in.GetParity(),
+		Exchange: in.GetExchange(),
+		From:     in.GetFrom(),
+	})
+	if err != nil {
+		return
+	}
+
+	out = &pb.GetFirstPriceResponse{
+		Price: 0,
+	}
+	out.Price = firstPrice.Close
+
+	return
+}

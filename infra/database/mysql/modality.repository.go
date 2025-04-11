@@ -1,8 +1,6 @@
 package mysql
 
 import (
-	"context"
-	"database/sql"
 	"log"
 
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
@@ -23,13 +21,8 @@ func NewModalityRepository(db database.DatabaseInterface) ModalityRepositoryInte
 	}
 }
 
-func (m modalityRepository) List(in repositorydto.InputModalityDto) (out []*repositorydto.OutputModalityDto) {
-	tx, err := m.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("MRL 00 :", err)
-	}
-
-	stmt, err := tx.Prepare(`
+func (t modalityRepository) List(in repositorydto.InputModalityDto) (out []*repositorydto.OutputModalityDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT modality, name, enabled
 		FROM modality
 	`)
@@ -62,8 +55,6 @@ func (m modalityRepository) List(in repositorydto.InputModalityDto) (out []*repo
 
 		out = append(out, &u)
 	}
-
-	tx.Commit()
 
 	return
 }

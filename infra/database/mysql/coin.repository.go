@@ -1,7 +1,6 @@
 package mysql
 
 import (
-	"context"
 	"database/sql"
 	"log"
 
@@ -15,6 +14,7 @@ type coinRepository struct {
 
 type CoinRepositoryInterface interface {
 	List() (list []*repositorydto.OutputCoinDto)
+	FindAvg(from, to uint64) (list []*repositorydto.OutputCandleDto)
 }
 
 func NewCoinRepository(db database.DatabaseInterface) CoinRepositoryInterface {
@@ -23,14 +23,49 @@ func NewCoinRepository(db database.DatabaseInterface) CoinRepositoryInterface {
 	}
 }
 
-func (c *coinRepository) List() (list []*repositorydto.OutputCoinDto) {
-	tx, err := c.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
+func (t *coinRepository) FindAvg(from, to uint64) (list []*repositorydto.OutputCandleDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
+		SELECT parity, exchange, AVG(close), (((MIN(close) - MAX(close)) / MAX(close)) * 100) as roc
+		FROM candle 
+		WHERE mts BETWEEN ? AND ?
+		GROUP BY parity, exchange
+	`)
+
 	if err != nil {
-		log.Panicln("CRL 00: ", err)
+		log.Panicln("CRFA 01: ", err)
 		return
 	}
 
-	rows, err := tx.Query(`SELECT coin, symbol, active FROM coin`)
+	defer stmt.Close()
+
+	res, err := stmt.Query(from, to)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("CRFA 02: ", err)
+		return
+	}
+
+	defer res.Close()
+
+	for res.Next() {
+		var c repositorydto.OutputCandleDto
+
+		err := res.Scan(&c.Parity, &c.Exchange, &c.Close, &c.Roc)
+
+		if err != nil {
+			log.Panic("CRFA 03: ", err)
+		}
+
+		list = append(list, &c)
+	}
+
+	return
+}
+
+func (t *coinRepository) List() (list []*repositorydto.OutputCoinDto) {
+	rows, err := t.Db.GetDatabase().Query(`SELECT coin, symbol, active FROM coin`)
 
 	if err != nil {
 		log.Panicln("CRL 01: ", err)

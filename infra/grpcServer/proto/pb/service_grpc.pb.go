@@ -197,24 +197,30 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	ExchangeService_ListTradeConfig_FullMethodName       = "/pb.ExchangeService/ListTradeConfig"
-	ExchangeService_CreateTradeConfig_FullMethodName     = "/pb.ExchangeService/CreateTradeConfig"
-	ExchangeService_UpdateTradeConfig_FullMethodName     = "/pb.ExchangeService/UpdateTradeConfig"
-	ExchangeService_CreateUserStrategy_FullMethodName    = "/pb.ExchangeService/CreateUserStrategy"
-	ExchangeService_ListUserStrategy_FullMethodName      = "/pb.ExchangeService/ListUserStrategy"
-	ExchangeService_ListParity_FullMethodName            = "/pb.ExchangeService/ListParity"
-	ExchangeService_ListCoin_FullMethodName              = "/pb.ExchangeService/ListCoin"
-	ExchangeService_GetWalletWithCoin_FullMethodName     = "/pb.ExchangeService/GetWalletWithCoin"
-	ExchangeService_ListWalletWithCoin_FullMethodName    = "/pb.ExchangeService/ListWalletWithCoin"
-	ExchangeService_CreateWallet_FullMethodName          = "/pb.ExchangeService/CreateWallet"
-	ExchangeService_UpdateWallet_FullMethodName          = "/pb.ExchangeService/UpdateWallet"
-	ExchangeService_GetCandleFirstMts_FullMethodName     = "/pb.ExchangeService/GetCandleFirstMts"
-	ExchangeService_GetLastTwoCandles_FullMethodName     = "/pb.ExchangeService/GetLastTwoCandles"
-	ExchangeService_CreateCandles_FullMethodName         = "/pb.ExchangeService/CreateCandles"
-	ExchangeService_ListCandleLimit_FullMethodName       = "/pb.ExchangeService/ListCandleLimit"
-	ExchangeService_ListOperation_FullMethodName         = "/pb.ExchangeService/ListOperation"
-	ExchangeService_ListOperationByPeriod_FullMethodName = "/pb.ExchangeService/ListOperationByPeriod"
-	ExchangeService_ListAllOperation_FullMethodName      = "/pb.ExchangeService/ListAllOperation"
+	ExchangeService_ListTradeConfig_FullMethodName             = "/pb.ExchangeService/ListTradeConfig"
+	ExchangeService_CreateTradeConfig_FullMethodName           = "/pb.ExchangeService/CreateTradeConfig"
+	ExchangeService_UpdateTradeConfig_FullMethodName           = "/pb.ExchangeService/UpdateTradeConfig"
+	ExchangeService_GetTradeConfig_FullMethodName              = "/pb.ExchangeService/GetTradeConfig"
+	ExchangeService_CreateUserStrategy_FullMethodName          = "/pb.ExchangeService/CreateUserStrategy"
+	ExchangeService_ListUserStrategy_FullMethodName            = "/pb.ExchangeService/ListUserStrategy"
+	ExchangeService_ListParity_FullMethodName                  = "/pb.ExchangeService/ListParity"
+	ExchangeService_GetAvgPriceByParityExchange_FullMethodName = "/pb.ExchangeService/GetAvgPriceByParityExchange"
+	ExchangeService_ListCoin_FullMethodName                    = "/pb.ExchangeService/ListCoin"
+	ExchangeService_GetWalletWithCoin_FullMethodName           = "/pb.ExchangeService/GetWalletWithCoin"
+	ExchangeService_ListWalletWithCoin_FullMethodName          = "/pb.ExchangeService/ListWalletWithCoin"
+	ExchangeService_CreateWallet_FullMethodName                = "/pb.ExchangeService/CreateWallet"
+	ExchangeService_UpdateWallet_FullMethodName                = "/pb.ExchangeService/UpdateWallet"
+	ExchangeService_GetCandleFirstMts_FullMethodName           = "/pb.ExchangeService/GetCandleFirstMts"
+	ExchangeService_GetLastTwoCandles_FullMethodName           = "/pb.ExchangeService/GetLastTwoCandles"
+	ExchangeService_CreateCandles_FullMethodName               = "/pb.ExchangeService/CreateCandles"
+	ExchangeService_ListCandleLimit_FullMethodName             = "/pb.ExchangeService/ListCandleLimit"
+	ExchangeService_ListAvgPrices_FullMethodName               = "/pb.ExchangeService/ListAvgPrices"
+	ExchangeService_GetFirstPrice_FullMethodName               = "/pb.ExchangeService/GetFirstPrice"
+	ExchangeService_CreateAveragePrice_FullMethodName          = "/pb.ExchangeService/CreateAveragePrice"
+	ExchangeService_ListOperation_FullMethodName               = "/pb.ExchangeService/ListOperation"
+	ExchangeService_ListOperationByPeriod_FullMethodName       = "/pb.ExchangeService/ListOperationByPeriod"
+	ExchangeService_ListAllOperation_FullMethodName            = "/pb.ExchangeService/ListAllOperation"
+	ExchangeService_UpdateOperation_FullMethodName             = "/pb.ExchangeService/UpdateOperation"
 )
 
 // ExchangeServiceClient is the client API for ExchangeService service.
@@ -224,9 +230,11 @@ type ExchangeServiceClient interface {
 	ListTradeConfig(ctx context.Context, in *ListTradeConfigRequest, opts ...grpc.CallOption) (*TradeConfigResponse, error)
 	CreateTradeConfig(ctx context.Context, in *CreateTradeConfigRequest, opts ...grpc.CallOption) (*TradeConfigResponse, error)
 	UpdateTradeConfig(ctx context.Context, in *UpdateTradeConfigRequest, opts ...grpc.CallOption) (*UpdateTradeConfigResponse, error)
+	GetTradeConfig(ctx context.Context, in *GetTradeConfigRequest, opts ...grpc.CallOption) (*GetTradeConfigResponse, error)
 	CreateUserStrategy(ctx context.Context, in *CreateUserStrategyRequest, opts ...grpc.CallOption) (*UserStrategyResponse, error)
 	ListUserStrategy(ctx context.Context, in *ListUserStrategyRequest, opts ...grpc.CallOption) (*UserStrategyResponse, error)
 	ListParity(ctx context.Context, in *ListParityRequest, opts ...grpc.CallOption) (*ListParityResponse, error)
+	GetAvgPriceByParityExchange(ctx context.Context, in *GetAvgPriceByParityExchangeRequest, opts ...grpc.CallOption) (*GetAvgPriceByParityExchangeResponse, error)
 	ListCoin(ctx context.Context, in *ListCoinRequest, opts ...grpc.CallOption) (*ListCoinResponse, error)
 	GetWalletWithCoin(ctx context.Context, in *GetWalletWithCoinRequest, opts ...grpc.CallOption) (*GetWalletWithCoinResponse, error)
 	ListWalletWithCoin(ctx context.Context, in *ListWalletWithCoinRequest, opts ...grpc.CallOption) (*ListWalletWithCoinResponse, error)
@@ -236,9 +244,13 @@ type ExchangeServiceClient interface {
 	GetLastTwoCandles(ctx context.Context, in *GetCandleFirstMtsRequest, opts ...grpc.CallOption) (*GetCandleFirstMtsResponse, error)
 	CreateCandles(ctx context.Context, in *CreateCandlesRequest, opts ...grpc.CallOption) (*CreateCandlesResponse, error)
 	ListCandleLimit(ctx context.Context, in *ListCandleLimitRequest, opts ...grpc.CallOption) (*ListCandleLimitResponse, error)
+	ListAvgPrices(ctx context.Context, in *ListAvgPricesRequest, opts ...grpc.CallOption) (*ListAvgPricesResponse, error)
+	GetFirstPrice(ctx context.Context, in *GetFirstPriceRequest, opts ...grpc.CallOption) (*GetFirstPriceResponse, error)
+	CreateAveragePrice(ctx context.Context, in *CreateAveragePriceRequest, opts ...grpc.CallOption) (*CreateAveragePriceResponse, error)
 	ListOperation(ctx context.Context, in *ListOperationRequest, opts ...grpc.CallOption) (*ListOperationResponse, error)
 	ListOperationByPeriod(ctx context.Context, in *ListOperationByPeriodRequest, opts ...grpc.CallOption) (*ListOperationByPeriodResponse, error)
 	ListAllOperation(ctx context.Context, in *ListAllOperationRequest, opts ...grpc.CallOption) (*ListAllOperationResponse, error)
+	UpdateOperation(ctx context.Context, in *UpdateOperationRequest, opts ...grpc.CallOption) (*UpdateOperationResponse, error)
 }
 
 type exchangeServiceClient struct {
@@ -279,6 +291,16 @@ func (c *exchangeServiceClient) UpdateTradeConfig(ctx context.Context, in *Updat
 	return out, nil
 }
 
+func (c *exchangeServiceClient) GetTradeConfig(ctx context.Context, in *GetTradeConfigRequest, opts ...grpc.CallOption) (*GetTradeConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTradeConfigResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_GetTradeConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *exchangeServiceClient) CreateUserStrategy(ctx context.Context, in *CreateUserStrategyRequest, opts ...grpc.CallOption) (*UserStrategyResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserStrategyResponse)
@@ -303,6 +325,16 @@ func (c *exchangeServiceClient) ListParity(ctx context.Context, in *ListParityRe
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListParityResponse)
 	err := c.cc.Invoke(ctx, ExchangeService_ListParity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) GetAvgPriceByParityExchange(ctx context.Context, in *GetAvgPriceByParityExchangeRequest, opts ...grpc.CallOption) (*GetAvgPriceByParityExchangeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAvgPriceByParityExchangeResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_GetAvgPriceByParityExchange_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -399,6 +431,36 @@ func (c *exchangeServiceClient) ListCandleLimit(ctx context.Context, in *ListCan
 	return out, nil
 }
 
+func (c *exchangeServiceClient) ListAvgPrices(ctx context.Context, in *ListAvgPricesRequest, opts ...grpc.CallOption) (*ListAvgPricesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAvgPricesResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListAvgPrices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) GetFirstPrice(ctx context.Context, in *GetFirstPriceRequest, opts ...grpc.CallOption) (*GetFirstPriceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetFirstPriceResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_GetFirstPrice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) CreateAveragePrice(ctx context.Context, in *CreateAveragePriceRequest, opts ...grpc.CallOption) (*CreateAveragePriceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateAveragePriceResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_CreateAveragePrice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *exchangeServiceClient) ListOperation(ctx context.Context, in *ListOperationRequest, opts ...grpc.CallOption) (*ListOperationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListOperationResponse)
@@ -429,6 +491,16 @@ func (c *exchangeServiceClient) ListAllOperation(ctx context.Context, in *ListAl
 	return out, nil
 }
 
+func (c *exchangeServiceClient) UpdateOperation(ctx context.Context, in *UpdateOperationRequest, opts ...grpc.CallOption) (*UpdateOperationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateOperationResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_UpdateOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExchangeServiceServer is the server API for ExchangeService service.
 // All implementations must embed UnimplementedExchangeServiceServer
 // for forward compatibility.
@@ -436,9 +508,11 @@ type ExchangeServiceServer interface {
 	ListTradeConfig(context.Context, *ListTradeConfigRequest) (*TradeConfigResponse, error)
 	CreateTradeConfig(context.Context, *CreateTradeConfigRequest) (*TradeConfigResponse, error)
 	UpdateTradeConfig(context.Context, *UpdateTradeConfigRequest) (*UpdateTradeConfigResponse, error)
+	GetTradeConfig(context.Context, *GetTradeConfigRequest) (*GetTradeConfigResponse, error)
 	CreateUserStrategy(context.Context, *CreateUserStrategyRequest) (*UserStrategyResponse, error)
 	ListUserStrategy(context.Context, *ListUserStrategyRequest) (*UserStrategyResponse, error)
 	ListParity(context.Context, *ListParityRequest) (*ListParityResponse, error)
+	GetAvgPriceByParityExchange(context.Context, *GetAvgPriceByParityExchangeRequest) (*GetAvgPriceByParityExchangeResponse, error)
 	ListCoin(context.Context, *ListCoinRequest) (*ListCoinResponse, error)
 	GetWalletWithCoin(context.Context, *GetWalletWithCoinRequest) (*GetWalletWithCoinResponse, error)
 	ListWalletWithCoin(context.Context, *ListWalletWithCoinRequest) (*ListWalletWithCoinResponse, error)
@@ -448,9 +522,13 @@ type ExchangeServiceServer interface {
 	GetLastTwoCandles(context.Context, *GetCandleFirstMtsRequest) (*GetCandleFirstMtsResponse, error)
 	CreateCandles(context.Context, *CreateCandlesRequest) (*CreateCandlesResponse, error)
 	ListCandleLimit(context.Context, *ListCandleLimitRequest) (*ListCandleLimitResponse, error)
+	ListAvgPrices(context.Context, *ListAvgPricesRequest) (*ListAvgPricesResponse, error)
+	GetFirstPrice(context.Context, *GetFirstPriceRequest) (*GetFirstPriceResponse, error)
+	CreateAveragePrice(context.Context, *CreateAveragePriceRequest) (*CreateAveragePriceResponse, error)
 	ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error)
 	ListOperationByPeriod(context.Context, *ListOperationByPeriodRequest) (*ListOperationByPeriodResponse, error)
 	ListAllOperation(context.Context, *ListAllOperationRequest) (*ListAllOperationResponse, error)
+	UpdateOperation(context.Context, *UpdateOperationRequest) (*UpdateOperationResponse, error)
 	mustEmbedUnimplementedExchangeServiceServer()
 }
 
@@ -470,6 +548,9 @@ func (UnimplementedExchangeServiceServer) CreateTradeConfig(context.Context, *Cr
 func (UnimplementedExchangeServiceServer) UpdateTradeConfig(context.Context, *UpdateTradeConfigRequest) (*UpdateTradeConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTradeConfig not implemented")
 }
+func (UnimplementedExchangeServiceServer) GetTradeConfig(context.Context, *GetTradeConfigRequest) (*GetTradeConfigResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTradeConfig not implemented")
+}
 func (UnimplementedExchangeServiceServer) CreateUserStrategy(context.Context, *CreateUserStrategyRequest) (*UserStrategyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUserStrategy not implemented")
 }
@@ -478,6 +559,9 @@ func (UnimplementedExchangeServiceServer) ListUserStrategy(context.Context, *Lis
 }
 func (UnimplementedExchangeServiceServer) ListParity(context.Context, *ListParityRequest) (*ListParityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListParity not implemented")
+}
+func (UnimplementedExchangeServiceServer) GetAvgPriceByParityExchange(context.Context, *GetAvgPriceByParityExchangeRequest) (*GetAvgPriceByParityExchangeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAvgPriceByParityExchange not implemented")
 }
 func (UnimplementedExchangeServiceServer) ListCoin(context.Context, *ListCoinRequest) (*ListCoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCoin not implemented")
@@ -506,6 +590,15 @@ func (UnimplementedExchangeServiceServer) CreateCandles(context.Context, *Create
 func (UnimplementedExchangeServiceServer) ListCandleLimit(context.Context, *ListCandleLimitRequest) (*ListCandleLimitResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCandleLimit not implemented")
 }
+func (UnimplementedExchangeServiceServer) ListAvgPrices(context.Context, *ListAvgPricesRequest) (*ListAvgPricesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAvgPrices not implemented")
+}
+func (UnimplementedExchangeServiceServer) GetFirstPrice(context.Context, *GetFirstPriceRequest) (*GetFirstPriceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFirstPrice not implemented")
+}
+func (UnimplementedExchangeServiceServer) CreateAveragePrice(context.Context, *CreateAveragePriceRequest) (*CreateAveragePriceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAveragePrice not implemented")
+}
 func (UnimplementedExchangeServiceServer) ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOperation not implemented")
 }
@@ -514,6 +607,9 @@ func (UnimplementedExchangeServiceServer) ListOperationByPeriod(context.Context,
 }
 func (UnimplementedExchangeServiceServer) ListAllOperation(context.Context, *ListAllOperationRequest) (*ListAllOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAllOperation not implemented")
+}
+func (UnimplementedExchangeServiceServer) UpdateOperation(context.Context, *UpdateOperationRequest) (*UpdateOperationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateOperation not implemented")
 }
 func (UnimplementedExchangeServiceServer) mustEmbedUnimplementedExchangeServiceServer() {}
 func (UnimplementedExchangeServiceServer) testEmbeddedByValue()                         {}
@@ -590,6 +686,24 @@ func _ExchangeService_UpdateTradeConfig_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_GetTradeConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTradeConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).GetTradeConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_GetTradeConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).GetTradeConfig(ctx, req.(*GetTradeConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ExchangeService_CreateUserStrategy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateUserStrategyRequest)
 	if err := dec(in); err != nil {
@@ -640,6 +754,24 @@ func _ExchangeService_ListParity_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ExchangeServiceServer).ListParity(ctx, req.(*ListParityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_GetAvgPriceByParityExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAvgPriceByParityExchangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).GetAvgPriceByParityExchange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_GetAvgPriceByParityExchange_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).GetAvgPriceByParityExchange(ctx, req.(*GetAvgPriceByParityExchangeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -806,6 +938,60 @@ func _ExchangeService_ListCandleLimit_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_ListAvgPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAvgPricesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListAvgPrices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListAvgPrices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListAvgPrices(ctx, req.(*ListAvgPricesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_GetFirstPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFirstPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).GetFirstPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_GetFirstPrice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).GetFirstPrice(ctx, req.(*GetFirstPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_CreateAveragePrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAveragePriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).CreateAveragePrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_CreateAveragePrice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).CreateAveragePrice(ctx, req.(*CreateAveragePriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ExchangeService_ListOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListOperationRequest)
 	if err := dec(in); err != nil {
@@ -860,6 +1046,24 @@ func _ExchangeService_ListAllOperation_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_UpdateOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateOperationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).UpdateOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_UpdateOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).UpdateOperation(ctx, req.(*UpdateOperationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExchangeService_ServiceDesc is the grpc.ServiceDesc for ExchangeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -880,6 +1084,10 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ExchangeService_UpdateTradeConfig_Handler,
 		},
 		{
+			MethodName: "GetTradeConfig",
+			Handler:    _ExchangeService_GetTradeConfig_Handler,
+		},
+		{
 			MethodName: "CreateUserStrategy",
 			Handler:    _ExchangeService_CreateUserStrategy_Handler,
 		},
@@ -890,6 +1098,10 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListParity",
 			Handler:    _ExchangeService_ListParity_Handler,
+		},
+		{
+			MethodName: "GetAvgPriceByParityExchange",
+			Handler:    _ExchangeService_GetAvgPriceByParityExchange_Handler,
 		},
 		{
 			MethodName: "ListCoin",
@@ -928,6 +1140,18 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ExchangeService_ListCandleLimit_Handler,
 		},
 		{
+			MethodName: "ListAvgPrices",
+			Handler:    _ExchangeService_ListAvgPrices_Handler,
+		},
+		{
+			MethodName: "GetFirstPrice",
+			Handler:    _ExchangeService_GetFirstPrice_Handler,
+		},
+		{
+			MethodName: "CreateAveragePrice",
+			Handler:    _ExchangeService_CreateAveragePrice_Handler,
+		},
+		{
 			MethodName: "ListOperation",
 			Handler:    _ExchangeService_ListOperation_Handler,
 		},
@@ -938,6 +1162,10 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAllOperation",
 			Handler:    _ExchangeService_ListAllOperation_Handler,
+		},
+		{
+			MethodName: "UpdateOperation",
+			Handler:    _ExchangeService_UpdateOperation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

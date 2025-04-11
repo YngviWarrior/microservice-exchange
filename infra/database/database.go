@@ -12,6 +12,8 @@ import (
 
 type DatabaseInterface interface {
 	CreateConnection() *sql.Conn
+	CreateTransaction() *sql.Tx
+	GetDatabase() *sql.DB
 }
 
 type database struct {
@@ -39,6 +41,10 @@ func NewDatabase() DatabaseInterface {
 	return &database{
 		Pool: db,
 	}
+}
+
+func (d *database) GetDatabase() *sql.DB {
+	return d.Pool
 }
 
 func (d *database) CreateConnection() *sql.Conn {

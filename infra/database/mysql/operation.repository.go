@@ -1,7 +1,6 @@
 package mysql
 
 import (
-	"context"
 	"database/sql"
 	"log"
 	"time"
@@ -33,52 +32,34 @@ func NewOperationRepository(db database.DatabaseInterface) OperationRepositoryIn
 	}
 }
 
-func (o *operationRepository) Delete(operation uint64) bool {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORD 00: ", err)
-		return false
-	}
+func (t *operationRepository) Delete(operation uint64) bool {
 	query := `DELETE operation WHERE operation = ?`
 
-	_, err = tx.Exec(query, operation)
+	_, err := t.Db.GetDatabase().Exec(query, operation)
 	if err != nil {
 		log.Println("ORD 01: ", err)
 		return false
 	}
 
-	tx.Commit()
 	return true
 }
 
-func (o *operationRepository) UpdateDynamically(updateFields []string, updatefieldValues []any, wherecolumns []string, wherevalues []any, paginationValues []any, order string) bool {
+func (t *operationRepository) UpdateDynamically(updateFields []string, updatefieldValues []any, wherecolumns []string, wherevalues []any, paginationValues []any, order string) bool {
 	_, wheres, updates, _ := utils.QueryFormatter(updateFields, updatefieldValues, wherecolumns, wherevalues, paginationValues, []string{}, []any{}, order)
 	query := `UPDATE operation SET ` + updates + wheres
 
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORUD 00: ", err)
-		return false
-	}
-	_, err = tx.Exec(query)
+	_, err := t.Db.GetDatabase().Exec(query)
 
 	if err != nil {
 		log.Println("ORUD 01: ", err)
 		return false
 	}
 
-	tx.Commit()
 	return true
 }
 
-func (o *operationRepository) Update(p *repositorydto.InputOperationDto) bool {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORU 00: ", err)
-		return false
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *operationRepository) Update(p *repositorydto.InputOperationDto) bool {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		UPDATE operation 
 		SET mts_start = ?, mts_finish = ?, open_price = ?, close_price = ?, invested_amount = ?, profit_amount = ?, profit = ?, closed = ?, audit = ?, enabled = ?
 		WHERE operation = ?
@@ -100,19 +81,12 @@ func (o *operationRepository) Update(p *repositorydto.InputOperationDto) bool {
 		return false
 	}
 
-	tx.Commit()
 	return true
 
 }
 
-func (o *operationRepository) ListByPeriod(from, to int64) (list []*repositorydto.OutputOperationWStrategyDto) {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORLBP 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *operationRepository) ListByPeriod(from, to int64) (list []*repositorydto.OutputOperationWStrategyDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, s.name as strategy_name, o.strategy_variant, sv.name as strategy_variant_name, o.mts_start, o.mts_finish, o.profit, o.profit_amount, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
 		FROM operation o
 		JOIN strategy s on o.strategy = s.strategy
@@ -151,18 +125,11 @@ func (o *operationRepository) ListByPeriod(from, to int64) (list []*repositorydt
 		list = append(list, &o)
 	}
 
-	tx.Commit()
 	return
 }
 
-func (o *operationRepository) ListAll() (list []*repositorydto.OutputOperationWStrategyDto) {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORLA 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *operationRepository) ListAll() (list []*repositorydto.OutputOperationWStrategyDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, s.name as strategy_name, o.strategy_variant, sv.name as strategy_variant_name, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
 		FROM operation o
 		JOIN strategy s ON o.strategy = s.strategy
@@ -200,18 +167,11 @@ func (o *operationRepository) ListAll() (list []*repositorydto.OutputOperationWS
 		list = append(list, &o)
 	}
 
-	tx.Commit()
 	return
 }
 
-func (o *operationRepository) List(in *repositorydto.InputOperationDto) (list []*repositorydto.OjoinOMDFT) {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORL 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *operationRepository) List(in *repositorydto.InputOperationDto) (list []*repositorydto.OjoinOMDFT) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, o.strategy_variant, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled, om.operation_meta_data_fast_trade, om.minimum_price, om.maximum_price, om.last_price, om.is_receding
 		FROM operation o
 		LEFT JOIN operation_meta_data_fast_trade om ON o.operation = om.operation
@@ -251,18 +211,11 @@ func (o *operationRepository) List(in *repositorydto.InputOperationDto) (list []
 		list = append(list, &o)
 	}
 
-	tx.Commit()
 	return
 }
 
-func (o *operationRepository) Get(operation int64) (out *repositorydto.OutputOperationDto) {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORF 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`
+func (t *operationRepository) Get(operation int64) (out *repositorydto.OutputOperationDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, o.strategy_variant, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
 		FROM operation o
 		WHERE o.operation = ?
@@ -284,18 +237,11 @@ func (o *operationRepository) Get(operation int64) (out *repositorydto.OutputOpe
 		return
 	}
 
-	tx.Commit()
 	return
 }
 
-func (o *operationRepository) Count(userId uint64, parity int64) (count int64) {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORCO 00: ", err)
-		return
-	}
-
-	stmt, err := tx.Prepare(`SELECT COUNT(*) FROM operation WHERE closed = 0`)
+func (t *operationRepository) Count(userId uint64, parity int64) (count int64) {
+	stmt, err := t.Db.GetDatabase().Prepare(`SELECT COUNT(*) FROM operation WHERE closed = 0`)
 
 	if err != nil {
 		log.Panicln("ORCO 01: ", err)
@@ -312,18 +258,11 @@ func (o *operationRepository) Count(userId uint64, parity int64) (count int64) {
 		return
 	}
 
-	tx.Commit()
 	return
 }
 
-func (o *operationRepository) Create(userId uint64, parity int64, exchange, strategy, strategyVariant int64, investedAmount float64, enabled bool) int64 {
-	tx, err := o.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Println("ORCO 00: ", err)
-		return 0
-	}
-
-	stmt, err := tx.Prepare(`INSERT INTO operation(user, parity, exchange, strategy, strategy_variant, mts_start, invested_amount, enabled) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+func (t *operationRepository) Create(userId uint64, parity int64, exchange, strategy, strategyVariant int64, investedAmount float64, enabled bool) int64 {
+	stmt, err := t.Db.GetDatabase().Prepare(`INSERT INTO operation(user, parity, exchange, strategy, strategy_variant, mts_start, invested_amount, enabled) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
 
 	if err != nil {
 		log.Panicln("ORC 01: ", err)
@@ -341,6 +280,5 @@ func (o *operationRepository) Create(userId uint64, parity int64, exchange, stra
 
 	li, _ := res.LastInsertId()
 
-	tx.Commit()
 	return li
 }

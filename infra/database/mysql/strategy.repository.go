@@ -1,8 +1,6 @@
 package mysql
 
 import (
-	"context"
-	"database/sql"
 	"log"
 
 	"github.com/YngviWarrior/microservice-exchange/infra/database"
@@ -23,13 +21,8 @@ func NewStrategyRepository(db database.DatabaseInterface) StrategyRepositoryInte
 	}
 }
 
-func (m strategyRepository) List(in repositorydto.InputStrategyDto) (out []*repositorydto.OutputStrategyDto) {
-	tx, err := m.Db.CreateConnection().BeginTx(context.Background(), &sql.TxOptions{})
-	if err != nil {
-		log.Panicln("SRL 00 :", err)
-	}
-
-	stmt, err := tx.Prepare(`
+func (t strategyRepository) List(in repositorydto.InputStrategyDto) (out []*repositorydto.OutputStrategyDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT strategy, modality, name, enabled
 		FROM strategy
 	`)
@@ -62,8 +55,6 @@ func (m strategyRepository) List(in repositorydto.InputStrategyDto) (out []*repo
 
 		out = append(out, &u)
 	}
-
-	tx.Commit()
 
 	return
 }

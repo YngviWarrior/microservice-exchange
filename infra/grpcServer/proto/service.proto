@@ -11,6 +11,7 @@ import "coin.proto";
 import "candle.proto";
 import "parity.proto";
 import "operation.proto";
+import "avg_price.proto";
 
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
@@ -22,11 +23,13 @@ service ExchangeService {
     rpc ListTradeConfig(ListTradeConfigRequest) returns (TradeConfigResponse) {}
     rpc CreateTradeConfig(CreateTradeConfigRequest) returns (TradeConfigResponse) {}
     rpc UpdateTradeConfig(UpdateTradeConfigRequest) returns (UpdateTradeConfigResponse) {}
+    rpc GetTradeConfig(GetTradeConfigRequest) returns (GetTradeConfigResponse) {}
 
     rpc CreateUserStrategy(CreateUserStrategyRequest) returns (UserStrategyResponse) {}
     rpc ListUserStrategy(ListUserStrategyRequest) returns (UserStrategyResponse) {}
 
     rpc ListParity(ListParityRequest) returns (ListParityResponse) {}
+    rpc GetAvgPriceByParityExchange(GetAvgPriceByParityExchangeRequest) returns (GetAvgPriceByParityExchangeResponse) {}
     rpc ListCoin(ListCoinRequest) returns (ListCoinResponse) {}
 
     rpc GetWalletWithCoin(GetWalletWithCoinRequest) returns (GetWalletWithCoinResponse) {}
@@ -38,8 +41,11 @@ service ExchangeService {
     rpc GetLastTwoCandles(GetCandleFirstMtsRequest) returns (GetCandleFirstMtsResponse) {}
     rpc CreateCandles(CreateCandlesRequest) returns (CreateCandlesResponse) {}
     rpc ListCandleLimit(ListCandleLimitRequest) returns (ListCandleLimitResponse) {}
+    rpc ListAvgPrices(ListAvgPricesRequest) returns (ListAvgPricesResponse) {}
+    rpc GetFirstPrice(GetFirstPriceRequest) returns (GetFirstPriceResponse) {}
     
     rpc ListOperation(ListOperationRequest) returns (ListOperationResponse) {} 
     rpc ListOperationByPeriod(ListOperationByPeriodRequest) returns (ListOperationByPeriodResponse) {} 
     rpc ListAllOperation(ListAllOperationRequest) returns (ListAllOperationResponse) {} 
+    rpc UpdateOperation(UpdateOperationRequest) returns (UpdateOperationResponse) {} 
 }
