@@ -12,6 +12,7 @@ import "candle.proto";
 import "parity.proto";
 import "operation.proto";
 import "avg_price.proto";
+import "operation_history.proto";
 
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (UserResponse) {}
@@ -41,11 +42,17 @@ service ExchangeService {
     rpc GetLastTwoCandles(GetCandleFirstMtsRequest) returns (GetCandleFirstMtsResponse) {}
     rpc CreateCandles(CreateCandlesRequest) returns (CreateCandlesResponse) {}
     rpc ListCandleLimit(ListCandleLimitRequest) returns (ListCandleLimitResponse) {}
-    rpc ListAvgPrices(ListAvgPricesRequest) returns (ListAvgPricesResponse) {}
     rpc GetFirstPrice(GetFirstPriceRequest) returns (GetFirstPriceResponse) {}
+    rpc GetLastPrice(GetLastPriceRequest) returns (GetLastPriceResponse) {}
+    
+    rpc ListAvgPrices(ListAvgPricesRequest) returns (ListAvgPricesResponse) {}
+    rpc UpdateAveragePrice(UpdateAveragePriceRequest) returns (UpdateAveragePriceResponse) {}
     
     rpc ListOperation(ListOperationRequest) returns (ListOperationResponse) {} 
     rpc ListOperationByPeriod(ListOperationByPeriodRequest) returns (ListOperationByPeriodResponse) {} 
     rpc ListAllOperation(ListAllOperationRequest) returns (ListAllOperationResponse) {} 
     rpc UpdateOperation(UpdateOperationRequest) returns (UpdateOperationResponse) {} 
+    rpc CreateOperation(CreateOperationRequest) returns (CreateOperationResponse) {} 
+    
+    rpc GetLastBuyRegisterByOperation(GetLastBuyRegisterByOperationRequest) returns (GetLastBuyRegisterByOperationResponse) {} 
 }

@@ -20,7 +20,7 @@ func NewGetFirstPriceUseCase(candleRepo mysql.CandleRepositoryInterface) UseCase
 }
 
 func (u *usecaseGetFirstPrice) GetFirstPrice(in *usecasedto.InputGetFirstPriceDto) (out *usecasedto.OutputGetFirstPriceDto, err error) {
-	candle := u.CandleRepo.FindFirstPrice(in.Parity, in.Exchange, in.From)
+	candle := u.CandleRepo.GetFirstPrice(in.Parity, in.Exchange, in.From)
 
 	out = &usecasedto.OutputGetFirstPriceDto{}
 	out.Parity = candle.Parity

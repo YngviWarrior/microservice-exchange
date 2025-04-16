@@ -15,6 +15,7 @@ type tradeConfigRepository struct {
 type TradeConfigRepositoryInterface interface {
 	Create(*repositorydto.InputTradeConfigDto) bool
 	List() (out []*repositorydto.OutputTradeConfigDto, err error)
+	Get(in repositorydto.InputTradeConfigDto) (o repositorydto.OutputTradeConfigDto, err error)
 	Update(in *repositorydto.InputTradeConfigDto) bool
 }
 
@@ -22,6 +23,24 @@ func NewTradeConfigRepository(db database.DatabaseInterface) TradeConfigReposito
 	return &tradeConfigRepository{
 		Db: db,
 	}
+}
+
+func (t *tradeConfigRepository) Get(in repositorydto.InputTradeConfigDto) (o repositorydto.OutputTradeConfigDto, err error) {
+	err = t.Db.GetDatabase().QueryRow(`
+		SELECT trade_config, user, modality, strategy, strategy_variant, parity, exchange, operation_quantity, operation_amount, default_profit_percentage, enabled
+		FROM trade_config
+		WHERE user = ? AND modality = ? AND strategy = ? AND strategy_variant = ? AND parity = ? AND exchange = ?
+		AND enabled = 1
+	`, in.User, in.Modality, in.Strategy, in.StrategyVariant, in.Parity, in.Exchange).Scan(&o.TradeConfig, &o.User, &o.Modality, &o.Strategy, &o.StrategyVariant, &o.Parity, &o.Exchange, &o.OperationQuantity, &o.OperationAmount, &o.DefaultProfitPercentage, &o.Enabled)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("UTCRF 01: ", err)
+		return
+	}
+
+	return
 }
 
 func (t *tradeConfigRepository) List() (out []*repositorydto.OutputTradeConfigDto, err error) {

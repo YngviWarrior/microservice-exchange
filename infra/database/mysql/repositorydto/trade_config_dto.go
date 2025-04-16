@@ -1,14 +1,14 @@
 package repositorydto
 
 type InputTradeConfigDto struct {
-	TradeConfig             int64
-	User                    int64
-	Modality                int64
-	Strategy                int64
-	StrategyVariant         int64
-	Parity                  int64
-	Exchange                int64
-	OperationQuantity       int64
+	TradeConfig             uint64
+	User                    uint64
+	Modality                uint64
+	Strategy                uint64
+	StrategyVariant         uint64
+	Parity                  uint64
+	Exchange                uint64
+	OperationQuantity       uint64
 	OperationAmount         float64
 	DefaultProfitPercentage float64
 	WalletValueLimit        float64
@@ -16,15 +16,15 @@ type InputTradeConfigDto struct {
 }
 
 type OutputTradeConfigDto struct {
-	TradeConfig             int64
-	User                    int64
-	Modality                int64
-	Strategy                int64
+	TradeConfig             uint64
+	User                    uint64
+	Modality                uint64
+	Strategy                uint64
 	StrategyEnabled         bool
-	StrategyVariant         int64
-	Parity                  int64
-	Exchange                int64
-	OperationQuantity       int64
+	StrategyVariant         uint64
+	Parity                  uint64
+	Exchange                uint64
+	OperationQuantity       uint64
 	OperationAmount         float64
 	Enabled                 bool
 	DefaultProfitPercentage float64

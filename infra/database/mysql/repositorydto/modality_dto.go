@@ -2,7 +2,7 @@ package repositorydto
 
 type InputModalityDto struct{}
 type OutputModalityDto struct {
-	Modality int64
+	Modality uint64
 	Name     string
 	Enabled  bool
 }

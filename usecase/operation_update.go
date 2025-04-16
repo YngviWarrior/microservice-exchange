@@ -24,14 +24,14 @@ func NewUpdateOperationUseCase(operationRepo mysql.OperationRepositoryInterface)
 
 func (u *usecaseUpdateOperation) UpdateOperation(in *usecasedto.InputUpdateOperationDto) (out *usecasedto.OutputUpdateOperationDto, err error) {
 	if !u.OperationRepo.Update(&repositorydto.InputOperationDto{
-		Operation:       uint64(in.Operation),
+		Operation:       in.Operation,
 		User:            in.User,
 		Parity:          in.Parity,
 		Exchange:        in.Exchange,
-		Strategy:        uint64(in.Strategy),
-		StrategyVariant: uint64(in.StrategyVariant),
-		MtsStart:        uint64(in.MtsStart),
-		MtsFinish:       uint64(in.MtsFinish),
+		Strategy:        in.Strategy,
+		StrategyVariant: in.StrategyVariant,
+		MtsStart:        in.MtsStart,
+		MtsFinish:       in.MtsFinish,
 		OpenPrice:       in.OpenPrice,
 		ClosePrice:      in.ClosePrice,
 		InvestedAmount:  in.InvestedAmount,

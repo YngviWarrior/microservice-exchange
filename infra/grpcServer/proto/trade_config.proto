@@ -4,15 +4,15 @@ package pb;
 option go_package = "./pb";
 
 message TradeConfig {
-    int64   trade_config = 1;
-    int64   user = 2;
-    int64   modality = 3;
-    int64   strategy = 4;
+    uint64   trade_config = 1;
+    uint64   user = 2;
+    uint64   modality = 3;
+    uint64   strategy = 4;
     bool    strategy_enabled = 5;
-    int64   strategy_variant = 6;
-    int64   parity = 7;
-    int64   exchange = 8;
-    int64   operation_quantity = 9;
+    uint64   strategy_variant = 6;
+    uint64   parity = 7;
+    uint64   exchange = 8;
+    uint64   operation_quantity = 9;
     double operation_amount = 10;
     bool    enabled = 11;
     double default_profit_percentage = 12;
@@ -32,17 +32,17 @@ message TradeConfigResponse {
 }
 
 message CreateTradeConfigRequest {
-    int64 modality = 1;
-    int64 strategy = 2;
-    int64 strategy_variant = 3;
-    int64 parity = 4;
-    int64 exchange = 5;
-    int64 operation_quantity = 6;
+    uint64 modality = 1;
+    uint64 strategy = 2;
+    uint64 strategy_variant = 3;
+    uint64 parity = 4;
+    uint64 exchange = 5;
+    uint64 operation_quantity = 6;
     double operation_amount = 7;
     double default_profit_percentage = 8;
     double wallet_value_limit = 9;
     bool enabled = 10;
-    int64 user = 11;
+    uint64 user = 11;
 }
 
 message ListTradeConfigRequest {}
@@ -72,6 +72,7 @@ message GetTradeConfigRequest {
     uint64 strategy_variant = 3;
     uint64 parity = 4;
     uint64 exchange = 5;
+    uint64 modality = 6;
 }
 
 message GetTradeConfigResponse {

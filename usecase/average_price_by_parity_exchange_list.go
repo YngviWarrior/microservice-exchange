@@ -1,8 +1,6 @@
 package usecase
 
 import (
-	"fmt"
-
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql"
 	"github.com/YngviWarrior/microservice-exchange/infra/database/mysql/repositorydto"
 	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
@@ -28,7 +26,19 @@ func (u *usecaseGetAvgPriceByParityExchange) GetAvgPriceByParityExchange(in *use
 		Exchange: in.Exchange,
 	})
 
-	fmt.Println(avg)
+	out = &usecasedto.OutputGetAvgPriceByParityExchangeDto{
+		Parity:               avg.Parity,
+		Exchange:             avg.Exchange,
+		Day:                  avg.Day,
+		DayRoc:               avg.DayRoc,
+		DayUpdateTimestamp:   avg.DayUpdateTimestamp,
+		Week:                 avg.Week,
+		WeekRoc:              avg.WeekRoc,
+		WeekUpdateTimestamp:  avg.WeekUpdateTimestamp,
+		Month:                avg.Month,
+		MonthRoc:             avg.MonthRoc,
+		MonthUpdateTimestamp: avg.MonthUpdateTimestamp,
+	}
 
 	return
 }

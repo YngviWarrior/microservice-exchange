@@ -144,14 +144,14 @@ func (g *grpcServer) UpdateOperation(ctx context.Context, in *pb.UpdateOperation
 	op := in.GetOperation()
 
 	operation, err := usecase.UpdateOperation(&usecasedto.InputUpdateOperationDto{
-		Operation:       int64(op.GetOperation()),
+		Operation:       op.GetOperation(),
 		User:            op.GetUser(),
 		Parity:          op.GetParity(),
 		Exchange:        op.GetExchange(),
-		Strategy:        int64(op.GetStrategy()),
-		StrategyVariant: int64(op.GetStrategyVariant()),
-		MtsStart:        int64(op.GetMtsStart()),
-		MtsFinish:       int64(op.GetMtsFinish()),
+		Strategy:        op.GetStrategy(),
+		StrategyVariant: op.GetStrategyVariant(),
+		MtsStart:        op.GetMtsStart(),
+		MtsFinish:       op.GetMtsFinish(),
 		OpenPrice:       op.GetOpenPrice(),
 		ClosePrice:      op.GetClosePrice(),
 		InvestedAmount:  op.GetInvestedAmount(),
@@ -179,6 +179,62 @@ func (g *grpcServer) UpdateOperation(ctx context.Context, in *pb.UpdateOperation
 	o.StrategyVariant = uint64(operation.StrategyVariant)
 	o.MtsStart = uint64(operation.MtsStart)
 	o.MtsFinish = uint64(operation.MtsFinish)
+	o.OpenPrice = operation.OpenPrice
+	o.ClosePrice = operation.ClosePrice
+	o.InvestedAmount = operation.InvestedAmount
+	o.ProfitAmount = operation.ProfitAmount
+	o.Profit = operation.Profit
+	o.Closed = operation.Closed
+	o.Audit = operation.Audit
+	o.Enabled = operation.Enabled
+
+	out.Operation = &o
+
+	return
+}
+
+func (g *grpcServer) CreateOperation(ctx context.Context, in *pb.CreateOperationRequest) (out *pb.CreateOperationResponse, err error) {
+	operationRepo := mysql.NewOperationRepository(g.Db)
+	usecase := usecase.NewCreateOperationUseCase(operationRepo)
+
+	op := in.GetOperation()
+
+	operation, err := usecase.CreateOperation(&usecasedto.InputCreateOperationDto{
+		Operation:       op.GetOperation(),
+		User:            op.GetUser(),
+		Parity:          op.GetParity(),
+		Exchange:        op.GetExchange(),
+		Strategy:        op.GetStrategy(),
+		StrategyVariant: op.GetStrategyVariant(),
+		MtsStart:        op.GetMtsStart(),
+		MtsFinish:       op.GetMtsFinish(),
+		OpenPrice:       op.GetOpenPrice(),
+		ClosePrice:      op.GetClosePrice(),
+		InvestedAmount:  op.GetInvestedAmount(),
+		ProfitAmount:    op.GetProfitAmount(),
+		Profit:          op.GetProfit(),
+		Closed:          op.GetClosed(),
+		Audit:           op.GetAudit(),
+		Enabled:         op.GetEnabled(),
+	})
+	if err != nil {
+		return
+	}
+
+	out = &pb.CreateOperationResponse{
+		Operation: &pb.Operation{},
+	}
+
+	var o pb.Operation
+
+	o.Operation = operation.Operation
+	o.User = operation.User
+	o.Parity = operation.Parity
+	o.Exchange = operation.Exchange
+	o.Strategy = operation.Strategy
+	o.StrategyVariant = operation.StrategyVariant
+	o.MtsStart = operation.MtsStart
+	o.MtsFinish = operation.MtsFinish
 	o.OpenPrice = operation.OpenPrice
 	o.ClosePrice = operation.ClosePrice
 	o.InvestedAmount = operation.InvestedAmount

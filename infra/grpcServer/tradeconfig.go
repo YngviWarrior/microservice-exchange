@@ -9,6 +9,52 @@ import (
 	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
+func (g *grpcServer) GetTradeConfig(ctx context.Context, in *pb.GetTradeConfigRequest) (out *pb.GetTradeConfigResponse, err error) {
+	tradeConfigRepo := mysql.NewTradeConfigRepository(g.Db)
+	useCases := usecase.NewGetTradeConfigUsecase(tradeConfigRepo)
+
+	response, err := useCases.GetTradeConfig(usecasedto.InputTradeConfigDto{
+		User:            in.GetUser(),
+		Modality:        in.GetModality(),
+		Strategy:        in.GetStrategy(),
+		StrategyVariant: in.GetStrategyVariant(),
+		Parity:          in.GetParity(),
+		Exchange:        in.GetExchange(),
+	})
+	if err != nil {
+		return
+	}
+
+	out = &pb.GetTradeConfigResponse{
+		TradeConfig: &pb.TradeConfig{},
+	}
+
+	var o pb.TradeConfig
+	o.TradeConfig = response.TradeConfig
+	o.User = response.User
+	o.Modality = response.Modality
+	o.Strategy = response.Strategy
+	o.StrategyEnabled = response.StrategyEnabled
+	o.StrategyVariant = response.StrategyVariant
+	o.Parity = response.Parity
+	o.Exchange = response.Exchange
+	o.OperationQuantity = response.OperationQuantity
+	o.OperationAmount = response.OperationAmount
+	o.Enabled = response.Enabled
+	o.DefaultProfitPercentage = response.DefaultProfitPercentage
+	o.WalletValueLimit = response.WalletValueLimit
+	o.ModalityName = response.ModalityName
+	o.StrategyName = response.StrategyName
+	o.StrategyVariantName = response.StrategyVariantName
+	o.StrategyVariantEnabled = response.StrategyVariantEnabled
+	o.ParitySymbol = response.ParitySymbol
+	o.ExchangeName = response.ExchangeName
+
+	out.TradeConfig = &o
+
+	return
+}
+
 func (g *grpcServer) ListTradeConfig(ctx context.Context, in *pb.ListTradeConfigRequest) (out *pb.TradeConfigResponse, err error) {
 	tradeConfigRepo := mysql.NewTradeConfigRepository(g.Db)
 	useCases := usecase.NewListTradeConfigUsecase(tradeConfigRepo)

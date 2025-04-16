@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message GetLastBuyRegisterByOperationRequest {
+    uint64 Operation = 1;
+}
+
+message GetLastBuyRegisterByOperationResponse {
+    double CoinQuantity = 1;
+    double Fee = 2;
+}

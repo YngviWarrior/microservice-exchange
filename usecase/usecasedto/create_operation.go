@@ -1,6 +1,6 @@
 package usecasedto
 
-type InputUpdateOperationDto struct {
+type InputCreateOperationDto struct {
 	Operation       uint64  `json:"operation"`
 	User            uint64  `json:"user_id"`
 	Parity          uint64  `json:"parity"`
@@ -19,7 +19,7 @@ type InputUpdateOperationDto struct {
 	Enabled         bool    `json:"enabled"`
 }
 
-type OutputUpdateOperationDto struct {
+type OutputCreateOperationDto struct {
 	Operation       uint64  `json:"operation"`
 	User            uint64  `json:"user_id"`
 	Parity          uint64  `json:"parity"`

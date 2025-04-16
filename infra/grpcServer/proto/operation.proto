@@ -83,3 +83,11 @@ message UpdateOperationRequest {
 message UpdateOperationResponse {
     Operation operation = 1;
 }
+
+message CreateOperationRequest {
+	Operation operation = 1;
+}
+
+message CreateOperationResponse {
+    Operation operation = 1;
+}

@@ -70,3 +70,12 @@ message GetFirstPriceRequest {
 message GetFirstPriceResponse {
 	double price = 1;
 }
+
+message GetLastPriceRequest {
+	uint64 parity = 1;
+	uint64 exchange = 2;
+}
+
+message GetLastPriceResponse {
+	double price = 1;
+}

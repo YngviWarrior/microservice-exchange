@@ -207,8 +207,8 @@ ALTER TABLE `average_price` ADD COLUMN `month_roc` DECIMAL(60,8) NOT NULL DEFAUL
 ALTER TABLE `average_price` ADD COLUMN `sma_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `sma`;
 -- ALTER TABLE `average_price` DROP COLUMN `roc`;
 
--- INSERT INTO `average_price`(`parity`)
--- VALUES (1),(4);
+INSERT INTO `average_price`(`parity`, `exchange`)
+VALUES (1,2),(3,2);
 
 DROP TABLE IF EXISTS `operation_meta_data_fast_trade`;
 CREATE TABLE `operation_meta_data_fast_trade` (

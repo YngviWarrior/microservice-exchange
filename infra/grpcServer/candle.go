@@ -119,3 +119,23 @@ func (g *grpcServer) GetFirstPrice(ctx context.Context, in *pb.GetFirstPriceRequ
 
 	return
 }
+
+func (g *grpcServer) GetLastPrice(ctx context.Context, in *pb.GetLastPriceRequest) (out *pb.GetLastPriceResponse, err error) {
+	candleRepo := mysql.NewCandleRepository(g.Db)
+	usecase := usecase.NewGetLastPriceUseCase(candleRepo)
+
+	lastPrice, err := usecase.GetLastPrice(&usecasedto.InputGetLastPriceDto{
+		Parity:   in.GetParity(),
+		Exchange: in.GetExchange(),
+	})
+	if err != nil {
+		return
+	}
+
+	out = &pb.GetLastPriceResponse{
+		Price: 0,
+	}
+	out.Price = lastPrice.Close
+
+	return
+}

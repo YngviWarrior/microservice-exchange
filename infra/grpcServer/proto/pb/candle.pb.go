@@ -713,6 +713,102 @@ func (x *GetFirstPriceResponse) GetPrice() float64 {
 	return 0
 }
 
+type GetLastPriceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Parity        uint64                 `protobuf:"varint,1,opt,name=parity,proto3" json:"parity,omitempty"`
+	Exchange      uint64                 `protobuf:"varint,2,opt,name=exchange,proto3" json:"exchange,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLastPriceRequest) Reset() {
+	*x = GetLastPriceRequest{}
+	mi := &file_candle_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLastPriceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLastPriceRequest) ProtoMessage() {}
+
+func (x *GetLastPriceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_candle_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLastPriceRequest.ProtoReflect.Descriptor instead.
+func (*GetLastPriceRequest) Descriptor() ([]byte, []int) {
+	return file_candle_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetLastPriceRequest) GetParity() uint64 {
+	if x != nil {
+		return x.Parity
+	}
+	return 0
+}
+
+func (x *GetLastPriceRequest) GetExchange() uint64 {
+	if x != nil {
+		return x.Exchange
+	}
+	return 0
+}
+
+type GetLastPriceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Price         float64                `protobuf:"fixed64,1,opt,name=price,proto3" json:"price,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLastPriceResponse) Reset() {
+	*x = GetLastPriceResponse{}
+	mi := &file_candle_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLastPriceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLastPriceResponse) ProtoMessage() {}
+
+func (x *GetLastPriceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_candle_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLastPriceResponse.ProtoReflect.Descriptor instead.
+func (*GetLastPriceResponse) Descriptor() ([]byte, []int) {
+	return file_candle_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetLastPriceResponse) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
 var File_candle_proto protoreflect.FileDescriptor
 
 var file_candle_proto_rawDesc = string([]byte{
@@ -782,8 +878,16 @@ var file_candle_proto_rawDesc = string([]byte{
 	0x66, 0x72, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d,
 	0x22, 0x2d, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x46, 0x69, 0x72, 0x73, 0x74, 0x50, 0x72, 0x69, 0x63,
 	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69,
-	0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x42,
-	0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x22,
+	0x49, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x73, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x69, 0x74, 0x79,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x70, 0x61, 0x72, 0x69, 0x74, 0x79, 0x12, 0x1a,
+	0x0a, 0x08, 0x65, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x08, 0x65, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x22, 0x2c, 0x0a, 0x14, 0x47, 0x65,
+	0x74, 0x4c, 0x61, 0x73, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -798,7 +902,7 @@ func file_candle_proto_rawDescGZIP() []byte {
 	return file_candle_proto_rawDescData
 }
 
-var file_candle_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_candle_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_candle_proto_goTypes = []any{
 	(*Candle)(nil),                    // 0: pb.Candle
 	(*GetCandleFirstMtsRequest)(nil),  // 1: pb.GetCandleFirstMtsRequest
@@ -813,6 +917,8 @@ var file_candle_proto_goTypes = []any{
 	(*ListAvgPricesResponse)(nil),     // 10: pb.ListAvgPricesResponse
 	(*GetFirstPriceRequest)(nil),      // 11: pb.GetFirstPriceRequest
 	(*GetFirstPriceResponse)(nil),     // 12: pb.GetFirstPriceResponse
+	(*GetLastPriceRequest)(nil),       // 13: pb.GetLastPriceRequest
+	(*GetLastPriceResponse)(nil),      // 14: pb.GetLastPriceResponse
 }
 var file_candle_proto_depIdxs = []int32{
 	0, // 0: pb.GetCandleFirstMtsResponse.candles:type_name -> pb.Candle
@@ -839,7 +945,7 @@ func file_candle_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_candle_proto_rawDesc), len(file_candle_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

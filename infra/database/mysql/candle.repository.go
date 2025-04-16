@@ -25,7 +25,7 @@ type CandleRepositoryInterface interface {
 	Create(candle *repositorydto.InputCandleDto) bool
 	CreateDirect(candle *repositorydto.InputCandleDto) bool
 	CreateList(candles []*repositorydto.InputCandleDto) bool
-	FindFirstPrice(parity, exchange, from uint64) (c repositorydto.OutputCandleDto)
+	GetFirstPrice(parity, exchange, from uint64) (c repositorydto.OutputCandleDto)
 }
 
 func NewCandleRepository(db database.DatabaseInterface) CandleRepositoryInterface {
@@ -34,7 +34,7 @@ func NewCandleRepository(db database.DatabaseInterface) CandleRepositoryInterfac
 	}
 }
 
-func (t *candleRepository) FindFirstPrice(parity, exchange, from uint64) (c repositorydto.OutputCandleDto) {
+func (t *candleRepository) GetFirstPrice(parity, exchange, from uint64) (c repositorydto.OutputCandleDto) {
 	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT parity, exchange, close, mts
 		FROM candle 

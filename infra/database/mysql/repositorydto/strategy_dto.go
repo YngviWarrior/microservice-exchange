@@ -2,8 +2,8 @@ package repositorydto
 
 type InputStrategyDto struct{}
 type OutputStrategyDto struct {
-	Strategy int64
-	Modality int64
+	Strategy uint64
+	Modality uint64
 	Name     string
 	Enabled  bool
 }

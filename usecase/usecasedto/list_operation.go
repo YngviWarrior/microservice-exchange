@@ -15,6 +15,7 @@ type OutputListOperationDto struct {
 	User                uint64  `json:"user_id"`
 	Parity              uint64  `json:"parity"`
 	Exchange            uint64  `json:"exchange"`
+	Modality            uint64  `json:"modality"`
 	Strategy            int64   `json:"strategy"`
 	StrategyName        string  `json:"strategy_name"`
 	StrategyVariant     int64   `json:"strategy_variant"`

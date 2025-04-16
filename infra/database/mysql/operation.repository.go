@@ -15,10 +15,10 @@ type operationRepository struct {
 }
 
 type OperationRepositoryInterface interface {
-	Create(userId uint64, parity int64, exchange, strategy, strategyVariant int64, investedAmount float64, enabled bool) int64
+	Create(in *repositorydto.InputOperationDto) int64
 	Count(userId uint64, parity int64) int64
 	List(in *repositorydto.InputOperationDto) (list []*repositorydto.OjoinOMDFT)
-	Get(operation int64) (out *repositorydto.OutputOperationDto)
+	Get(operation int64) (out repositorydto.OutputOperationDto)
 	ListAll() (list []*repositorydto.OutputOperationWStrategyDto)
 	ListByPeriod(from, to int64) (list []*repositorydto.OutputOperationWStrategyDto)
 	Update(p *repositorydto.InputOperationDto) bool
@@ -214,7 +214,7 @@ func (t *operationRepository) List(in *repositorydto.InputOperationDto) (list []
 	return
 }
 
-func (t *operationRepository) Get(operation int64) (out *repositorydto.OutputOperationDto) {
+func (t *operationRepository) Get(operation int64) (out repositorydto.OutputOperationDto) {
 	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, o.strategy_variant, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
 		FROM operation o
@@ -261,7 +261,7 @@ func (t *operationRepository) Count(userId uint64, parity int64) (count int64) {
 	return
 }
 
-func (t *operationRepository) Create(userId uint64, parity int64, exchange, strategy, strategyVariant int64, investedAmount float64, enabled bool) int64 {
+func (t *operationRepository) Create(in *repositorydto.InputOperationDto) int64 {
 	stmt, err := t.Db.GetDatabase().Prepare(`INSERT INTO operation(user, parity, exchange, strategy, strategy_variant, mts_start, invested_amount, enabled) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
 
 	if err != nil {
@@ -271,7 +271,7 @@ func (t *operationRepository) Create(userId uint64, parity int64, exchange, stra
 
 	defer stmt.Close()
 
-	res, err := stmt.Exec(userId, parity, exchange, strategy, strategyVariant, time.Now().UnixMicro(), investedAmount, enabled)
+	res, err := stmt.Exec(in.User, in.Parity, in.Exchange, in.Strategy, in.StrategyVariant, time.Now().UnixMicro(), in.InvestedAmount, in.Enabled)
 
 	if err != nil {
 		log.Panicln("ORC 02: ", err)
