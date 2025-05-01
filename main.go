@@ -16,44 +16,41 @@ import (
 
 func main() {
 	err := godotenv.Load(".env")
-
 	if err != nil {
 		log.Fatal(".env file is missing")
 	}
 
 	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatal("failed to open log file:", err)
+	}
+
 	switch os.Getenv("ENVIROMENT") {
 	case "local":
 		log.SetOutput(os.Stdout)
 		log.SetOutput(file)
-
 	case "testnet":
 		log.SetOutput(os.Stdout)
-
 	case "server":
 		loc, _ := time.LoadLocation("America/Sao_Paulo")
 		time.Local = loc
-
 		log.SetOutput(file)
 	}
 
 	database := database.NewDatabase()
-
 	exchangeService := grpcserver.NewGrpcServer(database)
 
 	grpcServer := grpc.NewServer()
-
 	pb.RegisterExchangeServiceServer(grpcServer, exchangeService)
 	reflection.Register(grpcServer)
 
 	lis, err := net.Listen("tcp", os.Getenv("PORT"))
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to listen: %v", err)
 	}
 
 	log.Println("Running at port ", os.Getenv("PORT"))
 	if err := grpcServer.Serve(lis); err != nil {
-		panic(err)
+		log.Fatalf("failed to serve: %v", err)
 	}
-
 }

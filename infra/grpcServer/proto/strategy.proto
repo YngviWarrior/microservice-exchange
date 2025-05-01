@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+import "trade_config.proto";
+
+message StrategyRequest {
+    KlineData kline = 1;
+	TradeConfig trade_config = 2;
+	string Strategy = 3;
+}
+
+message StrategyResponse {}
+
+message KlineData {
+	uint64 Start = 1;
+	uint64 End = 2;
+	string Interval = 3;
+	string Open = 4;
+	string Close = 5;
+	string High = 6;
+	string Low = 7;
+	string Volume = 8;
+	string Turnover = 9;
+	bool Confirm = 10;
+	uint64 Timestamp = 11;
+	uint64 Coin = 12;
+}

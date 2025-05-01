@@ -27,8 +27,9 @@ func (u *usecaseListTradeConfig) ListTradeConfig() (out []*usecasedto.OutputTrad
 		log.Panicln("LTC 00: ", err)
 	}
 
-	o := &usecasedto.OutputTradeConfigDto{}
 	for _, v := range response {
+		o := &usecasedto.OutputTradeConfigDto{}
+
 		o.TradeConfig = v.TradeConfig
 		o.User = v.User
 		o.Modality = v.Modality

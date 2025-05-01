@@ -6,16 +6,16 @@ type InputListOperationByPeriodDto struct {
 }
 
 type OutputListOperationByPeriodDto struct {
-	Operation           int64   `json:"operation"`
+	Operation           uint64  `json:"operation"`
 	User                uint64  `json:"user_id"`
 	Parity              uint64  `json:"parity"`
 	Exchange            uint64  `json:"exchange"`
-	Strategy            int64   `json:"strategy"`
+	Strategy            uint64  `json:"strategy"`
 	StrategyName        string  `json:"strategy_name"`
-	StrategyVariant     int64   `json:"strategy_variant"`
+	StrategyVariant     uint64  `json:"strategy_variant"`
 	StrategyVariantName string  `json:"strategy_variant_name"`
-	MtsStart            int64   `json:"mts_start"`
-	MtsFinish           int64   `json:"mts_finish"`
+	MtsStart            uint64  `json:"mts_start"`
+	MtsFinish           uint64  `json:"mts_finish"`
 	OpenPrice           float64 `json:"open_price"`
 	ClosePrice          float64 `json:"close_price"`
 	InvestedAmount      float64 `json:"invested_amount"`

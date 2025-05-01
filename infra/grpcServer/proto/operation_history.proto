@@ -3,6 +3,19 @@ syntax = "proto3";
 package pb;
 option go_package = "./pb";
 
+message OperationHistory {
+    uint64 OperationHistory = 1;
+    uint64 Operation = 2;
+    uint64 TransactionType = 3;
+    double CoinPrice = 4;
+    double CoinQuantity = 5;
+    double StablePrice = 6;
+    double StableQuantity = 7;
+    string OperationExchangeId = 8;
+    uint64 OperationExchangeStatus = 9;
+    double Fee = 10;
+}
+
 message GetLastBuyRegisterByOperationRequest {
     uint64 Operation = 1;
 }
@@ -10,4 +23,12 @@ message GetLastBuyRegisterByOperationRequest {
 message GetLastBuyRegisterByOperationResponse {
     double CoinQuantity = 1;
     double Fee = 2;
+}
+
+message CreateOperationHistoryRequest {
+    OperationHistory OperationHistory = 1;
+}
+
+message CreateOperationHistoryResponse {
+    OperationHistory OperationHistory = 1;
 }
