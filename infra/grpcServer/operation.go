@@ -149,7 +149,7 @@ func (g *grpcServer) GetOperation(ctx context.Context, in *pb.GetOperationReques
 	}
 
 	out = &pb.GetOperationResponse{
-		Operations: &pb.Operation{},
+		Operation: &pb.Operation{},
 	}
 
 	var o pb.Operation
@@ -171,7 +171,7 @@ func (g *grpcServer) GetOperation(ctx context.Context, in *pb.GetOperationReques
 	o.Audit = operation.Audit
 	o.Enabled = operation.Enabled
 
-	out.Operations = &o
+	out.Operation = &o
 
 	return
 }
