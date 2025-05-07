@@ -13,6 +13,7 @@ import "parity.proto";
 import "operation.proto";
 import "avg_price.proto";
 import "operation_history.proto";
+import "transaction_type.proto";
 import "strategy.proto";
 
 service UserService {
@@ -49,14 +50,20 @@ service ExchangeService {
     rpc ListAvgPrices(ListAvgPricesRequest) returns (ListAvgPricesResponse) {}
     rpc UpdateAveragePrice(UpdateAveragePriceRequest) returns (UpdateAveragePriceResponse) {}
     
+    rpc GetOperation(GetOperationRequest) returns (GetOperationResponse) {} 
     rpc ListOperation(ListOperationRequest) returns (ListOperationResponse) {} 
     rpc ListOperationByPeriod(ListOperationByPeriodRequest) returns (ListOperationByPeriodResponse) {} 
     rpc ListAllOperation(ListAllOperationRequest) returns (ListAllOperationResponse) {} 
     rpc UpdateOperation(UpdateOperationRequest) returns (UpdateOperationResponse) {} 
     rpc CreateOperation(CreateOperationRequest) returns (CreateOperationResponse) {} 
     
+    rpc GetOperationHistory(GetOperationHistoryRequest) returns (GetOperationHistoryResponse) {} 
+    rpc UpdateOperationHistory(UpdateOperationHistoryRequest) returns (UpdateOperationHistoryResponse) {} 
+    
     rpc GetLastBuyRegisterByOperation(GetLastBuyRegisterByOperationRequest) returns (GetLastBuyRegisterByOperationResponse) {} 
     rpc CreateOperationHistory(CreateOperationHistoryRequest) returns (CreateOperationHistoryResponse) {} 
+
+    rpc ListTransactionType(ListTransactionTypeRequest) returns (ListTransactionTypeResponse) {}
 
     rpc Strategy(StrategyRequest) returns (StrategyResponse) {} 
 }

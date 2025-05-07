@@ -47,6 +47,14 @@ message OperationJoin {
 	uint64 strategy_variant_name        = 19;
 }
 
+message GetOperationRequest {
+    uint64 operationId = 1;
+}
+
+message GetOperationResponse {
+    Operation operation = 1;
+}
+
 message ListOperationRequest {
     uint64 user = 1;
     uint64 strategy = 2;

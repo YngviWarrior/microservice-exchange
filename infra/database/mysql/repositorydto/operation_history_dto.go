@@ -9,7 +9,7 @@ type InputOperationHistoryDto struct {
 	StablePrice             float64
 	StableQuantity          float64
 	Fee                     float64
-	OperationExchangeId     string
+	OperationExchangeId     uint64
 	OperationExchangeStatus uint64
 }
 
@@ -22,6 +22,6 @@ type OutputOperationHistoryDto struct {
 	StablePrice             float64
 	StableQuantity          float64
 	Fee                     float64
-	OperationExchangeId     string
+	OperationExchangeId     uint64
 	OperationExchangeStatus uint64
 }

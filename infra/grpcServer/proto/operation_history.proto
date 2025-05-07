@@ -11,9 +11,18 @@ message OperationHistory {
     double CoinQuantity = 5;
     double StablePrice = 6;
     double StableQuantity = 7;
-    string OperationExchangeId = 8;
+    uint64 OperationExchangeId = 8;
     uint64 OperationExchangeStatus = 9;
     double Fee = 10;
+}
+
+message GetOperationHistoryRequest {
+    uint64 OrderId = 1;
+    uint64 OrderIdLink = 2;
+}
+
+message GetOperationHistoryResponse {
+    OperationHistory OperationHistory = 1;
 }
 
 message GetLastBuyRegisterByOperationRequest {
@@ -30,5 +39,13 @@ message CreateOperationHistoryRequest {
 }
 
 message CreateOperationHistoryResponse {
+    OperationHistory OperationHistory = 1;
+}
+
+message UpdateOperationHistoryRequest {
+    OperationHistory OperationHistory = 1;
+}
+
+message UpdateOperationHistoryResponse {
     OperationHistory OperationHistory = 1;
 }

@@ -40,7 +40,7 @@ func (u *usecaseCreateOperation) CreateOperation(in *usecasedto.InputCreateOpera
 		Enabled:         in.Enabled,
 	})
 
-	operation := u.OperationRepo.Get(opId)
+	operation := u.OperationRepo.Get(uint64(opId))
 
 	out = &usecasedto.OutputCreateOperationDto{
 		Operation:       operation.Operation,

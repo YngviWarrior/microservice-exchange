@@ -47,7 +47,7 @@ func (i *strategy) BuyCoin(params *internaldto.BuyCoinParams) bool {
 				StablePrice:         opAmount * params.ClosePrice,
 				StableQuantity:      opAmount,
 				Fee:                 params.OpFee,
-				OperationExchangeId: fmt.Sprint(orderId),
+				OperationExchangeId: uint64(orderId),
 			})
 		} else {
 			discordService.NewDiscordWebhook().SendNotification(&discordstructs.Notification{

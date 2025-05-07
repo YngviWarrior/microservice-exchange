@@ -218,13 +218,17 @@ const (
 	ExchangeService_GetLastPrice_FullMethodName                  = "/pb.ExchangeService/GetLastPrice"
 	ExchangeService_ListAvgPrices_FullMethodName                 = "/pb.ExchangeService/ListAvgPrices"
 	ExchangeService_UpdateAveragePrice_FullMethodName            = "/pb.ExchangeService/UpdateAveragePrice"
+	ExchangeService_GetOperation_FullMethodName                  = "/pb.ExchangeService/GetOperation"
 	ExchangeService_ListOperation_FullMethodName                 = "/pb.ExchangeService/ListOperation"
 	ExchangeService_ListOperationByPeriod_FullMethodName         = "/pb.ExchangeService/ListOperationByPeriod"
 	ExchangeService_ListAllOperation_FullMethodName              = "/pb.ExchangeService/ListAllOperation"
 	ExchangeService_UpdateOperation_FullMethodName               = "/pb.ExchangeService/UpdateOperation"
 	ExchangeService_CreateOperation_FullMethodName               = "/pb.ExchangeService/CreateOperation"
+	ExchangeService_GetOperationHistory_FullMethodName           = "/pb.ExchangeService/GetOperationHistory"
+	ExchangeService_UpdateOperationHistory_FullMethodName        = "/pb.ExchangeService/UpdateOperationHistory"
 	ExchangeService_GetLastBuyRegisterByOperation_FullMethodName = "/pb.ExchangeService/GetLastBuyRegisterByOperation"
 	ExchangeService_CreateOperationHistory_FullMethodName        = "/pb.ExchangeService/CreateOperationHistory"
+	ExchangeService_ListTransactionType_FullMethodName           = "/pb.ExchangeService/ListTransactionType"
 	ExchangeService_Strategy_FullMethodName                      = "/pb.ExchangeService/Strategy"
 )
 
@@ -253,13 +257,17 @@ type ExchangeServiceClient interface {
 	GetLastPrice(ctx context.Context, in *GetLastPriceRequest, opts ...grpc.CallOption) (*GetLastPriceResponse, error)
 	ListAvgPrices(ctx context.Context, in *ListAvgPricesRequest, opts ...grpc.CallOption) (*ListAvgPricesResponse, error)
 	UpdateAveragePrice(ctx context.Context, in *UpdateAveragePriceRequest, opts ...grpc.CallOption) (*UpdateAveragePriceResponse, error)
+	GetOperation(ctx context.Context, in *GetOperationRequest, opts ...grpc.CallOption) (*GetOperationResponse, error)
 	ListOperation(ctx context.Context, in *ListOperationRequest, opts ...grpc.CallOption) (*ListOperationResponse, error)
 	ListOperationByPeriod(ctx context.Context, in *ListOperationByPeriodRequest, opts ...grpc.CallOption) (*ListOperationByPeriodResponse, error)
 	ListAllOperation(ctx context.Context, in *ListAllOperationRequest, opts ...grpc.CallOption) (*ListAllOperationResponse, error)
 	UpdateOperation(ctx context.Context, in *UpdateOperationRequest, opts ...grpc.CallOption) (*UpdateOperationResponse, error)
 	CreateOperation(ctx context.Context, in *CreateOperationRequest, opts ...grpc.CallOption) (*CreateOperationResponse, error)
+	GetOperationHistory(ctx context.Context, in *GetOperationHistoryRequest, opts ...grpc.CallOption) (*GetOperationHistoryResponse, error)
+	UpdateOperationHistory(ctx context.Context, in *UpdateOperationHistoryRequest, opts ...grpc.CallOption) (*UpdateOperationHistoryResponse, error)
 	GetLastBuyRegisterByOperation(ctx context.Context, in *GetLastBuyRegisterByOperationRequest, opts ...grpc.CallOption) (*GetLastBuyRegisterByOperationResponse, error)
 	CreateOperationHistory(ctx context.Context, in *CreateOperationHistoryRequest, opts ...grpc.CallOption) (*CreateOperationHistoryResponse, error)
+	ListTransactionType(ctx context.Context, in *ListTransactionTypeRequest, opts ...grpc.CallOption) (*ListTransactionTypeResponse, error)
 	Strategy(ctx context.Context, in *StrategyRequest, opts ...grpc.CallOption) (*StrategyResponse, error)
 }
 
@@ -481,6 +489,16 @@ func (c *exchangeServiceClient) UpdateAveragePrice(ctx context.Context, in *Upda
 	return out, nil
 }
 
+func (c *exchangeServiceClient) GetOperation(ctx context.Context, in *GetOperationRequest, opts ...grpc.CallOption) (*GetOperationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOperationResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_GetOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *exchangeServiceClient) ListOperation(ctx context.Context, in *ListOperationRequest, opts ...grpc.CallOption) (*ListOperationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListOperationResponse)
@@ -531,6 +549,26 @@ func (c *exchangeServiceClient) CreateOperation(ctx context.Context, in *CreateO
 	return out, nil
 }
 
+func (c *exchangeServiceClient) GetOperationHistory(ctx context.Context, in *GetOperationHistoryRequest, opts ...grpc.CallOption) (*GetOperationHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOperationHistoryResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_GetOperationHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) UpdateOperationHistory(ctx context.Context, in *UpdateOperationHistoryRequest, opts ...grpc.CallOption) (*UpdateOperationHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateOperationHistoryResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_UpdateOperationHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *exchangeServiceClient) GetLastBuyRegisterByOperation(ctx context.Context, in *GetLastBuyRegisterByOperationRequest, opts ...grpc.CallOption) (*GetLastBuyRegisterByOperationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetLastBuyRegisterByOperationResponse)
@@ -545,6 +583,16 @@ func (c *exchangeServiceClient) CreateOperationHistory(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateOperationHistoryResponse)
 	err := c.cc.Invoke(ctx, ExchangeService_CreateOperationHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListTransactionType(ctx context.Context, in *ListTransactionTypeRequest, opts ...grpc.CallOption) (*ListTransactionTypeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTransactionTypeResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListTransactionType_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -586,13 +634,17 @@ type ExchangeServiceServer interface {
 	GetLastPrice(context.Context, *GetLastPriceRequest) (*GetLastPriceResponse, error)
 	ListAvgPrices(context.Context, *ListAvgPricesRequest) (*ListAvgPricesResponse, error)
 	UpdateAveragePrice(context.Context, *UpdateAveragePriceRequest) (*UpdateAveragePriceResponse, error)
+	GetOperation(context.Context, *GetOperationRequest) (*GetOperationResponse, error)
 	ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error)
 	ListOperationByPeriod(context.Context, *ListOperationByPeriodRequest) (*ListOperationByPeriodResponse, error)
 	ListAllOperation(context.Context, *ListAllOperationRequest) (*ListAllOperationResponse, error)
 	UpdateOperation(context.Context, *UpdateOperationRequest) (*UpdateOperationResponse, error)
 	CreateOperation(context.Context, *CreateOperationRequest) (*CreateOperationResponse, error)
+	GetOperationHistory(context.Context, *GetOperationHistoryRequest) (*GetOperationHistoryResponse, error)
+	UpdateOperationHistory(context.Context, *UpdateOperationHistoryRequest) (*UpdateOperationHistoryResponse, error)
 	GetLastBuyRegisterByOperation(context.Context, *GetLastBuyRegisterByOperationRequest) (*GetLastBuyRegisterByOperationResponse, error)
 	CreateOperationHistory(context.Context, *CreateOperationHistoryRequest) (*CreateOperationHistoryResponse, error)
+	ListTransactionType(context.Context, *ListTransactionTypeRequest) (*ListTransactionTypeResponse, error)
 	Strategy(context.Context, *StrategyRequest) (*StrategyResponse, error)
 	mustEmbedUnimplementedExchangeServiceServer()
 }
@@ -667,6 +719,9 @@ func (UnimplementedExchangeServiceServer) ListAvgPrices(context.Context, *ListAv
 func (UnimplementedExchangeServiceServer) UpdateAveragePrice(context.Context, *UpdateAveragePriceRequest) (*UpdateAveragePriceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAveragePrice not implemented")
 }
+func (UnimplementedExchangeServiceServer) GetOperation(context.Context, *GetOperationRequest) (*GetOperationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOperation not implemented")
+}
 func (UnimplementedExchangeServiceServer) ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOperation not implemented")
 }
@@ -682,11 +737,20 @@ func (UnimplementedExchangeServiceServer) UpdateOperation(context.Context, *Upda
 func (UnimplementedExchangeServiceServer) CreateOperation(context.Context, *CreateOperationRequest) (*CreateOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOperation not implemented")
 }
+func (UnimplementedExchangeServiceServer) GetOperationHistory(context.Context, *GetOperationHistoryRequest) (*GetOperationHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOperationHistory not implemented")
+}
+func (UnimplementedExchangeServiceServer) UpdateOperationHistory(context.Context, *UpdateOperationHistoryRequest) (*UpdateOperationHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateOperationHistory not implemented")
+}
 func (UnimplementedExchangeServiceServer) GetLastBuyRegisterByOperation(context.Context, *GetLastBuyRegisterByOperationRequest) (*GetLastBuyRegisterByOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLastBuyRegisterByOperation not implemented")
 }
 func (UnimplementedExchangeServiceServer) CreateOperationHistory(context.Context, *CreateOperationHistoryRequest) (*CreateOperationHistoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOperationHistory not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListTransactionType(context.Context, *ListTransactionTypeRequest) (*ListTransactionTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTransactionType not implemented")
 }
 func (UnimplementedExchangeServiceServer) Strategy(context.Context, *StrategyRequest) (*StrategyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Strategy not implemented")
@@ -1090,6 +1154,24 @@ func _ExchangeService_UpdateAveragePrice_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_GetOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOperationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).GetOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_GetOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).GetOperation(ctx, req.(*GetOperationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ExchangeService_ListOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListOperationRequest)
 	if err := dec(in); err != nil {
@@ -1180,6 +1262,42 @@ func _ExchangeService_CreateOperation_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_GetOperationHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOperationHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).GetOperationHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_GetOperationHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).GetOperationHistory(ctx, req.(*GetOperationHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_UpdateOperationHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateOperationHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).UpdateOperationHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_UpdateOperationHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).UpdateOperationHistory(ctx, req.(*UpdateOperationHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ExchangeService_GetLastBuyRegisterByOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetLastBuyRegisterByOperationRequest)
 	if err := dec(in); err != nil {
@@ -1212,6 +1330,24 @@ func _ExchangeService_CreateOperationHistory_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ExchangeServiceServer).CreateOperationHistory(ctx, req.(*CreateOperationHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListTransactionType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTransactionTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListTransactionType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListTransactionType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListTransactionType(ctx, req.(*ListTransactionTypeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1326,6 +1462,10 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ExchangeService_UpdateAveragePrice_Handler,
 		},
 		{
+			MethodName: "GetOperation",
+			Handler:    _ExchangeService_GetOperation_Handler,
+		},
+		{
 			MethodName: "ListOperation",
 			Handler:    _ExchangeService_ListOperation_Handler,
 		},
@@ -1346,12 +1486,24 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ExchangeService_CreateOperation_Handler,
 		},
 		{
+			MethodName: "GetOperationHistory",
+			Handler:    _ExchangeService_GetOperationHistory_Handler,
+		},
+		{
+			MethodName: "UpdateOperationHistory",
+			Handler:    _ExchangeService_UpdateOperationHistory_Handler,
+		},
+		{
 			MethodName: "GetLastBuyRegisterByOperation",
 			Handler:    _ExchangeService_GetLastBuyRegisterByOperation_Handler,
 		},
 		{
 			MethodName: "CreateOperationHistory",
 			Handler:    _ExchangeService_CreateOperationHistory_Handler,
+		},
+		{
+			MethodName: "ListTransactionType",
+			Handler:    _ExchangeService_ListTransactionType_Handler,
 		},
 		{
 			MethodName: "Strategy",

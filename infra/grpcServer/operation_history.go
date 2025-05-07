@@ -28,6 +28,34 @@ func (g *grpcServer) GetLastBuyRegisterByOperation(ctx context.Context, in *pb.G
 	return
 }
 
+func (g *grpcServer) GetOperationHistory(ctx context.Context, in *pb.GetOperationHistoryRequest) (out *pb.GetOperationHistoryResponse, err error) {
+	operationHistoryRepo := mysql.NewOperationHistoryRepository(g.Db)
+	usecase := usecase.NewGetOperationHistoryUseCase(operationHistoryRepo)
+
+	response, err := usecase.GetOperationHistory(&usecasedto.InputGetOperationHistoryDto{
+		OrderExchangeId: in.GetOrderId(),
+	})
+	if err != nil {
+		return
+	}
+
+	out = &pb.GetOperationHistoryResponse{
+		OperationHistory: &pb.OperationHistory{
+			Operation:               response.Operation,
+			TransactionType:         response.TransactionType,
+			CoinPrice:               response.CoinPrice,
+			CoinQuantity:            response.CoinQuantity,
+			StablePrice:             response.StablePrice,
+			StableQuantity:          response.StableQuantity,
+			Fee:                     response.Fee,
+			OperationExchangeId:     response.OperationExchangeId,
+			OperationExchangeStatus: response.OperationExchangeStatus,
+		},
+	}
+
+	return
+}
+
 func (g *grpcServer) CreateOperationHistory(ctx context.Context, in *pb.CreateOperationHistoryRequest) (out *pb.CreateOperationHistoryResponse, err error) {
 	operationHistoryRepo := mysql.NewOperationHistoryRepository(g.Db)
 	usecase := usecase.NewCreateOperationHistoryUseCase(operationHistoryRepo)

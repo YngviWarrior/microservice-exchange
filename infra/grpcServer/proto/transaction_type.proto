@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+message TransactionType {
+    uint64 TransactionType = 1;
+    string Description = 2;
+    bool Active = 3;
+}
+
+message ListTransactionTypeRequest {}
+
+message ListTransactionTypeResponse {
+    repeated TransactionType TransactionTypes = 1;
+}

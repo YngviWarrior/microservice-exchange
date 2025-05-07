@@ -18,7 +18,7 @@ type OperationRepositoryInterface interface {
 	Create(in *repositorydto.InputOperationDto) int64
 	Count(userId uint64, parity int64) int64
 	List(in *repositorydto.InputOperationDto) (list []*repositorydto.OjoinOMDFT)
-	Get(operation int64) (out repositorydto.OutputOperationDto)
+	Get(operation uint64) (out repositorydto.OjoinOMDFT)
 	ListAll() (list []*repositorydto.OutputOperationWStrategyDto)
 	ListByPeriod(from, to int64) (list []*repositorydto.OutputOperationWStrategyDto)
 	Update(p *repositorydto.InputOperationDto) bool
@@ -214,7 +214,7 @@ func (t *operationRepository) List(in *repositorydto.InputOperationDto) (list []
 	return
 }
 
-func (t *operationRepository) Get(operation int64) (out repositorydto.OutputOperationDto) {
+func (t *operationRepository) Get(operation uint64) (out repositorydto.OjoinOMDFT) {
 	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT o.operation, o.user, o.parity, o.exchange, o.strategy, o.strategy_variant, o.mts_start, o.mts_finish, o.profit, o.invested_amount, o.open_price, o.close_price, o.closed, o.audit, o.enabled
 		FROM operation o

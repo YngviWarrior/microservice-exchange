@@ -30,7 +30,7 @@ type OperationHistory struct {
 	CoinQuantity            float64                `protobuf:"fixed64,5,opt,name=CoinQuantity,proto3" json:"CoinQuantity,omitempty"`
 	StablePrice             float64                `protobuf:"fixed64,6,opt,name=StablePrice,proto3" json:"StablePrice,omitempty"`
 	StableQuantity          float64                `protobuf:"fixed64,7,opt,name=StableQuantity,proto3" json:"StableQuantity,omitempty"`
-	OperationExchangeId     string                 `protobuf:"bytes,8,opt,name=OperationExchangeId,proto3" json:"OperationExchangeId,omitempty"`
+	OperationExchangeId     uint64                 `protobuf:"varint,8,opt,name=OperationExchangeId,proto3" json:"OperationExchangeId,omitempty"`
 	OperationExchangeStatus uint64                 `protobuf:"varint,9,opt,name=OperationExchangeStatus,proto3" json:"OperationExchangeStatus,omitempty"`
 	Fee                     float64                `protobuf:"fixed64,10,opt,name=Fee,proto3" json:"Fee,omitempty"`
 	unknownFields           protoimpl.UnknownFields
@@ -116,11 +116,11 @@ func (x *OperationHistory) GetStableQuantity() float64 {
 	return 0
 }
 
-func (x *OperationHistory) GetOperationExchangeId() string {
+func (x *OperationHistory) GetOperationExchangeId() uint64 {
 	if x != nil {
 		return x.OperationExchangeId
 	}
-	return ""
+	return 0
 }
 
 func (x *OperationHistory) GetOperationExchangeStatus() uint64 {
@@ -137,6 +137,102 @@ func (x *OperationHistory) GetFee() float64 {
 	return 0
 }
 
+type GetOperationHistoryRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderId       uint64                 `protobuf:"varint,1,opt,name=OrderId,proto3" json:"OrderId,omitempty"`
+	OrderIdLink   uint64                 `protobuf:"varint,2,opt,name=OrderIdLink,proto3" json:"OrderIdLink,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOperationHistoryRequest) Reset() {
+	*x = GetOperationHistoryRequest{}
+	mi := &file_operation_history_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOperationHistoryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOperationHistoryRequest) ProtoMessage() {}
+
+func (x *GetOperationHistoryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_operation_history_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOperationHistoryRequest.ProtoReflect.Descriptor instead.
+func (*GetOperationHistoryRequest) Descriptor() ([]byte, []int) {
+	return file_operation_history_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetOperationHistoryRequest) GetOrderId() uint64 {
+	if x != nil {
+		return x.OrderId
+	}
+	return 0
+}
+
+func (x *GetOperationHistoryRequest) GetOrderIdLink() uint64 {
+	if x != nil {
+		return x.OrderIdLink
+	}
+	return 0
+}
+
+type GetOperationHistoryResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	OperationHistory *OperationHistory      `protobuf:"bytes,1,opt,name=OperationHistory,proto3" json:"OperationHistory,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GetOperationHistoryResponse) Reset() {
+	*x = GetOperationHistoryResponse{}
+	mi := &file_operation_history_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOperationHistoryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOperationHistoryResponse) ProtoMessage() {}
+
+func (x *GetOperationHistoryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_operation_history_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOperationHistoryResponse.ProtoReflect.Descriptor instead.
+func (*GetOperationHistoryResponse) Descriptor() ([]byte, []int) {
+	return file_operation_history_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetOperationHistoryResponse) GetOperationHistory() *OperationHistory {
+	if x != nil {
+		return x.OperationHistory
+	}
+	return nil
+}
+
 type GetLastBuyRegisterByOperationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Operation     uint64                 `protobuf:"varint,1,opt,name=Operation,proto3" json:"Operation,omitempty"`
@@ -146,7 +242,7 @@ type GetLastBuyRegisterByOperationRequest struct {
 
 func (x *GetLastBuyRegisterByOperationRequest) Reset() {
 	*x = GetLastBuyRegisterByOperationRequest{}
-	mi := &file_operation_history_proto_msgTypes[1]
+	mi := &file_operation_history_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -158,7 +254,7 @@ func (x *GetLastBuyRegisterByOperationRequest) String() string {
 func (*GetLastBuyRegisterByOperationRequest) ProtoMessage() {}
 
 func (x *GetLastBuyRegisterByOperationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_operation_history_proto_msgTypes[1]
+	mi := &file_operation_history_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -171,7 +267,7 @@ func (x *GetLastBuyRegisterByOperationRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use GetLastBuyRegisterByOperationRequest.ProtoReflect.Descriptor instead.
 func (*GetLastBuyRegisterByOperationRequest) Descriptor() ([]byte, []int) {
-	return file_operation_history_proto_rawDescGZIP(), []int{1}
+	return file_operation_history_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetLastBuyRegisterByOperationRequest) GetOperation() uint64 {
@@ -191,7 +287,7 @@ type GetLastBuyRegisterByOperationResponse struct {
 
 func (x *GetLastBuyRegisterByOperationResponse) Reset() {
 	*x = GetLastBuyRegisterByOperationResponse{}
-	mi := &file_operation_history_proto_msgTypes[2]
+	mi := &file_operation_history_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -203,7 +299,7 @@ func (x *GetLastBuyRegisterByOperationResponse) String() string {
 func (*GetLastBuyRegisterByOperationResponse) ProtoMessage() {}
 
 func (x *GetLastBuyRegisterByOperationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_operation_history_proto_msgTypes[2]
+	mi := &file_operation_history_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -216,7 +312,7 @@ func (x *GetLastBuyRegisterByOperationResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use GetLastBuyRegisterByOperationResponse.ProtoReflect.Descriptor instead.
 func (*GetLastBuyRegisterByOperationResponse) Descriptor() ([]byte, []int) {
-	return file_operation_history_proto_rawDescGZIP(), []int{2}
+	return file_operation_history_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetLastBuyRegisterByOperationResponse) GetCoinQuantity() float64 {
@@ -242,7 +338,7 @@ type CreateOperationHistoryRequest struct {
 
 func (x *CreateOperationHistoryRequest) Reset() {
 	*x = CreateOperationHistoryRequest{}
-	mi := &file_operation_history_proto_msgTypes[3]
+	mi := &file_operation_history_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -254,7 +350,7 @@ func (x *CreateOperationHistoryRequest) String() string {
 func (*CreateOperationHistoryRequest) ProtoMessage() {}
 
 func (x *CreateOperationHistoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_operation_history_proto_msgTypes[3]
+	mi := &file_operation_history_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -267,7 +363,7 @@ func (x *CreateOperationHistoryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateOperationHistoryRequest.ProtoReflect.Descriptor instead.
 func (*CreateOperationHistoryRequest) Descriptor() ([]byte, []int) {
-	return file_operation_history_proto_rawDescGZIP(), []int{3}
+	return file_operation_history_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *CreateOperationHistoryRequest) GetOperationHistory() *OperationHistory {
@@ -286,7 +382,7 @@ type CreateOperationHistoryResponse struct {
 
 func (x *CreateOperationHistoryResponse) Reset() {
 	*x = CreateOperationHistoryResponse{}
-	mi := &file_operation_history_proto_msgTypes[4]
+	mi := &file_operation_history_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -298,7 +394,7 @@ func (x *CreateOperationHistoryResponse) String() string {
 func (*CreateOperationHistoryResponse) ProtoMessage() {}
 
 func (x *CreateOperationHistoryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_operation_history_proto_msgTypes[4]
+	mi := &file_operation_history_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -311,10 +407,98 @@ func (x *CreateOperationHistoryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateOperationHistoryResponse.ProtoReflect.Descriptor instead.
 func (*CreateOperationHistoryResponse) Descriptor() ([]byte, []int) {
-	return file_operation_history_proto_rawDescGZIP(), []int{4}
+	return file_operation_history_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *CreateOperationHistoryResponse) GetOperationHistory() *OperationHistory {
+	if x != nil {
+		return x.OperationHistory
+	}
+	return nil
+}
+
+type UpdateOperationHistoryRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	OperationHistory *OperationHistory      `protobuf:"bytes,1,opt,name=OperationHistory,proto3" json:"OperationHistory,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *UpdateOperationHistoryRequest) Reset() {
+	*x = UpdateOperationHistoryRequest{}
+	mi := &file_operation_history_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateOperationHistoryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOperationHistoryRequest) ProtoMessage() {}
+
+func (x *UpdateOperationHistoryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_operation_history_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOperationHistoryRequest.ProtoReflect.Descriptor instead.
+func (*UpdateOperationHistoryRequest) Descriptor() ([]byte, []int) {
+	return file_operation_history_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UpdateOperationHistoryRequest) GetOperationHistory() *OperationHistory {
+	if x != nil {
+		return x.OperationHistory
+	}
+	return nil
+}
+
+type UpdateOperationHistoryResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	OperationHistory *OperationHistory      `protobuf:"bytes,1,opt,name=OperationHistory,proto3" json:"OperationHistory,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *UpdateOperationHistoryResponse) Reset() {
+	*x = UpdateOperationHistoryResponse{}
+	mi := &file_operation_history_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateOperationHistoryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOperationHistoryResponse) ProtoMessage() {}
+
+func (x *UpdateOperationHistoryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_operation_history_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOperationHistoryResponse.ProtoReflect.Descriptor instead.
+func (*UpdateOperationHistoryResponse) Descriptor() ([]byte, []int) {
+	return file_operation_history_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateOperationHistoryResponse) GetOperationHistory() *OperationHistory {
 	if x != nil {
 		return x.OperationHistory
 	}
@@ -334,10 +518,15 @@ const file_operation_history_proto_rawDesc = "" +
 	"\fCoinQuantity\x18\x05 \x01(\x01R\fCoinQuantity\x12 \n" +
 	"\vStablePrice\x18\x06 \x01(\x01R\vStablePrice\x12&\n" +
 	"\x0eStableQuantity\x18\a \x01(\x01R\x0eStableQuantity\x120\n" +
-	"\x13OperationExchangeId\x18\b \x01(\tR\x13OperationExchangeId\x128\n" +
+	"\x13OperationExchangeId\x18\b \x01(\x04R\x13OperationExchangeId\x128\n" +
 	"\x17OperationExchangeStatus\x18\t \x01(\x04R\x17OperationExchangeStatus\x12\x10\n" +
 	"\x03Fee\x18\n" +
-	" \x01(\x01R\x03Fee\"D\n" +
+	" \x01(\x01R\x03Fee\"X\n" +
+	"\x1aGetOperationHistoryRequest\x12\x18\n" +
+	"\aOrderId\x18\x01 \x01(\x04R\aOrderId\x12 \n" +
+	"\vOrderIdLink\x18\x02 \x01(\x04R\vOrderIdLink\"_\n" +
+	"\x1bGetOperationHistoryResponse\x12@\n" +
+	"\x10OperationHistory\x18\x01 \x01(\v2\x14.pb.OperationHistoryR\x10OperationHistory\"D\n" +
 	"$GetLastBuyRegisterByOperationRequest\x12\x1c\n" +
 	"\tOperation\x18\x01 \x01(\x04R\tOperation\"]\n" +
 	"%GetLastBuyRegisterByOperationResponse\x12\"\n" +
@@ -346,6 +535,10 @@ const file_operation_history_proto_rawDesc = "" +
 	"\x1dCreateOperationHistoryRequest\x12@\n" +
 	"\x10OperationHistory\x18\x01 \x01(\v2\x14.pb.OperationHistoryR\x10OperationHistory\"b\n" +
 	"\x1eCreateOperationHistoryResponse\x12@\n" +
+	"\x10OperationHistory\x18\x01 \x01(\v2\x14.pb.OperationHistoryR\x10OperationHistory\"a\n" +
+	"\x1dUpdateOperationHistoryRequest\x12@\n" +
+	"\x10OperationHistory\x18\x01 \x01(\v2\x14.pb.OperationHistoryR\x10OperationHistory\"b\n" +
+	"\x1eUpdateOperationHistoryResponse\x12@\n" +
 	"\x10OperationHistory\x18\x01 \x01(\v2\x14.pb.OperationHistoryR\x10OperationHistoryB\x06Z\x04./pbb\x06proto3"
 
 var (
@@ -360,22 +553,29 @@ func file_operation_history_proto_rawDescGZIP() []byte {
 	return file_operation_history_proto_rawDescData
 }
 
-var file_operation_history_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_operation_history_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_operation_history_proto_goTypes = []any{
 	(*OperationHistory)(nil),                      // 0: pb.OperationHistory
-	(*GetLastBuyRegisterByOperationRequest)(nil),  // 1: pb.GetLastBuyRegisterByOperationRequest
-	(*GetLastBuyRegisterByOperationResponse)(nil), // 2: pb.GetLastBuyRegisterByOperationResponse
-	(*CreateOperationHistoryRequest)(nil),         // 3: pb.CreateOperationHistoryRequest
-	(*CreateOperationHistoryResponse)(nil),        // 4: pb.CreateOperationHistoryResponse
+	(*GetOperationHistoryRequest)(nil),            // 1: pb.GetOperationHistoryRequest
+	(*GetOperationHistoryResponse)(nil),           // 2: pb.GetOperationHistoryResponse
+	(*GetLastBuyRegisterByOperationRequest)(nil),  // 3: pb.GetLastBuyRegisterByOperationRequest
+	(*GetLastBuyRegisterByOperationResponse)(nil), // 4: pb.GetLastBuyRegisterByOperationResponse
+	(*CreateOperationHistoryRequest)(nil),         // 5: pb.CreateOperationHistoryRequest
+	(*CreateOperationHistoryResponse)(nil),        // 6: pb.CreateOperationHistoryResponse
+	(*UpdateOperationHistoryRequest)(nil),         // 7: pb.UpdateOperationHistoryRequest
+	(*UpdateOperationHistoryResponse)(nil),        // 8: pb.UpdateOperationHistoryResponse
 }
 var file_operation_history_proto_depIdxs = []int32{
-	0, // 0: pb.CreateOperationHistoryRequest.OperationHistory:type_name -> pb.OperationHistory
-	0, // 1: pb.CreateOperationHistoryResponse.OperationHistory:type_name -> pb.OperationHistory
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // 0: pb.GetOperationHistoryResponse.OperationHistory:type_name -> pb.OperationHistory
+	0, // 1: pb.CreateOperationHistoryRequest.OperationHistory:type_name -> pb.OperationHistory
+	0, // 2: pb.CreateOperationHistoryResponse.OperationHistory:type_name -> pb.OperationHistory
+	0, // 3: pb.UpdateOperationHistoryRequest.OperationHistory:type_name -> pb.OperationHistory
+	0, // 4: pb.UpdateOperationHistoryResponse.OperationHistory:type_name -> pb.OperationHistory
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_operation_history_proto_init() }
@@ -389,7 +589,7 @@ func file_operation_history_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_operation_history_proto_rawDesc), len(file_operation_history_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

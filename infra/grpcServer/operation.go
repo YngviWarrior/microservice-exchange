@@ -137,6 +137,45 @@ func (g *grpcServer) ListOperation(ctx context.Context, in *pb.ListOperationRequ
 	return
 }
 
+func (g *grpcServer) GetOperation(ctx context.Context, in *pb.GetOperationRequest) (out *pb.GetOperationResponse, err error) {
+	operationRepo := mysql.NewOperationRepository(g.Db)
+	usecase := usecase.NewGetOperationUseCase(operationRepo)
+
+	operation, err := usecase.GetOperation(&usecasedto.InputGetOperationDto{
+		OperationId: in.GetOperationId(),
+	})
+	if err != nil {
+		return
+	}
+
+	out = &pb.GetOperationResponse{
+		Operations: &pb.Operation{},
+	}
+
+	var o pb.Operation
+
+	o.Operation = uint64(operation.Operation)
+	o.User = operation.User
+	o.Parity = operation.Parity
+	o.Exchange = operation.Exchange
+	o.Strategy = uint64(operation.Strategy)
+	o.StrategyVariant = uint64(operation.StrategyVariant)
+	o.MtsStart = uint64(operation.MtsStart)
+	o.MtsFinish = uint64(operation.MtsFinish)
+	o.OpenPrice = operation.OpenPrice
+	o.ClosePrice = operation.ClosePrice
+	o.InvestedAmount = operation.InvestedAmount
+	o.ProfitAmount = operation.ProfitAmount
+	o.Profit = operation.Profit
+	o.Closed = operation.Closed
+	o.Audit = operation.Audit
+	o.Enabled = operation.Enabled
+
+	out.Operations = &o
+
+	return
+}
+
 func (g *grpcServer) UpdateOperation(ctx context.Context, in *pb.UpdateOperationRequest) (out *pb.UpdateOperationResponse, err error) {
 	operationRepo := mysql.NewOperationRepository(g.Db)
 	usecase := usecase.NewUpdateOperationUseCase(operationRepo)

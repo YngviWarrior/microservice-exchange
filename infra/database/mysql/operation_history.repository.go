@@ -14,7 +14,9 @@ type operationHistoryRepository struct {
 
 type OperationHistoryRepositoryInterface interface {
 	GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee float64)
+	Get(OrderExchangeId uint64) (repositorydto.OutputOperationHistoryDto, error)
 	Create(*repositorydto.InputOperationHistoryDto) bool
+	Update(*repositorydto.InputOperationHistoryDto) bool
 }
 
 func NewOperationHistoryRepository(db database.DatabaseInterface) OperationHistoryRepositoryInterface {
@@ -70,4 +72,69 @@ func (t *operationHistoryRepository) GetLastBuyRegisterByOperation(operation uin
 	}
 
 	return
+}
+
+func (t *operationHistoryRepository) Get(orderExchangeId uint64) (out repositorydto.OutputOperationHistoryDto, err error) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
+		SELECT operation_history, operation, transaction_type, coin_price, 
+		coin_quantity, stable_price, stable_quantity, fee, 
+		operation_exchange_id, operation_exchange_status
+		FROM operation_history
+		WHERE operation_exchange_id = ?
+	`)
+
+	if err != nil {
+		log.Panicln("OHRG 01: ", err)
+		return
+	}
+
+	defer stmt.Close()
+
+	err = stmt.QueryRow(orderExchangeId).Scan(&out.OperationHistory, &out.Operation, &out.TransactionType, &out.CoinPrice, &out.CoinQuantity, &out.StablePrice, &out.StableQuantity, &out.Fee, &out.OperationExchangeId, &out.OperationExchangeStatus)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("OHRG 02: ", err)
+		return
+	}
+
+	return
+}
+
+func (t *operationHistoryRepository) Update(p *repositorydto.InputOperationHistoryDto) bool {
+	stmt, err := t.Db.GetDatabase().Prepare(`
+		UPDATE operation_history
+		SET 
+			operation_history = ?,
+			operation = ?,
+			transaction_type = ?,
+			coin_price = ?,
+			coin_quantity = ?,
+			stable_price = ?,
+			stable_quantity = ?,
+			fee = ?,
+			operation_exchange_id = ?,
+			operation_exchange_status = ?
+		WHERE operation_history = ?
+	`)
+
+	if err != nil {
+		log.Panicln("OHRU 01: ", err)
+		return false
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(p.OperationHistory, p.Operation, p.TransactionType, p.CoinPrice, p.CoinQuantity, p.StablePrice, p.StableQuantity, p.Fee, p.OperationExchangeId, p.OperationExchangeStatus, p.OperationHistory)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("OHRU 02: ", err)
+		return false
+	}
+
+	return true
+
 }
