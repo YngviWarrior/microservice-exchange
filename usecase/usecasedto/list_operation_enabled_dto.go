@@ -1,21 +1,14 @@
 package usecasedto
 
-type InputListOperationDto struct {
-	UserId          uint64
-	Strategy        uint64
-	StrategyVariant uint64
-	Parity          uint64
-	Exchange        uint64
-	Closed          bool
-	Enabled         bool
-}
+type InputListOperationEnabledDto struct{}
 
-type OutputListOperationDto struct {
+type OutputListOperationEnabledDto struct {
 	Operation           uint64  `json:"operation"`
 	User                uint64  `json:"user_id"`
 	Parity              uint64  `json:"parity"`
+	ParitySymbol        string  `json:"parity_symbol"`
 	Exchange            uint64  `json:"exchange"`
-	Modality            uint64  `json:"modality"`
+	ExchangeName        string  `json:"exchange_name"`
 	Strategy            uint64  `json:"strategy"`
 	StrategyName        string  `json:"strategy_name"`
 	StrategyVariant     uint64  `json:"strategy_variant"`

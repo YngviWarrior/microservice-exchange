@@ -19,6 +19,7 @@ type InputOperationDto struct {
 	Closed          bool
 	Audit           bool
 	Enabled         bool
+	InTransaction   bool
 	TimesCanceled   float64
 }
 
@@ -39,6 +40,7 @@ type OutputOperationDto struct {
 	Closed          bool
 	Audit           bool
 	Enabled         bool
+	InTransaction   bool
 	TimesCanceled   float64
 }
 
@@ -61,13 +63,16 @@ type OutputOperationWStrategyDto struct {
 	Closed              bool    `json:"closed"`
 	Audit               bool    `json:"audit"`
 	Enabled             bool    `json:"enabled"`
+	InTransaction       bool    `json:"in_transaction"`
 }
 
 type OjoinOMDFT struct {
 	Operation           uint64  `json:"operation"`
 	User                uint64  `json:"user_id"`
 	Parity              uint64  `json:"parity"`
+	ParitySymbol        string  `json:"parity_symbol"`
 	Exchange            uint64  `json:"exchange"`
+	ExchangeName        string  `json:"exchange_name"`
 	Strategy            uint64  `json:"strategy"`
 	StrategyName        string  `json:"strategy_name"`
 	StrategyVariant     uint64  `json:"strategy_variant"`
@@ -82,6 +87,7 @@ type OjoinOMDFT struct {
 	Closed              bool    `json:"closed"`
 	Audit               bool    `json:"audit"`
 	Enabled             bool    `json:"enabled"`
+	InTransaction       bool    `json:"in_transaction"`
 
 	OperationMetaDataFastTrade sql.NullInt64
 	MinimumPrice               sql.NullFloat64

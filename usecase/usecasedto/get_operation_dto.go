@@ -24,6 +24,7 @@ type OutputGetOperationDto struct {
 	Closed              bool    `json:"closed"`
 	Audit               bool    `json:"audit"`
 	Enabled             bool    `json:"enabled"`
+	InTransaction       bool    `json:"in_transaction"`
 
 	// OperationMetaDataFastTrade sql.NullInt64
 	// MinimumPrice               sql.NullFloat64

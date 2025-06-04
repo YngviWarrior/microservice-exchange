@@ -13,6 +13,6 @@ type OutputGetOperationHistoryDto struct {
 	StablePrice             float64 `json:"stable_price"`
 	StableQuantity          float64 `json:"stable_quantity"`
 	Fee                     float64 `json:"fee"`
-	OperationExchangeId     uint64  `json:"operation_exchange_id"`
+	OperationExchangeId     string  `json:"operation_exchange_id"`
 	OperationExchangeStatus uint64  `json:"operation_exchange_status"`
 }

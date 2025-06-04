@@ -9,6 +9,49 @@ import (
 	"github.com/YngviWarrior/microservice-exchange/usecase/usecasedto"
 )
 
+func (g *grpcServer) ListOperationEnabled(ctx context.Context, in *pb.ListOperationEnabledRequest) (out *pb.ListOperationEnabledResponse, err error) {
+	operationRepo := mysql.NewOperationRepository(g.Db)
+	usecase := usecase.NewListOperationEnabledUseCase(operationRepo)
+
+	operations, err := usecase.ListOperationEnabled(&usecasedto.InputListOperationEnabledDto{})
+	if err != nil {
+		return
+	}
+
+	out = &pb.ListOperationEnabledResponse{
+		Operations: []*pb.OperationJoin{},
+	}
+
+	for _, v := range operations {
+		var o pb.OperationJoin
+
+		o.Operation = uint64(v.Operation)
+		o.User = v.User
+		o.Parity = v.Parity
+		o.ParitySymbol = v.ParitySymbol
+		o.Exchange = v.Exchange
+		o.Strategy = uint64(v.Strategy)
+		o.StrategyName = v.StrategyName
+		o.StrategyVariant = uint64(v.StrategyVariant)
+		o.StrategyVariantName = v.StrategyVariantName
+		o.MtsStart = uint64(v.MtsStart)
+		o.MtsFinish = uint64(v.MtsFinish)
+		o.OpenPrice = v.OpenPrice
+		o.ClosePrice = v.ClosePrice
+		o.InvestedAmount = v.InvestedAmount
+		o.ProfitAmount = v.ProfitAmount
+		o.Profit = v.Profit
+		o.Closed = v.Closed
+		o.Audit = v.Audit
+		o.Enabled = v.Enabled
+		o.InTransaction = v.InTransaction
+
+		out.Operations = append(out.Operations, &o)
+	}
+	// fmt.Printf("%+v\n", out.Operations)
+	return
+}
+
 func (g *grpcServer) ListAllOperation(ctx context.Context, in *pb.ListAllOperationRequest) (out *pb.ListAllOperationResponse, err error) {
 	operationRepo := mysql.NewOperationRepository(g.Db)
 	usecase := usecase.NewListOperationAllUseCase(operationRepo)
@@ -30,7 +73,9 @@ func (g *grpcServer) ListAllOperation(ctx context.Context, in *pb.ListAllOperati
 		o.Parity = v.Parity
 		o.Exchange = v.Exchange
 		o.Strategy = uint64(v.Strategy)
+		o.StrategyName = v.StrategyName
 		o.StrategyVariant = uint64(v.StrategyVariant)
+		o.StrategyVariantName = v.StrategyVariantName
 		o.MtsStart = uint64(v.MtsStart)
 		o.MtsFinish = uint64(v.MtsFinish)
 		o.OpenPrice = v.OpenPrice
@@ -130,6 +175,7 @@ func (g *grpcServer) ListOperation(ctx context.Context, in *pb.ListOperationRequ
 		o.Closed = v.Closed
 		o.Audit = v.Audit
 		o.Enabled = v.Enabled
+		o.InTransaction = v.InTransaction
 
 		out.Operations = append(out.Operations, &o)
 	}
@@ -170,6 +216,7 @@ func (g *grpcServer) GetOperation(ctx context.Context, in *pb.GetOperationReques
 	o.Closed = operation.Closed
 	o.Audit = operation.Audit
 	o.Enabled = operation.Enabled
+	o.InTransaction = operation.InTransaction
 
 	out.Operation = &o
 
@@ -178,11 +225,12 @@ func (g *grpcServer) GetOperation(ctx context.Context, in *pb.GetOperationReques
 
 func (g *grpcServer) UpdateOperation(ctx context.Context, in *pb.UpdateOperationRequest) (out *pb.UpdateOperationResponse, err error) {
 	operationRepo := mysql.NewOperationRepository(g.Db)
-	usecase := usecase.NewUpdateOperationUseCase(operationRepo)
+	usecase1 := usecase.NewUpdateOperationUseCase(operationRepo)
+	usecase2 := usecase.NewGetOperationUseCase(operationRepo)
 
 	op := in.GetOperation()
 
-	operation, err := usecase.UpdateOperation(&usecasedto.InputUpdateOperationDto{
+	_, err = usecase1.UpdateOperation(&usecasedto.InputUpdateOperationDto{
 		Operation:       op.GetOperation(),
 		User:            op.GetUser(),
 		Parity:          op.GetParity(),
@@ -199,6 +247,14 @@ func (g *grpcServer) UpdateOperation(ctx context.Context, in *pb.UpdateOperation
 		Closed:          op.GetClosed(),
 		Audit:           op.GetAudit(),
 		Enabled:         op.GetEnabled(),
+		InTransaction:   op.GetInTransaction(),
+	})
+	if err != nil {
+		return
+	}
+
+	operation, err := usecase2.GetOperation(&usecasedto.InputGetOperationDto{
+		OperationId: op.GetOperation(),
 	})
 	if err != nil {
 		return
@@ -226,6 +282,7 @@ func (g *grpcServer) UpdateOperation(ctx context.Context, in *pb.UpdateOperation
 	o.Closed = operation.Closed
 	o.Audit = operation.Audit
 	o.Enabled = operation.Enabled
+	o.InTransaction = operation.InTransaction
 
 	out.Operation = &o
 
@@ -255,6 +312,7 @@ func (g *grpcServer) CreateOperation(ctx context.Context, in *pb.CreateOperation
 		Closed:          op.GetClosed(),
 		Audit:           op.GetAudit(),
 		Enabled:         op.GetEnabled(),
+		InTransaction:   op.GetInTransaction(),
 	})
 	if err != nil {
 		return
@@ -282,6 +340,7 @@ func (g *grpcServer) CreateOperation(ctx context.Context, in *pb.CreateOperation
 	o.Closed = operation.Closed
 	o.Audit = operation.Audit
 	o.Enabled = operation.Enabled
+	o.InTransaction = operation.InTransaction
 
 	out.Operation = &o
 

@@ -13,8 +13,9 @@ type operationHistoryRepository struct {
 }
 
 type OperationHistoryRepositoryInterface interface {
-	GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee float64)
+	GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee float64, status uint64)
 	Get(OrderExchangeId uint64) (repositorydto.OutputOperationHistoryDto, error)
+	ListByOperation(operation uint64) []*repositorydto.OutputOperationHistoryDto
 	Create(*repositorydto.InputOperationHistoryDto) bool
 	Update(*repositorydto.InputOperationHistoryDto) bool
 }
@@ -23,6 +24,49 @@ func NewOperationHistoryRepository(db database.DatabaseInterface) OperationHisto
 	return &operationHistoryRepository{
 		Db: db,
 	}
+}
+
+func (t *operationHistoryRepository) ListByOperation(operation uint64) (list []*repositorydto.OutputOperationHistoryDto) {
+	stmt, err := t.Db.GetDatabase().Prepare(`
+		SELECT operation_history, operation, transaction_type, coin_price, 
+		coin_quantity, stable_price, stable_quantity, fee, 
+		operation_exchange_id, operation_exchange_status
+		FROM operation_history
+		WHERE operation = ?
+	`)
+
+	if err != nil {
+		log.Panic("OHRLBO 01: ", err)
+		return
+	}
+
+	defer stmt.Close()
+
+	res, err := stmt.Query(operation)
+
+	switch {
+	case err == sql.ErrNoRows:
+	case err != nil:
+		log.Panicln("OHRLBO 02: ", err)
+		return
+	}
+
+	defer res.Close()
+
+	for res.Next() {
+		var o repositorydto.OutputOperationHistoryDto
+
+		err = res.Scan(&o.OperationHistory, &o.Operation, &o.TransactionType, &o.CoinPrice, &o.CoinQuantity, &o.StablePrice, &o.StableQuantity, &o.Fee, &o.OperationExchangeId, &o.OperationExchangeStatus)
+
+		if err != nil {
+			log.Panic("OHRLBO 03: ", err)
+			return
+		}
+
+		list = append(list, &o)
+	}
+
+	return
 }
 
 func (t *operationHistoryRepository) Create(p *repositorydto.InputOperationHistoryDto) bool {
@@ -47,9 +91,9 @@ func (t *operationHistoryRepository) Create(p *repositorydto.InputOperationHisto
 	return true
 }
 
-func (t *operationHistoryRepository) GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee float64) {
+func (t *operationHistoryRepository) GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee float64, status uint64) {
 	stmt, err := t.Db.GetDatabase().Prepare(`
-		SELECT coin_quantity, fee
+		SELECT coin_quantity, fee, operation_exchange_status
 		FROM operation_history
 		WHERE operation = ? AND transaction_type = 1 
 		LIMIT 1
@@ -62,7 +106,7 @@ func (t *operationHistoryRepository) GetLastBuyRegisterByOperation(operation uin
 
 	defer stmt.Close()
 
-	err = stmt.QueryRow(operation).Scan(&coinQuantity, &fee)
+	err = stmt.QueryRow(operation).Scan(&coinQuantity, &fee, &status)
 
 	switch {
 	case err == sql.ErrNoRows:

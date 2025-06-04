@@ -42,6 +42,7 @@ func (u *usecaseGetOperation) GetOperation(in *usecasedto.InputGetOperationDto) 
 	out.Closed = operation.Closed
 	out.Audit = operation.Audit
 	out.Enabled = operation.Enabled
+	out.InTransaction = operation.InTransaction
 
 	return
 }

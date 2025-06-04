@@ -18,7 +18,7 @@ CREATE TABLE `parity`(
     PRIMARY KEY(`parity`)
 );
 
-INSERT INTO `parity`(`symbol`, `active`) VALUES("BTCUSDT", 1),("USDTBRL", 1),("BTCBRL", 1);
+INSERT INTO `parity`(`symbol`, `active`) VALUES("BTCUSDT", 1),("USDTBRL", 1),("BTCBRL", 1), ("ETHUSDT", 1);
 
 CREATE TABLE `exchange` (
     `exchange` INT(11) NOT NULL auto_increment,
@@ -136,6 +136,7 @@ CREATE TABLE `operation`(
     `closed` TINYINT(1) NOT NULL DEFAULT 0,
     `audit` TINYINT(1) NOT NULL DEFAULT 0,
     `enabled` TINYINT(1) NOT NULL DEFAULT 0,
+    `in_transaction` TINYINT(1) NOT NULL DEFAULT 0,
     `times_canceled` INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY(`operation`),
     FOREIGN KEY (`parity`) REFERENCES `parity`(`parity`),

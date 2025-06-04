@@ -31,7 +31,7 @@ const file_service_proto_rawDesc = "" +
 	"\n" +
 	"CreateUser\x12\x15.pb.CreateUserRequest\x1a\x10.pb.UserResponse\"\x00\x12?\n" +
 	"\x0eGetUserByEmail\x12\x19.pb.GetUserByEmailRequest\x1a\x10.pb.UserResponse\"\x00\x129\n" +
-	"\vGetUserById\x12\x16.pb.GetUserByIdRequest\x1a\x10.pb.UserResponse\"\x002\xf4\x14\n" +
+	"\vGetUserById\x12\x16.pb.GetUserByIdRequest\x1a\x10.pb.UserResponse\"\x002\xcf\x16\n" +
 	"\x0fExchangeService\x12H\n" +
 	"\x0fListTradeConfig\x12\x1a.pb.ListTradeConfigRequest\x1a\x17.pb.TradeConfigResponse\"\x00\x12L\n" +
 	"\x11CreateTradeConfig\x12\x1c.pb.CreateTradeConfigRequest\x1a\x17.pb.TradeConfigResponse\"\x00\x12R\n" +
@@ -56,85 +56,91 @@ const file_service_proto_rawDesc = "" +
 	"\rListAvgPrices\x12\x18.pb.ListAvgPricesRequest\x1a\x19.pb.ListAvgPricesResponse\"\x00\x12U\n" +
 	"\x12UpdateAveragePrice\x12\x1d.pb.UpdateAveragePriceRequest\x1a\x1e.pb.UpdateAveragePriceResponse\"\x00\x12C\n" +
 	"\fGetOperation\x12\x17.pb.GetOperationRequest\x1a\x18.pb.GetOperationResponse\"\x00\x12F\n" +
-	"\rListOperation\x12\x18.pb.ListOperationRequest\x1a\x19.pb.ListOperationResponse\"\x00\x12^\n" +
+	"\rListOperation\x12\x18.pb.ListOperationRequest\x1a\x19.pb.ListOperationResponse\"\x00\x12[\n" +
+	"\x14ListOperationEnabled\x12\x1f.pb.ListOperationEnabledRequest\x1a .pb.ListOperationEnabledResponse\"\x00\x12^\n" +
 	"\x15ListOperationByPeriod\x12 .pb.ListOperationByPeriodRequest\x1a!.pb.ListOperationByPeriodResponse\"\x00\x12O\n" +
 	"\x10ListAllOperation\x12\x1b.pb.ListAllOperationRequest\x1a\x1c.pb.ListAllOperationResponse\"\x00\x12L\n" +
 	"\x0fUpdateOperation\x12\x1a.pb.UpdateOperationRequest\x1a\x1b.pb.UpdateOperationResponse\"\x00\x12L\n" +
 	"\x0fCreateOperation\x12\x1a.pb.CreateOperationRequest\x1a\x1b.pb.CreateOperationResponse\"\x00\x12X\n" +
 	"\x13GetOperationHistory\x12\x1e.pb.GetOperationHistoryRequest\x1a\x1f.pb.GetOperationHistoryResponse\"\x00\x12a\n" +
-	"\x16UpdateOperationHistory\x12!.pb.UpdateOperationHistoryRequest\x1a\".pb.UpdateOperationHistoryResponse\"\x00\x12v\n" +
+	"\x16UpdateOperationHistory\x12!.pb.UpdateOperationHistoryRequest\x1a\".pb.UpdateOperationHistoryResponse\"\x00\x12|\n" +
+	"\x1fListOperationHistoryByOperation\x12*.pb.ListOperationHistoryByOperationRequest\x1a+.pb.ListOperationHistoryByOperationResponse\"\x00\x12v\n" +
 	"\x1dGetLastBuyRegisterByOperation\x12(.pb.GetLastBuyRegisterByOperationRequest\x1a).pb.GetLastBuyRegisterByOperationResponse\"\x00\x12a\n" +
 	"\x16CreateOperationHistory\x12!.pb.CreateOperationHistoryRequest\x1a\".pb.CreateOperationHistoryResponse\"\x00\x12X\n" +
 	"\x13ListTransactionType\x12\x1e.pb.ListTransactionTypeRequest\x1a\x1f.pb.ListTransactionTypeResponse\"\x00\x127\n" +
 	"\bStrategy\x12\x13.pb.StrategyRequest\x1a\x14.pb.StrategyResponse\"\x00B\x06Z\x04./pbb\x06proto3"
 
 var file_service_proto_goTypes = []any{
-	(*CreateUserRequest)(nil),                     // 0: pb.CreateUserRequest
-	(*GetUserByEmailRequest)(nil),                 // 1: pb.GetUserByEmailRequest
-	(*GetUserByIdRequest)(nil),                    // 2: pb.GetUserByIdRequest
-	(*ListTradeConfigRequest)(nil),                // 3: pb.ListTradeConfigRequest
-	(*CreateTradeConfigRequest)(nil),              // 4: pb.CreateTradeConfigRequest
-	(*UpdateTradeConfigRequest)(nil),              // 5: pb.UpdateTradeConfigRequest
-	(*GetTradeConfigRequest)(nil),                 // 6: pb.GetTradeConfigRequest
-	(*CreateUserStrategyRequest)(nil),             // 7: pb.CreateUserStrategyRequest
-	(*ListUserStrategyRequest)(nil),               // 8: pb.ListUserStrategyRequest
-	(*ListParityRequest)(nil),                     // 9: pb.ListParityRequest
-	(*GetAvgPriceByParityExchangeRequest)(nil),    // 10: pb.GetAvgPriceByParityExchangeRequest
-	(*ListCoinRequest)(nil),                       // 11: pb.ListCoinRequest
-	(*GetWalletWithCoinRequest)(nil),              // 12: pb.GetWalletWithCoinRequest
-	(*ListWalletWithCoinRequest)(nil),             // 13: pb.ListWalletWithCoinRequest
-	(*CreateWalletRequest)(nil),                   // 14: pb.CreateWalletRequest
-	(*UpdateWalletRequest)(nil),                   // 15: pb.UpdateWalletRequest
-	(*GetCandleFirstMtsRequest)(nil),              // 16: pb.GetCandleFirstMtsRequest
-	(*CreateCandlesRequest)(nil),                  // 17: pb.CreateCandlesRequest
-	(*ListCandleLimitRequest)(nil),                // 18: pb.ListCandleLimitRequest
-	(*GetFirstPriceRequest)(nil),                  // 19: pb.GetFirstPriceRequest
-	(*GetLastPriceRequest)(nil),                   // 20: pb.GetLastPriceRequest
-	(*ListAvgPricesRequest)(nil),                  // 21: pb.ListAvgPricesRequest
-	(*UpdateAveragePriceRequest)(nil),             // 22: pb.UpdateAveragePriceRequest
-	(*GetOperationRequest)(nil),                   // 23: pb.GetOperationRequest
-	(*ListOperationRequest)(nil),                  // 24: pb.ListOperationRequest
-	(*ListOperationByPeriodRequest)(nil),          // 25: pb.ListOperationByPeriodRequest
-	(*ListAllOperationRequest)(nil),               // 26: pb.ListAllOperationRequest
-	(*UpdateOperationRequest)(nil),                // 27: pb.UpdateOperationRequest
-	(*CreateOperationRequest)(nil),                // 28: pb.CreateOperationRequest
-	(*GetOperationHistoryRequest)(nil),            // 29: pb.GetOperationHistoryRequest
-	(*UpdateOperationHistoryRequest)(nil),         // 30: pb.UpdateOperationHistoryRequest
-	(*GetLastBuyRegisterByOperationRequest)(nil),  // 31: pb.GetLastBuyRegisterByOperationRequest
-	(*CreateOperationHistoryRequest)(nil),         // 32: pb.CreateOperationHistoryRequest
-	(*ListTransactionTypeRequest)(nil),            // 33: pb.ListTransactionTypeRequest
-	(*StrategyRequest)(nil),                       // 34: pb.StrategyRequest
-	(*UserResponse)(nil),                          // 35: pb.UserResponse
-	(*TradeConfigResponse)(nil),                   // 36: pb.TradeConfigResponse
-	(*UpdateTradeConfigResponse)(nil),             // 37: pb.UpdateTradeConfigResponse
-	(*GetTradeConfigResponse)(nil),                // 38: pb.GetTradeConfigResponse
-	(*UserStrategyResponse)(nil),                  // 39: pb.UserStrategyResponse
-	(*ListParityResponse)(nil),                    // 40: pb.ListParityResponse
-	(*GetAvgPriceByParityExchangeResponse)(nil),   // 41: pb.GetAvgPriceByParityExchangeResponse
-	(*ListCoinResponse)(nil),                      // 42: pb.ListCoinResponse
-	(*GetWalletWithCoinResponse)(nil),             // 43: pb.GetWalletWithCoinResponse
-	(*ListWalletWithCoinResponse)(nil),            // 44: pb.ListWalletWithCoinResponse
-	(*CreateWalletResponse)(nil),                  // 45: pb.CreateWalletResponse
-	(*UpdateWalletResponse)(nil),                  // 46: pb.UpdateWalletResponse
-	(*GetCandleFirstMtsResponse)(nil),             // 47: pb.GetCandleFirstMtsResponse
-	(*CreateCandlesResponse)(nil),                 // 48: pb.CreateCandlesResponse
-	(*ListCandleLimitResponse)(nil),               // 49: pb.ListCandleLimitResponse
-	(*GetFirstPriceResponse)(nil),                 // 50: pb.GetFirstPriceResponse
-	(*GetLastPriceResponse)(nil),                  // 51: pb.GetLastPriceResponse
-	(*ListAvgPricesResponse)(nil),                 // 52: pb.ListAvgPricesResponse
-	(*UpdateAveragePriceResponse)(nil),            // 53: pb.UpdateAveragePriceResponse
-	(*GetOperationResponse)(nil),                  // 54: pb.GetOperationResponse
-	(*ListOperationResponse)(nil),                 // 55: pb.ListOperationResponse
-	(*ListOperationByPeriodResponse)(nil),         // 56: pb.ListOperationByPeriodResponse
-	(*ListAllOperationResponse)(nil),              // 57: pb.ListAllOperationResponse
-	(*UpdateOperationResponse)(nil),               // 58: pb.UpdateOperationResponse
-	(*CreateOperationResponse)(nil),               // 59: pb.CreateOperationResponse
-	(*GetOperationHistoryResponse)(nil),           // 60: pb.GetOperationHistoryResponse
-	(*UpdateOperationHistoryResponse)(nil),        // 61: pb.UpdateOperationHistoryResponse
-	(*GetLastBuyRegisterByOperationResponse)(nil), // 62: pb.GetLastBuyRegisterByOperationResponse
-	(*CreateOperationHistoryResponse)(nil),        // 63: pb.CreateOperationHistoryResponse
-	(*ListTransactionTypeResponse)(nil),           // 64: pb.ListTransactionTypeResponse
-	(*StrategyResponse)(nil),                      // 65: pb.StrategyResponse
+	(*CreateUserRequest)(nil),                       // 0: pb.CreateUserRequest
+	(*GetUserByEmailRequest)(nil),                   // 1: pb.GetUserByEmailRequest
+	(*GetUserByIdRequest)(nil),                      // 2: pb.GetUserByIdRequest
+	(*ListTradeConfigRequest)(nil),                  // 3: pb.ListTradeConfigRequest
+	(*CreateTradeConfigRequest)(nil),                // 4: pb.CreateTradeConfigRequest
+	(*UpdateTradeConfigRequest)(nil),                // 5: pb.UpdateTradeConfigRequest
+	(*GetTradeConfigRequest)(nil),                   // 6: pb.GetTradeConfigRequest
+	(*CreateUserStrategyRequest)(nil),               // 7: pb.CreateUserStrategyRequest
+	(*ListUserStrategyRequest)(nil),                 // 8: pb.ListUserStrategyRequest
+	(*ListParityRequest)(nil),                       // 9: pb.ListParityRequest
+	(*GetAvgPriceByParityExchangeRequest)(nil),      // 10: pb.GetAvgPriceByParityExchangeRequest
+	(*ListCoinRequest)(nil),                         // 11: pb.ListCoinRequest
+	(*GetWalletWithCoinRequest)(nil),                // 12: pb.GetWalletWithCoinRequest
+	(*ListWalletWithCoinRequest)(nil),               // 13: pb.ListWalletWithCoinRequest
+	(*CreateWalletRequest)(nil),                     // 14: pb.CreateWalletRequest
+	(*UpdateWalletRequest)(nil),                     // 15: pb.UpdateWalletRequest
+	(*GetCandleFirstMtsRequest)(nil),                // 16: pb.GetCandleFirstMtsRequest
+	(*CreateCandlesRequest)(nil),                    // 17: pb.CreateCandlesRequest
+	(*ListCandleLimitRequest)(nil),                  // 18: pb.ListCandleLimitRequest
+	(*GetFirstPriceRequest)(nil),                    // 19: pb.GetFirstPriceRequest
+	(*GetLastPriceRequest)(nil),                     // 20: pb.GetLastPriceRequest
+	(*ListAvgPricesRequest)(nil),                    // 21: pb.ListAvgPricesRequest
+	(*UpdateAveragePriceRequest)(nil),               // 22: pb.UpdateAveragePriceRequest
+	(*GetOperationRequest)(nil),                     // 23: pb.GetOperationRequest
+	(*ListOperationRequest)(nil),                    // 24: pb.ListOperationRequest
+	(*ListOperationEnabledRequest)(nil),             // 25: pb.ListOperationEnabledRequest
+	(*ListOperationByPeriodRequest)(nil),            // 26: pb.ListOperationByPeriodRequest
+	(*ListAllOperationRequest)(nil),                 // 27: pb.ListAllOperationRequest
+	(*UpdateOperationRequest)(nil),                  // 28: pb.UpdateOperationRequest
+	(*CreateOperationRequest)(nil),                  // 29: pb.CreateOperationRequest
+	(*GetOperationHistoryRequest)(nil),              // 30: pb.GetOperationHistoryRequest
+	(*UpdateOperationHistoryRequest)(nil),           // 31: pb.UpdateOperationHistoryRequest
+	(*ListOperationHistoryByOperationRequest)(nil),  // 32: pb.ListOperationHistoryByOperationRequest
+	(*GetLastBuyRegisterByOperationRequest)(nil),    // 33: pb.GetLastBuyRegisterByOperationRequest
+	(*CreateOperationHistoryRequest)(nil),           // 34: pb.CreateOperationHistoryRequest
+	(*ListTransactionTypeRequest)(nil),              // 35: pb.ListTransactionTypeRequest
+	(*StrategyRequest)(nil),                         // 36: pb.StrategyRequest
+	(*UserResponse)(nil),                            // 37: pb.UserResponse
+	(*TradeConfigResponse)(nil),                     // 38: pb.TradeConfigResponse
+	(*UpdateTradeConfigResponse)(nil),               // 39: pb.UpdateTradeConfigResponse
+	(*GetTradeConfigResponse)(nil),                  // 40: pb.GetTradeConfigResponse
+	(*UserStrategyResponse)(nil),                    // 41: pb.UserStrategyResponse
+	(*ListParityResponse)(nil),                      // 42: pb.ListParityResponse
+	(*GetAvgPriceByParityExchangeResponse)(nil),     // 43: pb.GetAvgPriceByParityExchangeResponse
+	(*ListCoinResponse)(nil),                        // 44: pb.ListCoinResponse
+	(*GetWalletWithCoinResponse)(nil),               // 45: pb.GetWalletWithCoinResponse
+	(*ListWalletWithCoinResponse)(nil),              // 46: pb.ListWalletWithCoinResponse
+	(*CreateWalletResponse)(nil),                    // 47: pb.CreateWalletResponse
+	(*UpdateWalletResponse)(nil),                    // 48: pb.UpdateWalletResponse
+	(*GetCandleFirstMtsResponse)(nil),               // 49: pb.GetCandleFirstMtsResponse
+	(*CreateCandlesResponse)(nil),                   // 50: pb.CreateCandlesResponse
+	(*ListCandleLimitResponse)(nil),                 // 51: pb.ListCandleLimitResponse
+	(*GetFirstPriceResponse)(nil),                   // 52: pb.GetFirstPriceResponse
+	(*GetLastPriceResponse)(nil),                    // 53: pb.GetLastPriceResponse
+	(*ListAvgPricesResponse)(nil),                   // 54: pb.ListAvgPricesResponse
+	(*UpdateAveragePriceResponse)(nil),              // 55: pb.UpdateAveragePriceResponse
+	(*GetOperationResponse)(nil),                    // 56: pb.GetOperationResponse
+	(*ListOperationResponse)(nil),                   // 57: pb.ListOperationResponse
+	(*ListOperationEnabledResponse)(nil),            // 58: pb.ListOperationEnabledResponse
+	(*ListOperationByPeriodResponse)(nil),           // 59: pb.ListOperationByPeriodResponse
+	(*ListAllOperationResponse)(nil),                // 60: pb.ListAllOperationResponse
+	(*UpdateOperationResponse)(nil),                 // 61: pb.UpdateOperationResponse
+	(*CreateOperationResponse)(nil),                 // 62: pb.CreateOperationResponse
+	(*GetOperationHistoryResponse)(nil),             // 63: pb.GetOperationHistoryResponse
+	(*UpdateOperationHistoryResponse)(nil),          // 64: pb.UpdateOperationHistoryResponse
+	(*ListOperationHistoryByOperationResponse)(nil), // 65: pb.ListOperationHistoryByOperationResponse
+	(*GetLastBuyRegisterByOperationResponse)(nil),   // 66: pb.GetLastBuyRegisterByOperationResponse
+	(*CreateOperationHistoryResponse)(nil),          // 67: pb.CreateOperationHistoryResponse
+	(*ListTransactionTypeResponse)(nil),             // 68: pb.ListTransactionTypeResponse
+	(*StrategyResponse)(nil),                        // 69: pb.StrategyResponse
 }
 var file_service_proto_depIdxs = []int32{
 	0,  // 0: pb.UserService.CreateUser:input_type -> pb.CreateUserRequest
@@ -163,54 +169,58 @@ var file_service_proto_depIdxs = []int32{
 	22, // 23: pb.ExchangeService.UpdateAveragePrice:input_type -> pb.UpdateAveragePriceRequest
 	23, // 24: pb.ExchangeService.GetOperation:input_type -> pb.GetOperationRequest
 	24, // 25: pb.ExchangeService.ListOperation:input_type -> pb.ListOperationRequest
-	25, // 26: pb.ExchangeService.ListOperationByPeriod:input_type -> pb.ListOperationByPeriodRequest
-	26, // 27: pb.ExchangeService.ListAllOperation:input_type -> pb.ListAllOperationRequest
-	27, // 28: pb.ExchangeService.UpdateOperation:input_type -> pb.UpdateOperationRequest
-	28, // 29: pb.ExchangeService.CreateOperation:input_type -> pb.CreateOperationRequest
-	29, // 30: pb.ExchangeService.GetOperationHistory:input_type -> pb.GetOperationHistoryRequest
-	30, // 31: pb.ExchangeService.UpdateOperationHistory:input_type -> pb.UpdateOperationHistoryRequest
-	31, // 32: pb.ExchangeService.GetLastBuyRegisterByOperation:input_type -> pb.GetLastBuyRegisterByOperationRequest
-	32, // 33: pb.ExchangeService.CreateOperationHistory:input_type -> pb.CreateOperationHistoryRequest
-	33, // 34: pb.ExchangeService.ListTransactionType:input_type -> pb.ListTransactionTypeRequest
-	34, // 35: pb.ExchangeService.Strategy:input_type -> pb.StrategyRequest
-	35, // 36: pb.UserService.CreateUser:output_type -> pb.UserResponse
-	35, // 37: pb.UserService.GetUserByEmail:output_type -> pb.UserResponse
-	35, // 38: pb.UserService.GetUserById:output_type -> pb.UserResponse
-	36, // 39: pb.ExchangeService.ListTradeConfig:output_type -> pb.TradeConfigResponse
-	36, // 40: pb.ExchangeService.CreateTradeConfig:output_type -> pb.TradeConfigResponse
-	37, // 41: pb.ExchangeService.UpdateTradeConfig:output_type -> pb.UpdateTradeConfigResponse
-	38, // 42: pb.ExchangeService.GetTradeConfig:output_type -> pb.GetTradeConfigResponse
-	39, // 43: pb.ExchangeService.CreateUserStrategy:output_type -> pb.UserStrategyResponse
-	39, // 44: pb.ExchangeService.ListUserStrategy:output_type -> pb.UserStrategyResponse
-	40, // 45: pb.ExchangeService.ListParity:output_type -> pb.ListParityResponse
-	41, // 46: pb.ExchangeService.GetAvgPriceByParityExchange:output_type -> pb.GetAvgPriceByParityExchangeResponse
-	42, // 47: pb.ExchangeService.ListCoin:output_type -> pb.ListCoinResponse
-	43, // 48: pb.ExchangeService.GetWalletWithCoin:output_type -> pb.GetWalletWithCoinResponse
-	44, // 49: pb.ExchangeService.ListWalletWithCoin:output_type -> pb.ListWalletWithCoinResponse
-	45, // 50: pb.ExchangeService.CreateWallet:output_type -> pb.CreateWalletResponse
-	46, // 51: pb.ExchangeService.UpdateWallet:output_type -> pb.UpdateWalletResponse
-	47, // 52: pb.ExchangeService.GetCandleFirstMts:output_type -> pb.GetCandleFirstMtsResponse
-	47, // 53: pb.ExchangeService.GetLastTwoCandles:output_type -> pb.GetCandleFirstMtsResponse
-	48, // 54: pb.ExchangeService.CreateCandles:output_type -> pb.CreateCandlesResponse
-	49, // 55: pb.ExchangeService.ListCandleLimit:output_type -> pb.ListCandleLimitResponse
-	50, // 56: pb.ExchangeService.GetFirstPrice:output_type -> pb.GetFirstPriceResponse
-	51, // 57: pb.ExchangeService.GetLastPrice:output_type -> pb.GetLastPriceResponse
-	52, // 58: pb.ExchangeService.ListAvgPrices:output_type -> pb.ListAvgPricesResponse
-	53, // 59: pb.ExchangeService.UpdateAveragePrice:output_type -> pb.UpdateAveragePriceResponse
-	54, // 60: pb.ExchangeService.GetOperation:output_type -> pb.GetOperationResponse
-	55, // 61: pb.ExchangeService.ListOperation:output_type -> pb.ListOperationResponse
-	56, // 62: pb.ExchangeService.ListOperationByPeriod:output_type -> pb.ListOperationByPeriodResponse
-	57, // 63: pb.ExchangeService.ListAllOperation:output_type -> pb.ListAllOperationResponse
-	58, // 64: pb.ExchangeService.UpdateOperation:output_type -> pb.UpdateOperationResponse
-	59, // 65: pb.ExchangeService.CreateOperation:output_type -> pb.CreateOperationResponse
-	60, // 66: pb.ExchangeService.GetOperationHistory:output_type -> pb.GetOperationHistoryResponse
-	61, // 67: pb.ExchangeService.UpdateOperationHistory:output_type -> pb.UpdateOperationHistoryResponse
-	62, // 68: pb.ExchangeService.GetLastBuyRegisterByOperation:output_type -> pb.GetLastBuyRegisterByOperationResponse
-	63, // 69: pb.ExchangeService.CreateOperationHistory:output_type -> pb.CreateOperationHistoryResponse
-	64, // 70: pb.ExchangeService.ListTransactionType:output_type -> pb.ListTransactionTypeResponse
-	65, // 71: pb.ExchangeService.Strategy:output_type -> pb.StrategyResponse
-	36, // [36:72] is the sub-list for method output_type
-	0,  // [0:36] is the sub-list for method input_type
+	25, // 26: pb.ExchangeService.ListOperationEnabled:input_type -> pb.ListOperationEnabledRequest
+	26, // 27: pb.ExchangeService.ListOperationByPeriod:input_type -> pb.ListOperationByPeriodRequest
+	27, // 28: pb.ExchangeService.ListAllOperation:input_type -> pb.ListAllOperationRequest
+	28, // 29: pb.ExchangeService.UpdateOperation:input_type -> pb.UpdateOperationRequest
+	29, // 30: pb.ExchangeService.CreateOperation:input_type -> pb.CreateOperationRequest
+	30, // 31: pb.ExchangeService.GetOperationHistory:input_type -> pb.GetOperationHistoryRequest
+	31, // 32: pb.ExchangeService.UpdateOperationHistory:input_type -> pb.UpdateOperationHistoryRequest
+	32, // 33: pb.ExchangeService.ListOperationHistoryByOperation:input_type -> pb.ListOperationHistoryByOperationRequest
+	33, // 34: pb.ExchangeService.GetLastBuyRegisterByOperation:input_type -> pb.GetLastBuyRegisterByOperationRequest
+	34, // 35: pb.ExchangeService.CreateOperationHistory:input_type -> pb.CreateOperationHistoryRequest
+	35, // 36: pb.ExchangeService.ListTransactionType:input_type -> pb.ListTransactionTypeRequest
+	36, // 37: pb.ExchangeService.Strategy:input_type -> pb.StrategyRequest
+	37, // 38: pb.UserService.CreateUser:output_type -> pb.UserResponse
+	37, // 39: pb.UserService.GetUserByEmail:output_type -> pb.UserResponse
+	37, // 40: pb.UserService.GetUserById:output_type -> pb.UserResponse
+	38, // 41: pb.ExchangeService.ListTradeConfig:output_type -> pb.TradeConfigResponse
+	38, // 42: pb.ExchangeService.CreateTradeConfig:output_type -> pb.TradeConfigResponse
+	39, // 43: pb.ExchangeService.UpdateTradeConfig:output_type -> pb.UpdateTradeConfigResponse
+	40, // 44: pb.ExchangeService.GetTradeConfig:output_type -> pb.GetTradeConfigResponse
+	41, // 45: pb.ExchangeService.CreateUserStrategy:output_type -> pb.UserStrategyResponse
+	41, // 46: pb.ExchangeService.ListUserStrategy:output_type -> pb.UserStrategyResponse
+	42, // 47: pb.ExchangeService.ListParity:output_type -> pb.ListParityResponse
+	43, // 48: pb.ExchangeService.GetAvgPriceByParityExchange:output_type -> pb.GetAvgPriceByParityExchangeResponse
+	44, // 49: pb.ExchangeService.ListCoin:output_type -> pb.ListCoinResponse
+	45, // 50: pb.ExchangeService.GetWalletWithCoin:output_type -> pb.GetWalletWithCoinResponse
+	46, // 51: pb.ExchangeService.ListWalletWithCoin:output_type -> pb.ListWalletWithCoinResponse
+	47, // 52: pb.ExchangeService.CreateWallet:output_type -> pb.CreateWalletResponse
+	48, // 53: pb.ExchangeService.UpdateWallet:output_type -> pb.UpdateWalletResponse
+	49, // 54: pb.ExchangeService.GetCandleFirstMts:output_type -> pb.GetCandleFirstMtsResponse
+	49, // 55: pb.ExchangeService.GetLastTwoCandles:output_type -> pb.GetCandleFirstMtsResponse
+	50, // 56: pb.ExchangeService.CreateCandles:output_type -> pb.CreateCandlesResponse
+	51, // 57: pb.ExchangeService.ListCandleLimit:output_type -> pb.ListCandleLimitResponse
+	52, // 58: pb.ExchangeService.GetFirstPrice:output_type -> pb.GetFirstPriceResponse
+	53, // 59: pb.ExchangeService.GetLastPrice:output_type -> pb.GetLastPriceResponse
+	54, // 60: pb.ExchangeService.ListAvgPrices:output_type -> pb.ListAvgPricesResponse
+	55, // 61: pb.ExchangeService.UpdateAveragePrice:output_type -> pb.UpdateAveragePriceResponse
+	56, // 62: pb.ExchangeService.GetOperation:output_type -> pb.GetOperationResponse
+	57, // 63: pb.ExchangeService.ListOperation:output_type -> pb.ListOperationResponse
+	58, // 64: pb.ExchangeService.ListOperationEnabled:output_type -> pb.ListOperationEnabledResponse
+	59, // 65: pb.ExchangeService.ListOperationByPeriod:output_type -> pb.ListOperationByPeriodResponse
+	60, // 66: pb.ExchangeService.ListAllOperation:output_type -> pb.ListAllOperationResponse
+	61, // 67: pb.ExchangeService.UpdateOperation:output_type -> pb.UpdateOperationResponse
+	62, // 68: pb.ExchangeService.CreateOperation:output_type -> pb.CreateOperationResponse
+	63, // 69: pb.ExchangeService.GetOperationHistory:output_type -> pb.GetOperationHistoryResponse
+	64, // 70: pb.ExchangeService.UpdateOperationHistory:output_type -> pb.UpdateOperationHistoryResponse
+	65, // 71: pb.ExchangeService.ListOperationHistoryByOperation:output_type -> pb.ListOperationHistoryByOperationResponse
+	66, // 72: pb.ExchangeService.GetLastBuyRegisterByOperation:output_type -> pb.GetLastBuyRegisterByOperationResponse
+	67, // 73: pb.ExchangeService.CreateOperationHistory:output_type -> pb.CreateOperationHistoryResponse
+	68, // 74: pb.ExchangeService.ListTransactionType:output_type -> pb.ListTransactionTypeResponse
+	69, // 75: pb.ExchangeService.Strategy:output_type -> pb.StrategyResponse
+	38, // [38:76] is the sub-list for method output_type
+	0,  // [0:38] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

@@ -53,6 +53,7 @@ func (u *usecaseListOperation) ListOperation(in *usecasedto.InputListOperationDt
 		o.Closed = v.Closed
 		o.Audit = v.Audit
 		o.Enabled = v.Enabled
+		o.InTransaction = v.InTransaction
 
 		out = append(out, &o)
 	}

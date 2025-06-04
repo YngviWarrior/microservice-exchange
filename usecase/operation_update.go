@@ -23,6 +23,7 @@ func NewUpdateOperationUseCase(operationRepo mysql.OperationRepositoryInterface)
 }
 
 func (u *usecaseUpdateOperation) UpdateOperation(in *usecasedto.InputUpdateOperationDto) (out *usecasedto.OutputUpdateOperationDto, err error) {
+	// fmt.Printf("%+v\n", in)
 	if !u.OperationRepo.Update(&repositorydto.InputOperationDto{
 		Operation:       in.Operation,
 		User:            in.User,
@@ -40,6 +41,7 @@ func (u *usecaseUpdateOperation) UpdateOperation(in *usecasedto.InputUpdateOpera
 		Closed:          in.Closed,
 		Audit:           in.Audit,
 		Enabled:         in.Enabled,
+		InTransaction:   in.InTransaction,
 	}) {
 		log.Println("uUO 00: ", err)
 		return

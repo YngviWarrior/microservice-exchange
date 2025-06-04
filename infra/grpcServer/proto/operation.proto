@@ -21,6 +21,7 @@ message Operation {
 	bool audit           = 15;
 	bool enabled         = 16;
 	double times_canceled   = 17;
+	bool in_transaction         = 18;
 }
 
 
@@ -43,8 +44,12 @@ message OperationJoin {
 	bool enabled         = 16;
 	double times_canceled   = 17;
 	
-	uint64 strategy_name        = 18;
-	uint64 strategy_variant_name        = 19;
+	
+	string parity_symbol        = 18;
+	string exchange_name        = 19;
+	string strategy_name        = 20;
+	string strategy_variant_name        = 21;
+	bool in_transaction        = 22;
 }
 
 message GetOperationRequest {
@@ -63,6 +68,7 @@ message ListOperationRequest {
     uint64 exchange = 5;
     bool closed = 6;
     bool enabled = 7;
+    bool in_transaction = 8;
 }
 
 message ListOperationResponse {
@@ -76,6 +82,12 @@ message ListOperationByPeriodRequest {
 
 message ListOperationByPeriodResponse {
     repeated Operation operations = 1;
+}
+
+message ListOperationEnabledRequest {}
+
+message ListOperationEnabledResponse {
+    repeated OperationJoin operations = 1;
 }
 
 message ListAllOperationRequest {}

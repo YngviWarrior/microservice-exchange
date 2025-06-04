@@ -17,6 +17,7 @@ type InputCreateOperationDto struct {
 	Closed          bool    `json:"closed"`
 	Audit           bool    `json:"audit"`
 	Enabled         bool    `json:"enabled"`
+	InTransaction   bool    `json:"in_transaction"`
 }
 
 type OutputCreateOperationDto struct {
@@ -36,4 +37,5 @@ type OutputCreateOperationDto struct {
 	Closed          bool    `json:"closed"`
 	Audit           bool    `json:"audit"`
 	Enabled         bool    `json:"enabled"`
+	InTransaction   bool    `json:"in_transaction"`
 }

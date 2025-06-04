@@ -197,39 +197,41 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	ExchangeService_ListTradeConfig_FullMethodName               = "/pb.ExchangeService/ListTradeConfig"
-	ExchangeService_CreateTradeConfig_FullMethodName             = "/pb.ExchangeService/CreateTradeConfig"
-	ExchangeService_UpdateTradeConfig_FullMethodName             = "/pb.ExchangeService/UpdateTradeConfig"
-	ExchangeService_GetTradeConfig_FullMethodName                = "/pb.ExchangeService/GetTradeConfig"
-	ExchangeService_CreateUserStrategy_FullMethodName            = "/pb.ExchangeService/CreateUserStrategy"
-	ExchangeService_ListUserStrategy_FullMethodName              = "/pb.ExchangeService/ListUserStrategy"
-	ExchangeService_ListParity_FullMethodName                    = "/pb.ExchangeService/ListParity"
-	ExchangeService_GetAvgPriceByParityExchange_FullMethodName   = "/pb.ExchangeService/GetAvgPriceByParityExchange"
-	ExchangeService_ListCoin_FullMethodName                      = "/pb.ExchangeService/ListCoin"
-	ExchangeService_GetWalletWithCoin_FullMethodName             = "/pb.ExchangeService/GetWalletWithCoin"
-	ExchangeService_ListWalletWithCoin_FullMethodName            = "/pb.ExchangeService/ListWalletWithCoin"
-	ExchangeService_CreateWallet_FullMethodName                  = "/pb.ExchangeService/CreateWallet"
-	ExchangeService_UpdateWallet_FullMethodName                  = "/pb.ExchangeService/UpdateWallet"
-	ExchangeService_GetCandleFirstMts_FullMethodName             = "/pb.ExchangeService/GetCandleFirstMts"
-	ExchangeService_GetLastTwoCandles_FullMethodName             = "/pb.ExchangeService/GetLastTwoCandles"
-	ExchangeService_CreateCandles_FullMethodName                 = "/pb.ExchangeService/CreateCandles"
-	ExchangeService_ListCandleLimit_FullMethodName               = "/pb.ExchangeService/ListCandleLimit"
-	ExchangeService_GetFirstPrice_FullMethodName                 = "/pb.ExchangeService/GetFirstPrice"
-	ExchangeService_GetLastPrice_FullMethodName                  = "/pb.ExchangeService/GetLastPrice"
-	ExchangeService_ListAvgPrices_FullMethodName                 = "/pb.ExchangeService/ListAvgPrices"
-	ExchangeService_UpdateAveragePrice_FullMethodName            = "/pb.ExchangeService/UpdateAveragePrice"
-	ExchangeService_GetOperation_FullMethodName                  = "/pb.ExchangeService/GetOperation"
-	ExchangeService_ListOperation_FullMethodName                 = "/pb.ExchangeService/ListOperation"
-	ExchangeService_ListOperationByPeriod_FullMethodName         = "/pb.ExchangeService/ListOperationByPeriod"
-	ExchangeService_ListAllOperation_FullMethodName              = "/pb.ExchangeService/ListAllOperation"
-	ExchangeService_UpdateOperation_FullMethodName               = "/pb.ExchangeService/UpdateOperation"
-	ExchangeService_CreateOperation_FullMethodName               = "/pb.ExchangeService/CreateOperation"
-	ExchangeService_GetOperationHistory_FullMethodName           = "/pb.ExchangeService/GetOperationHistory"
-	ExchangeService_UpdateOperationHistory_FullMethodName        = "/pb.ExchangeService/UpdateOperationHistory"
-	ExchangeService_GetLastBuyRegisterByOperation_FullMethodName = "/pb.ExchangeService/GetLastBuyRegisterByOperation"
-	ExchangeService_CreateOperationHistory_FullMethodName        = "/pb.ExchangeService/CreateOperationHistory"
-	ExchangeService_ListTransactionType_FullMethodName           = "/pb.ExchangeService/ListTransactionType"
-	ExchangeService_Strategy_FullMethodName                      = "/pb.ExchangeService/Strategy"
+	ExchangeService_ListTradeConfig_FullMethodName                 = "/pb.ExchangeService/ListTradeConfig"
+	ExchangeService_CreateTradeConfig_FullMethodName               = "/pb.ExchangeService/CreateTradeConfig"
+	ExchangeService_UpdateTradeConfig_FullMethodName               = "/pb.ExchangeService/UpdateTradeConfig"
+	ExchangeService_GetTradeConfig_FullMethodName                  = "/pb.ExchangeService/GetTradeConfig"
+	ExchangeService_CreateUserStrategy_FullMethodName              = "/pb.ExchangeService/CreateUserStrategy"
+	ExchangeService_ListUserStrategy_FullMethodName                = "/pb.ExchangeService/ListUserStrategy"
+	ExchangeService_ListParity_FullMethodName                      = "/pb.ExchangeService/ListParity"
+	ExchangeService_GetAvgPriceByParityExchange_FullMethodName     = "/pb.ExchangeService/GetAvgPriceByParityExchange"
+	ExchangeService_ListCoin_FullMethodName                        = "/pb.ExchangeService/ListCoin"
+	ExchangeService_GetWalletWithCoin_FullMethodName               = "/pb.ExchangeService/GetWalletWithCoin"
+	ExchangeService_ListWalletWithCoin_FullMethodName              = "/pb.ExchangeService/ListWalletWithCoin"
+	ExchangeService_CreateWallet_FullMethodName                    = "/pb.ExchangeService/CreateWallet"
+	ExchangeService_UpdateWallet_FullMethodName                    = "/pb.ExchangeService/UpdateWallet"
+	ExchangeService_GetCandleFirstMts_FullMethodName               = "/pb.ExchangeService/GetCandleFirstMts"
+	ExchangeService_GetLastTwoCandles_FullMethodName               = "/pb.ExchangeService/GetLastTwoCandles"
+	ExchangeService_CreateCandles_FullMethodName                   = "/pb.ExchangeService/CreateCandles"
+	ExchangeService_ListCandleLimit_FullMethodName                 = "/pb.ExchangeService/ListCandleLimit"
+	ExchangeService_GetFirstPrice_FullMethodName                   = "/pb.ExchangeService/GetFirstPrice"
+	ExchangeService_GetLastPrice_FullMethodName                    = "/pb.ExchangeService/GetLastPrice"
+	ExchangeService_ListAvgPrices_FullMethodName                   = "/pb.ExchangeService/ListAvgPrices"
+	ExchangeService_UpdateAveragePrice_FullMethodName              = "/pb.ExchangeService/UpdateAveragePrice"
+	ExchangeService_GetOperation_FullMethodName                    = "/pb.ExchangeService/GetOperation"
+	ExchangeService_ListOperation_FullMethodName                   = "/pb.ExchangeService/ListOperation"
+	ExchangeService_ListOperationEnabled_FullMethodName            = "/pb.ExchangeService/ListOperationEnabled"
+	ExchangeService_ListOperationByPeriod_FullMethodName           = "/pb.ExchangeService/ListOperationByPeriod"
+	ExchangeService_ListAllOperation_FullMethodName                = "/pb.ExchangeService/ListAllOperation"
+	ExchangeService_UpdateOperation_FullMethodName                 = "/pb.ExchangeService/UpdateOperation"
+	ExchangeService_CreateOperation_FullMethodName                 = "/pb.ExchangeService/CreateOperation"
+	ExchangeService_GetOperationHistory_FullMethodName             = "/pb.ExchangeService/GetOperationHistory"
+	ExchangeService_UpdateOperationHistory_FullMethodName          = "/pb.ExchangeService/UpdateOperationHistory"
+	ExchangeService_ListOperationHistoryByOperation_FullMethodName = "/pb.ExchangeService/ListOperationHistoryByOperation"
+	ExchangeService_GetLastBuyRegisterByOperation_FullMethodName   = "/pb.ExchangeService/GetLastBuyRegisterByOperation"
+	ExchangeService_CreateOperationHistory_FullMethodName          = "/pb.ExchangeService/CreateOperationHistory"
+	ExchangeService_ListTransactionType_FullMethodName             = "/pb.ExchangeService/ListTransactionType"
+	ExchangeService_Strategy_FullMethodName                        = "/pb.ExchangeService/Strategy"
 )
 
 // ExchangeServiceClient is the client API for ExchangeService service.
@@ -259,12 +261,14 @@ type ExchangeServiceClient interface {
 	UpdateAveragePrice(ctx context.Context, in *UpdateAveragePriceRequest, opts ...grpc.CallOption) (*UpdateAveragePriceResponse, error)
 	GetOperation(ctx context.Context, in *GetOperationRequest, opts ...grpc.CallOption) (*GetOperationResponse, error)
 	ListOperation(ctx context.Context, in *ListOperationRequest, opts ...grpc.CallOption) (*ListOperationResponse, error)
+	ListOperationEnabled(ctx context.Context, in *ListOperationEnabledRequest, opts ...grpc.CallOption) (*ListOperationEnabledResponse, error)
 	ListOperationByPeriod(ctx context.Context, in *ListOperationByPeriodRequest, opts ...grpc.CallOption) (*ListOperationByPeriodResponse, error)
 	ListAllOperation(ctx context.Context, in *ListAllOperationRequest, opts ...grpc.CallOption) (*ListAllOperationResponse, error)
 	UpdateOperation(ctx context.Context, in *UpdateOperationRequest, opts ...grpc.CallOption) (*UpdateOperationResponse, error)
 	CreateOperation(ctx context.Context, in *CreateOperationRequest, opts ...grpc.CallOption) (*CreateOperationResponse, error)
 	GetOperationHistory(ctx context.Context, in *GetOperationHistoryRequest, opts ...grpc.CallOption) (*GetOperationHistoryResponse, error)
 	UpdateOperationHistory(ctx context.Context, in *UpdateOperationHistoryRequest, opts ...grpc.CallOption) (*UpdateOperationHistoryResponse, error)
+	ListOperationHistoryByOperation(ctx context.Context, in *ListOperationHistoryByOperationRequest, opts ...grpc.CallOption) (*ListOperationHistoryByOperationResponse, error)
 	GetLastBuyRegisterByOperation(ctx context.Context, in *GetLastBuyRegisterByOperationRequest, opts ...grpc.CallOption) (*GetLastBuyRegisterByOperationResponse, error)
 	CreateOperationHistory(ctx context.Context, in *CreateOperationHistoryRequest, opts ...grpc.CallOption) (*CreateOperationHistoryResponse, error)
 	ListTransactionType(ctx context.Context, in *ListTransactionTypeRequest, opts ...grpc.CallOption) (*ListTransactionTypeResponse, error)
@@ -509,6 +513,16 @@ func (c *exchangeServiceClient) ListOperation(ctx context.Context, in *ListOpera
 	return out, nil
 }
 
+func (c *exchangeServiceClient) ListOperationEnabled(ctx context.Context, in *ListOperationEnabledRequest, opts ...grpc.CallOption) (*ListOperationEnabledResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListOperationEnabledResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListOperationEnabled_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *exchangeServiceClient) ListOperationByPeriod(ctx context.Context, in *ListOperationByPeriodRequest, opts ...grpc.CallOption) (*ListOperationByPeriodResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListOperationByPeriodResponse)
@@ -563,6 +577,16 @@ func (c *exchangeServiceClient) UpdateOperationHistory(ctx context.Context, in *
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateOperationHistoryResponse)
 	err := c.cc.Invoke(ctx, ExchangeService_UpdateOperationHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeServiceClient) ListOperationHistoryByOperation(ctx context.Context, in *ListOperationHistoryByOperationRequest, opts ...grpc.CallOption) (*ListOperationHistoryByOperationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListOperationHistoryByOperationResponse)
+	err := c.cc.Invoke(ctx, ExchangeService_ListOperationHistoryByOperation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -636,12 +660,14 @@ type ExchangeServiceServer interface {
 	UpdateAveragePrice(context.Context, *UpdateAveragePriceRequest) (*UpdateAveragePriceResponse, error)
 	GetOperation(context.Context, *GetOperationRequest) (*GetOperationResponse, error)
 	ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error)
+	ListOperationEnabled(context.Context, *ListOperationEnabledRequest) (*ListOperationEnabledResponse, error)
 	ListOperationByPeriod(context.Context, *ListOperationByPeriodRequest) (*ListOperationByPeriodResponse, error)
 	ListAllOperation(context.Context, *ListAllOperationRequest) (*ListAllOperationResponse, error)
 	UpdateOperation(context.Context, *UpdateOperationRequest) (*UpdateOperationResponse, error)
 	CreateOperation(context.Context, *CreateOperationRequest) (*CreateOperationResponse, error)
 	GetOperationHistory(context.Context, *GetOperationHistoryRequest) (*GetOperationHistoryResponse, error)
 	UpdateOperationHistory(context.Context, *UpdateOperationHistoryRequest) (*UpdateOperationHistoryResponse, error)
+	ListOperationHistoryByOperation(context.Context, *ListOperationHistoryByOperationRequest) (*ListOperationHistoryByOperationResponse, error)
 	GetLastBuyRegisterByOperation(context.Context, *GetLastBuyRegisterByOperationRequest) (*GetLastBuyRegisterByOperationResponse, error)
 	CreateOperationHistory(context.Context, *CreateOperationHistoryRequest) (*CreateOperationHistoryResponse, error)
 	ListTransactionType(context.Context, *ListTransactionTypeRequest) (*ListTransactionTypeResponse, error)
@@ -725,6 +751,9 @@ func (UnimplementedExchangeServiceServer) GetOperation(context.Context, *GetOper
 func (UnimplementedExchangeServiceServer) ListOperation(context.Context, *ListOperationRequest) (*ListOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOperation not implemented")
 }
+func (UnimplementedExchangeServiceServer) ListOperationEnabled(context.Context, *ListOperationEnabledRequest) (*ListOperationEnabledResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOperationEnabled not implemented")
+}
 func (UnimplementedExchangeServiceServer) ListOperationByPeriod(context.Context, *ListOperationByPeriodRequest) (*ListOperationByPeriodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOperationByPeriod not implemented")
 }
@@ -742,6 +771,9 @@ func (UnimplementedExchangeServiceServer) GetOperationHistory(context.Context, *
 }
 func (UnimplementedExchangeServiceServer) UpdateOperationHistory(context.Context, *UpdateOperationHistoryRequest) (*UpdateOperationHistoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOperationHistory not implemented")
+}
+func (UnimplementedExchangeServiceServer) ListOperationHistoryByOperation(context.Context, *ListOperationHistoryByOperationRequest) (*ListOperationHistoryByOperationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOperationHistoryByOperation not implemented")
 }
 func (UnimplementedExchangeServiceServer) GetLastBuyRegisterByOperation(context.Context, *GetLastBuyRegisterByOperationRequest) (*GetLastBuyRegisterByOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLastBuyRegisterByOperation not implemented")
@@ -1190,6 +1222,24 @@ func _ExchangeService_ListOperation_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExchangeService_ListOperationEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOperationEnabledRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListOperationEnabled(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListOperationEnabled_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListOperationEnabled(ctx, req.(*ListOperationEnabledRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ExchangeService_ListOperationByPeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListOperationByPeriodRequest)
 	if err := dec(in); err != nil {
@@ -1294,6 +1344,24 @@ func _ExchangeService_UpdateOperationHistory_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ExchangeServiceServer).UpdateOperationHistory(ctx, req.(*UpdateOperationHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeService_ListOperationHistoryByOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOperationHistoryByOperationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServiceServer).ListOperationHistoryByOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExchangeService_ListOperationHistoryByOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServiceServer).ListOperationHistoryByOperation(ctx, req.(*ListOperationHistoryByOperationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1470,6 +1538,10 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ExchangeService_ListOperation_Handler,
 		},
 		{
+			MethodName: "ListOperationEnabled",
+			Handler:    _ExchangeService_ListOperationEnabled_Handler,
+		},
+		{
 			MethodName: "ListOperationByPeriod",
 			Handler:    _ExchangeService_ListOperationByPeriod_Handler,
 		},
@@ -1492,6 +1564,10 @@ var ExchangeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateOperationHistory",
 			Handler:    _ExchangeService_UpdateOperationHistory_Handler,
+		},
+		{
+			MethodName: "ListOperationHistoryByOperation",
+			Handler:    _ExchangeService_ListOperationHistoryByOperation_Handler,
 		},
 		{
 			MethodName: "GetLastBuyRegisterByOperation",

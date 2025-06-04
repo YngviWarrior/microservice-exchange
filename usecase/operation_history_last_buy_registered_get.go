@@ -20,11 +20,12 @@ func NewGetLastBuyRegisterByOperationUseCase(operationHistoryRepo mysql.Operatio
 }
 
 func (u *usecaseGetLastBuyRegisterByOperation) GetLastBuyRegisterByOperation(in *usecasedto.InputGetLastBuyRegisterByOperationDto) (out *usecasedto.OutputGetLastBuyRegisterByOperationDto, err error) {
-	coinQuantity, fee := u.OperationHistoryRepo.GetLastBuyRegisterByOperation(in.Operation)
+	coinQuantity, fee, status := u.OperationHistoryRepo.GetLastBuyRegisterByOperation(in.Operation)
 
 	out = &usecasedto.OutputGetLastBuyRegisterByOperationDto{}
 	out.CoinQuantity = coinQuantity
 	out.Fee = fee
+	out.Status = status
 
 	return
 }
