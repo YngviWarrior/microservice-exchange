@@ -16,8 +16,8 @@ type candleRepository struct {
 }
 
 type CandleRepositoryInterface interface {
-	GetLastPrice(parity, exchange uint64) (close float64)
-	GetLastPriceConn(parity, exchange uint64) (close float64)
+	GetLastPrice(parity, exchange uint64) (close string)
+	GetLastPriceConn(parity, exchange uint64) (close string)
 	ListLimit(parity, exchange, limit int64) (list []*repositorydto.OutputCandleDto)
 	GetFirstMts(parity, exchange int64) (c repositorydto.OutputCandleDto)
 	GetFirst(parity, exchange, from int64) (c repositorydto.OutputCandleDto)
@@ -61,7 +61,7 @@ func (t *candleRepository) GetFirstPrice(parity, exchange, from uint64) (c repos
 	return
 }
 
-func (t *candleRepository) GetLastPriceConn(parity, exchange uint64) (close float64) {
+func (t *candleRepository) GetLastPriceConn(parity, exchange uint64) (close string) {
 	stmt, err := t.Db.GetDatabase().PrepareContext(context.TODO(), `
 		SELECT close
 		FROM candle 
@@ -89,7 +89,7 @@ func (t *candleRepository) GetLastPriceConn(parity, exchange uint64) (close floa
 	return
 }
 
-func (t *candleRepository) GetLastPrice(parity, exchange uint64) (close float64) {
+func (t *candleRepository) GetLastPrice(parity, exchange uint64) (close string) {
 	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT close
 		FROM candle 

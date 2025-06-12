@@ -13,7 +13,7 @@ type operationHistoryRepository struct {
 }
 
 type OperationHistoryRepositoryInterface interface {
-	GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee float64, status uint64)
+	GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee string, status uint64)
 	Get(OrderExchangeId uint64) (repositorydto.OutputOperationHistoryDto, error)
 	ListByOperation(operation uint64) []*repositorydto.OutputOperationHistoryDto
 	Create(*repositorydto.InputOperationHistoryDto) bool
@@ -71,7 +71,7 @@ func (t *operationHistoryRepository) ListByOperation(operation uint64) (list []*
 
 func (t *operationHistoryRepository) Create(p *repositorydto.InputOperationHistoryDto) bool {
 	stmt, err := t.Db.GetDatabase().Prepare(`
-		INSERT INTO operation_history(operation, transaction_type, coin_price, coin_quantity, stable_price, stable_quantity, fee, operation_exchange_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+		INSERT INTO operation_history(operation, transaction_type, coin_price, coin_quantity, stable_price, stable_quantity, fee, operation_exchange_id, operation_exchange_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`)
 
 	if err != nil {
@@ -81,7 +81,7 @@ func (t *operationHistoryRepository) Create(p *repositorydto.InputOperationHisto
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(p.Operation, p.TransactionType, p.CoinPrice, p.CoinQuantity, p.StablePrice, p.StableQuantity, p.Fee, p.OperationExchangeId)
+	_, err = stmt.Exec(p.Operation, p.TransactionType, p.CoinPrice, p.CoinQuantity, p.StablePrice, p.StableQuantity, p.Fee, p.OperationExchangeId, p.OperationExchangeStatus)
 
 	if err != nil {
 		log.Panic("OHRC 02: ", err)
@@ -91,7 +91,7 @@ func (t *operationHistoryRepository) Create(p *repositorydto.InputOperationHisto
 	return true
 }
 
-func (t *operationHistoryRepository) GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee float64, status uint64) {
+func (t *operationHistoryRepository) GetLastBuyRegisterByOperation(operation uint64) (coinQuantity, fee string, status uint64) {
 	stmt, err := t.Db.GetDatabase().Prepare(`
 		SELECT coin_quantity, fee, operation_exchange_status
 		FROM operation_history

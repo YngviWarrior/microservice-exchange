@@ -32,10 +32,10 @@ type TradeConfig struct {
 	Parity                  uint64                 `protobuf:"varint,7,opt,name=parity,proto3" json:"parity,omitempty"`
 	Exchange                uint64                 `protobuf:"varint,8,opt,name=exchange,proto3" json:"exchange,omitempty"`
 	OperationQuantity       uint64                 `protobuf:"varint,9,opt,name=operation_quantity,json=operationQuantity,proto3" json:"operation_quantity,omitempty"`
-	OperationAmount         float64                `protobuf:"fixed64,10,opt,name=operation_amount,json=operationAmount,proto3" json:"operation_amount,omitempty"`
+	OperationAmount         string                 `protobuf:"bytes,10,opt,name=operation_amount,json=operationAmount,proto3" json:"operation_amount,omitempty"`
 	Enabled                 bool                   `protobuf:"varint,11,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	DefaultProfitPercentage float64                `protobuf:"fixed64,12,opt,name=default_profit_percentage,json=defaultProfitPercentage,proto3" json:"default_profit_percentage,omitempty"`
-	WalletValueLimit        float64                `protobuf:"fixed64,13,opt,name=wallet_value_limit,json=walletValueLimit,proto3" json:"wallet_value_limit,omitempty"`
+	DefaultProfitPercentage string                 `protobuf:"bytes,12,opt,name=default_profit_percentage,json=defaultProfitPercentage,proto3" json:"default_profit_percentage,omitempty"`
+	WalletValueLimit        string                 `protobuf:"bytes,13,opt,name=wallet_value_limit,json=walletValueLimit,proto3" json:"wallet_value_limit,omitempty"`
 	UserName                string                 `protobuf:"bytes,14,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
 	ModalityName            string                 `protobuf:"bytes,15,opt,name=modality_name,json=modalityName,proto3" json:"modality_name,omitempty"`
 	StrategyName            string                 `protobuf:"bytes,16,opt,name=strategy_name,json=strategyName,proto3" json:"strategy_name,omitempty"`
@@ -141,11 +141,11 @@ func (x *TradeConfig) GetOperationQuantity() uint64 {
 	return 0
 }
 
-func (x *TradeConfig) GetOperationAmount() float64 {
+func (x *TradeConfig) GetOperationAmount() string {
 	if x != nil {
 		return x.OperationAmount
 	}
-	return 0
+	return ""
 }
 
 func (x *TradeConfig) GetEnabled() bool {
@@ -155,18 +155,18 @@ func (x *TradeConfig) GetEnabled() bool {
 	return false
 }
 
-func (x *TradeConfig) GetDefaultProfitPercentage() float64 {
+func (x *TradeConfig) GetDefaultProfitPercentage() string {
 	if x != nil {
 		return x.DefaultProfitPercentage
 	}
-	return 0
+	return ""
 }
 
-func (x *TradeConfig) GetWalletValueLimit() float64 {
+func (x *TradeConfig) GetWalletValueLimit() string {
 	if x != nil {
 		return x.WalletValueLimit
 	}
-	return 0
+	return ""
 }
 
 func (x *TradeConfig) GetUserName() string {
@@ -277,9 +277,9 @@ type CreateTradeConfigRequest struct {
 	Parity                  uint64                 `protobuf:"varint,4,opt,name=parity,proto3" json:"parity,omitempty"`
 	Exchange                uint64                 `protobuf:"varint,5,opt,name=exchange,proto3" json:"exchange,omitempty"`
 	OperationQuantity       uint64                 `protobuf:"varint,6,opt,name=operation_quantity,json=operationQuantity,proto3" json:"operation_quantity,omitempty"`
-	OperationAmount         float64                `protobuf:"fixed64,7,opt,name=operation_amount,json=operationAmount,proto3" json:"operation_amount,omitempty"`
-	DefaultProfitPercentage float64                `protobuf:"fixed64,8,opt,name=default_profit_percentage,json=defaultProfitPercentage,proto3" json:"default_profit_percentage,omitempty"`
-	WalletValueLimit        float64                `protobuf:"fixed64,9,opt,name=wallet_value_limit,json=walletValueLimit,proto3" json:"wallet_value_limit,omitempty"`
+	OperationAmount         string                 `protobuf:"bytes,7,opt,name=operation_amount,json=operationAmount,proto3" json:"operation_amount,omitempty"`
+	DefaultProfitPercentage string                 `protobuf:"bytes,8,opt,name=default_profit_percentage,json=defaultProfitPercentage,proto3" json:"default_profit_percentage,omitempty"`
+	WalletValueLimit        string                 `protobuf:"bytes,9,opt,name=wallet_value_limit,json=walletValueLimit,proto3" json:"wallet_value_limit,omitempty"`
 	Enabled                 bool                   `protobuf:"varint,10,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	User                    uint64                 `protobuf:"varint,11,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields           protoimpl.UnknownFields
@@ -358,25 +358,25 @@ func (x *CreateTradeConfigRequest) GetOperationQuantity() uint64 {
 	return 0
 }
 
-func (x *CreateTradeConfigRequest) GetOperationAmount() float64 {
+func (x *CreateTradeConfigRequest) GetOperationAmount() string {
 	if x != nil {
 		return x.OperationAmount
 	}
-	return 0
+	return ""
 }
 
-func (x *CreateTradeConfigRequest) GetDefaultProfitPercentage() float64 {
+func (x *CreateTradeConfigRequest) GetDefaultProfitPercentage() string {
 	if x != nil {
 		return x.DefaultProfitPercentage
 	}
-	return 0
+	return ""
 }
 
-func (x *CreateTradeConfigRequest) GetWalletValueLimit() float64 {
+func (x *CreateTradeConfigRequest) GetWalletValueLimit() string {
 	if x != nil {
 		return x.WalletValueLimit
 	}
-	return 0
+	return ""
 }
 
 func (x *CreateTradeConfigRequest) GetEnabled() bool {
@@ -439,9 +439,9 @@ type UpdateTradeConfigRequest struct {
 	Parity                  uint64                 `protobuf:"varint,6,opt,name=parity,proto3" json:"parity,omitempty"`
 	Exchange                uint64                 `protobuf:"varint,7,opt,name=exchange,proto3" json:"exchange,omitempty"`
 	OperationQuantity       uint64                 `protobuf:"varint,8,opt,name=operation_quantity,json=operationQuantity,proto3" json:"operation_quantity,omitempty"`
-	OperationAmount         float64                `protobuf:"fixed64,9,opt,name=operation_amount,json=operationAmount,proto3" json:"operation_amount,omitempty"`
-	DefaultProfitPercentage float64                `protobuf:"fixed64,10,opt,name=default_profit_percentage,json=defaultProfitPercentage,proto3" json:"default_profit_percentage,omitempty"`
-	WalletValueLimit        float64                `protobuf:"fixed64,11,opt,name=wallet_value_limit,json=walletValueLimit,proto3" json:"wallet_value_limit,omitempty"`
+	OperationAmount         string                 `protobuf:"bytes,9,opt,name=operation_amount,json=operationAmount,proto3" json:"operation_amount,omitempty"`
+	DefaultProfitPercentage string                 `protobuf:"bytes,10,opt,name=default_profit_percentage,json=defaultProfitPercentage,proto3" json:"default_profit_percentage,omitempty"`
+	WalletValueLimit        string                 `protobuf:"bytes,11,opt,name=wallet_value_limit,json=walletValueLimit,proto3" json:"wallet_value_limit,omitempty"`
 	Enabled                 bool                   `protobuf:"varint,13,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -533,25 +533,25 @@ func (x *UpdateTradeConfigRequest) GetOperationQuantity() uint64 {
 	return 0
 }
 
-func (x *UpdateTradeConfigRequest) GetOperationAmount() float64 {
+func (x *UpdateTradeConfigRequest) GetOperationAmount() string {
 	if x != nil {
 		return x.OperationAmount
 	}
-	return 0
+	return ""
 }
 
-func (x *UpdateTradeConfigRequest) GetDefaultProfitPercentage() float64 {
+func (x *UpdateTradeConfigRequest) GetDefaultProfitPercentage() string {
 	if x != nil {
 		return x.DefaultProfitPercentage
 	}
-	return 0
+	return ""
 }
 
-func (x *UpdateTradeConfigRequest) GetWalletValueLimit() float64 {
+func (x *UpdateTradeConfigRequest) GetWalletValueLimit() string {
 	if x != nil {
 		return x.WalletValueLimit
 	}
-	return 0
+	return ""
 }
 
 func (x *UpdateTradeConfigRequest) GetEnabled() bool {
@@ -749,10 +749,10 @@ const file_trade_config_proto_rawDesc = "" +
 	"\bexchange\x18\b \x01(\x04R\bexchange\x12-\n" +
 	"\x12operation_quantity\x18\t \x01(\x04R\x11operationQuantity\x12)\n" +
 	"\x10operation_amount\x18\n" +
-	" \x01(\x01R\x0foperationAmount\x12\x18\n" +
+	" \x01(\tR\x0foperationAmount\x12\x18\n" +
 	"\aenabled\x18\v \x01(\bR\aenabled\x12:\n" +
-	"\x19default_profit_percentage\x18\f \x01(\x01R\x17defaultProfitPercentage\x12,\n" +
-	"\x12wallet_value_limit\x18\r \x01(\x01R\x10walletValueLimit\x12\x1b\n" +
+	"\x19default_profit_percentage\x18\f \x01(\tR\x17defaultProfitPercentage\x12,\n" +
+	"\x12wallet_value_limit\x18\r \x01(\tR\x10walletValueLimit\x12\x1b\n" +
 	"\tuser_name\x18\x0e \x01(\tR\buserName\x12#\n" +
 	"\rmodality_name\x18\x0f \x01(\tR\fmodalityName\x12#\n" +
 	"\rstrategy_name\x18\x10 \x01(\tR\fstrategyName\x122\n" +
@@ -771,9 +771,9 @@ const file_trade_config_proto_rawDesc = "" +
 	"\x06parity\x18\x04 \x01(\x04R\x06parity\x12\x1a\n" +
 	"\bexchange\x18\x05 \x01(\x04R\bexchange\x12-\n" +
 	"\x12operation_quantity\x18\x06 \x01(\x04R\x11operationQuantity\x12)\n" +
-	"\x10operation_amount\x18\a \x01(\x01R\x0foperationAmount\x12:\n" +
-	"\x19default_profit_percentage\x18\b \x01(\x01R\x17defaultProfitPercentage\x12,\n" +
-	"\x12wallet_value_limit\x18\t \x01(\x01R\x10walletValueLimit\x12\x18\n" +
+	"\x10operation_amount\x18\a \x01(\tR\x0foperationAmount\x12:\n" +
+	"\x19default_profit_percentage\x18\b \x01(\tR\x17defaultProfitPercentage\x12,\n" +
+	"\x12wallet_value_limit\x18\t \x01(\tR\x10walletValueLimit\x12\x18\n" +
 	"\aenabled\x18\n" +
 	" \x01(\bR\aenabled\x12\x12\n" +
 	"\x04user\x18\v \x01(\x04R\x04user\"\x18\n" +
@@ -787,10 +787,10 @@ const file_trade_config_proto_rawDesc = "" +
 	"\x06parity\x18\x06 \x01(\x04R\x06parity\x12\x1a\n" +
 	"\bexchange\x18\a \x01(\x04R\bexchange\x12-\n" +
 	"\x12operation_quantity\x18\b \x01(\x04R\x11operationQuantity\x12)\n" +
-	"\x10operation_amount\x18\t \x01(\x01R\x0foperationAmount\x12:\n" +
+	"\x10operation_amount\x18\t \x01(\tR\x0foperationAmount\x12:\n" +
 	"\x19default_profit_percentage\x18\n" +
-	" \x01(\x01R\x17defaultProfitPercentage\x12,\n" +
-	"\x12wallet_value_limit\x18\v \x01(\x01R\x10walletValueLimit\x12\x18\n" +
+	" \x01(\tR\x17defaultProfitPercentage\x12,\n" +
+	"\x12wallet_value_limit\x18\v \x01(\tR\x10walletValueLimit\x12\x18\n" +
 	"\aenabled\x18\r \x01(\bR\aenabled\"N\n" +
 	"\x19UpdateTradeConfigResponse\x121\n" +
 	"\vtradeconfig\x18\x01 \x01(\v2\x0f.pb.TradeConfigR\vtradeconfig\"\xc2\x01\n" +

@@ -26,13 +26,13 @@ type OperationHistory struct {
 	OperationHistory        uint64                 `protobuf:"varint,1,opt,name=OperationHistory,proto3" json:"OperationHistory,omitempty"`
 	Operation               uint64                 `protobuf:"varint,2,opt,name=Operation,proto3" json:"Operation,omitempty"`
 	TransactionType         uint64                 `protobuf:"varint,3,opt,name=TransactionType,proto3" json:"TransactionType,omitempty"`
-	CoinPrice               float64                `protobuf:"fixed64,4,opt,name=CoinPrice,proto3" json:"CoinPrice,omitempty"`
-	CoinQuantity            float64                `protobuf:"fixed64,5,opt,name=CoinQuantity,proto3" json:"CoinQuantity,omitempty"`
-	StablePrice             float64                `protobuf:"fixed64,6,opt,name=StablePrice,proto3" json:"StablePrice,omitempty"`
-	StableQuantity          float64                `protobuf:"fixed64,7,opt,name=StableQuantity,proto3" json:"StableQuantity,omitempty"`
+	CoinPrice               string                 `protobuf:"bytes,4,opt,name=CoinPrice,proto3" json:"CoinPrice,omitempty"`
+	CoinQuantity            string                 `protobuf:"bytes,5,opt,name=CoinQuantity,proto3" json:"CoinQuantity,omitempty"`
+	StablePrice             string                 `protobuf:"bytes,6,opt,name=StablePrice,proto3" json:"StablePrice,omitempty"`
+	StableQuantity          string                 `protobuf:"bytes,7,opt,name=StableQuantity,proto3" json:"StableQuantity,omitempty"`
 	OperationExchangeId     string                 `protobuf:"bytes,8,opt,name=OperationExchangeId,proto3" json:"OperationExchangeId,omitempty"`
 	OperationExchangeStatus uint64                 `protobuf:"varint,9,opt,name=OperationExchangeStatus,proto3" json:"OperationExchangeStatus,omitempty"`
-	Fee                     float64                `protobuf:"fixed64,10,opt,name=Fee,proto3" json:"Fee,omitempty"`
+	Fee                     string                 `protobuf:"bytes,10,opt,name=Fee,proto3" json:"Fee,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -88,32 +88,32 @@ func (x *OperationHistory) GetTransactionType() uint64 {
 	return 0
 }
 
-func (x *OperationHistory) GetCoinPrice() float64 {
+func (x *OperationHistory) GetCoinPrice() string {
 	if x != nil {
 		return x.CoinPrice
 	}
-	return 0
+	return ""
 }
 
-func (x *OperationHistory) GetCoinQuantity() float64 {
+func (x *OperationHistory) GetCoinQuantity() string {
 	if x != nil {
 		return x.CoinQuantity
 	}
-	return 0
+	return ""
 }
 
-func (x *OperationHistory) GetStablePrice() float64 {
+func (x *OperationHistory) GetStablePrice() string {
 	if x != nil {
 		return x.StablePrice
 	}
-	return 0
+	return ""
 }
 
-func (x *OperationHistory) GetStableQuantity() float64 {
+func (x *OperationHistory) GetStableQuantity() string {
 	if x != nil {
 		return x.StableQuantity
 	}
-	return 0
+	return ""
 }
 
 func (x *OperationHistory) GetOperationExchangeId() string {
@@ -130,11 +130,11 @@ func (x *OperationHistory) GetOperationExchangeStatus() uint64 {
 	return 0
 }
 
-func (x *OperationHistory) GetFee() float64 {
+func (x *OperationHistory) GetFee() string {
 	if x != nil {
 		return x.Fee
 	}
-	return 0
+	return ""
 }
 
 type GetOperationHistoryRequest struct {
@@ -367,8 +367,8 @@ func (x *GetLastBuyRegisterByOperationRequest) GetOperation() uint64 {
 
 type GetLastBuyRegisterByOperationResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CoinQuantity  float64                `protobuf:"fixed64,1,opt,name=CoinQuantity,proto3" json:"CoinQuantity,omitempty"`
-	Fee           float64                `protobuf:"fixed64,2,opt,name=Fee,proto3" json:"Fee,omitempty"`
+	CoinQuantity  string                 `protobuf:"bytes,1,opt,name=CoinQuantity,proto3" json:"CoinQuantity,omitempty"`
+	Fee           string                 `protobuf:"bytes,2,opt,name=Fee,proto3" json:"Fee,omitempty"`
 	Status        uint64                 `protobuf:"varint,3,opt,name=Status,proto3" json:"Status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -404,18 +404,18 @@ func (*GetLastBuyRegisterByOperationResponse) Descriptor() ([]byte, []int) {
 	return file_operation_history_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *GetLastBuyRegisterByOperationResponse) GetCoinQuantity() float64 {
+func (x *GetLastBuyRegisterByOperationResponse) GetCoinQuantity() string {
 	if x != nil {
 		return x.CoinQuantity
 	}
-	return 0
+	return ""
 }
 
-func (x *GetLastBuyRegisterByOperationResponse) GetFee() float64 {
+func (x *GetLastBuyRegisterByOperationResponse) GetFee() string {
 	if x != nil {
 		return x.Fee
 	}
-	return 0
+	return ""
 }
 
 func (x *GetLastBuyRegisterByOperationResponse) GetStatus() uint64 {
@@ -610,14 +610,14 @@ const file_operation_history_proto_rawDesc = "" +
 	"\x10OperationHistory\x18\x01 \x01(\x04R\x10OperationHistory\x12\x1c\n" +
 	"\tOperation\x18\x02 \x01(\x04R\tOperation\x12(\n" +
 	"\x0fTransactionType\x18\x03 \x01(\x04R\x0fTransactionType\x12\x1c\n" +
-	"\tCoinPrice\x18\x04 \x01(\x01R\tCoinPrice\x12\"\n" +
-	"\fCoinQuantity\x18\x05 \x01(\x01R\fCoinQuantity\x12 \n" +
-	"\vStablePrice\x18\x06 \x01(\x01R\vStablePrice\x12&\n" +
-	"\x0eStableQuantity\x18\a \x01(\x01R\x0eStableQuantity\x120\n" +
+	"\tCoinPrice\x18\x04 \x01(\tR\tCoinPrice\x12\"\n" +
+	"\fCoinQuantity\x18\x05 \x01(\tR\fCoinQuantity\x12 \n" +
+	"\vStablePrice\x18\x06 \x01(\tR\vStablePrice\x12&\n" +
+	"\x0eStableQuantity\x18\a \x01(\tR\x0eStableQuantity\x120\n" +
 	"\x13OperationExchangeId\x18\b \x01(\tR\x13OperationExchangeId\x128\n" +
 	"\x17OperationExchangeStatus\x18\t \x01(\x04R\x17OperationExchangeStatus\x12\x10\n" +
 	"\x03Fee\x18\n" +
-	" \x01(\x01R\x03Fee\"X\n" +
+	" \x01(\tR\x03Fee\"X\n" +
 	"\x1aGetOperationHistoryRequest\x12\x18\n" +
 	"\aOrderId\x18\x01 \x01(\x04R\aOrderId\x12 \n" +
 	"\vOrderIdLink\x18\x02 \x01(\x04R\vOrderIdLink\"_\n" +
@@ -630,8 +630,8 @@ const file_operation_history_proto_rawDesc = "" +
 	"$GetLastBuyRegisterByOperationRequest\x12\x1c\n" +
 	"\tOperation\x18\x01 \x01(\x04R\tOperation\"u\n" +
 	"%GetLastBuyRegisterByOperationResponse\x12\"\n" +
-	"\fCoinQuantity\x18\x01 \x01(\x01R\fCoinQuantity\x12\x10\n" +
-	"\x03Fee\x18\x02 \x01(\x01R\x03Fee\x12\x16\n" +
+	"\fCoinQuantity\x18\x01 \x01(\tR\fCoinQuantity\x12\x10\n" +
+	"\x03Fee\x18\x02 \x01(\tR\x03Fee\x12\x16\n" +
 	"\x06Status\x18\x03 \x01(\x04R\x06Status\"a\n" +
 	"\x1dCreateOperationHistoryRequest\x12@\n" +
 	"\x10OperationHistory\x18\x01 \x01(\v2\x14.pb.OperationHistoryR\x10OperationHistory\"b\n" +

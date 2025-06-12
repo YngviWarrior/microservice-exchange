@@ -30,11 +30,11 @@ func (t *tradeConfigRepository) Get(in repositorydto.InputTradeConfigDto) (o rep
 		SELECT trade_config, user, modality, strategy, strategy_variant, parity, exchange, operation_quantity, operation_amount, default_profit_percentage, enabled
 		FROM trade_config
 		WHERE user = ? AND modality = ? AND strategy = ? AND strategy_variant = ? AND parity = ? AND exchange = ?
-		AND enabled = 1
 	`, in.User, in.Modality, in.Strategy, in.StrategyVariant, in.Parity, in.Exchange).Scan(&o.TradeConfig, &o.User, &o.Modality, &o.Strategy, &o.StrategyVariant, &o.Parity, &o.Exchange, &o.OperationQuantity, &o.OperationAmount, &o.DefaultProfitPercentage, &o.Enabled)
 
 	switch {
 	case err == sql.ErrNoRows:
+		err = nil
 	case err != nil:
 		log.Panicln("UTCRF 01: ", err)
 		return

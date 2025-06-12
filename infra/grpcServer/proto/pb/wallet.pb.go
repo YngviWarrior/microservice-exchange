@@ -26,7 +26,7 @@ type Wallet struct {
 	Wallet        uint64                 `protobuf:"varint,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
 	Exchange      uint64                 `protobuf:"varint,2,opt,name=exchange,proto3" json:"exchange,omitempty"`
 	Coin          uint64                 `protobuf:"varint,3,opt,name=coin,proto3" json:"coin,omitempty"`
-	Amount        float64                `protobuf:"fixed64,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount        string                 `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -82,11 +82,11 @@ func (x *Wallet) GetCoin() uint64 {
 	return 0
 }
 
-func (x *Wallet) GetAmount() float64 {
+func (x *Wallet) GetAmount() string {
 	if x != nil {
 		return x.Amount
 	}
-	return 0
+	return ""
 }
 
 type WalletWithCoin struct {
@@ -94,7 +94,7 @@ type WalletWithCoin struct {
 	Wallet        uint64                 `protobuf:"varint,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
 	Exchange      uint64                 `protobuf:"varint,2,opt,name=exchange,proto3" json:"exchange,omitempty"`
 	Coin          uint64                 `protobuf:"varint,3,opt,name=coin,proto3" json:"coin,omitempty"`
-	Amount        float64                `protobuf:"fixed64,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount        string                 `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
 	Symbol        string                 `protobuf:"bytes,6,opt,name=symbol,proto3" json:"symbol,omitempty"`
 	Active        bool                   `protobuf:"varint,7,opt,name=active,proto3" json:"active,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -152,11 +152,11 @@ func (x *WalletWithCoin) GetCoin() uint64 {
 	return 0
 }
 
-func (x *WalletWithCoin) GetAmount() float64 {
+func (x *WalletWithCoin) GetAmount() string {
 	if x != nil {
 		return x.Amount
 	}
-	return 0
+	return ""
 }
 
 func (x *WalletWithCoin) GetSymbol() string {
@@ -386,7 +386,7 @@ type CreateWalletRequest struct {
 	Wallet        uint64                 `protobuf:"varint,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
 	Exchange      uint64                 `protobuf:"varint,2,opt,name=exchange,proto3" json:"exchange,omitempty"`
 	Coin          uint64                 `protobuf:"varint,3,opt,name=coin,proto3" json:"coin,omitempty"`
-	Amount        float64                `protobuf:"fixed64,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount        string                 `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -442,11 +442,11 @@ func (x *CreateWalletRequest) GetCoin() uint64 {
 	return 0
 }
 
-func (x *CreateWalletRequest) GetAmount() float64 {
+func (x *CreateWalletRequest) GetAmount() string {
 	if x != nil {
 		return x.Amount
 	}
-	return 0
+	return ""
 }
 
 type CreateWalletResponse struct {
@@ -590,12 +590,12 @@ const file_wallet_proto_rawDesc = "" +
 	"\x06wallet\x18\x01 \x01(\x04R\x06wallet\x12\x1a\n" +
 	"\bexchange\x18\x02 \x01(\x04R\bexchange\x12\x12\n" +
 	"\x04coin\x18\x03 \x01(\x04R\x04coin\x12\x16\n" +
-	"\x06amount\x18\x04 \x01(\x01R\x06amount\"\xa0\x01\n" +
+	"\x06amount\x18\x04 \x01(\tR\x06amount\"\xa0\x01\n" +
 	"\x0eWalletWithCoin\x12\x16\n" +
 	"\x06wallet\x18\x01 \x01(\x04R\x06wallet\x12\x1a\n" +
 	"\bexchange\x18\x02 \x01(\x04R\bexchange\x12\x12\n" +
 	"\x04coin\x18\x03 \x01(\x04R\x04coin\x12\x16\n" +
-	"\x06amount\x18\x04 \x01(\x01R\x06amount\x12\x16\n" +
+	"\x06amount\x18\x04 \x01(\tR\x06amount\x12\x16\n" +
 	"\x06symbol\x18\x06 \x01(\tR\x06symbol\x12\x16\n" +
 	"\x06active\x18\a \x01(\bR\x06active\"\x83\x01\n" +
 	"\x19GetWalletWithCoinResponse\x12\"\n" +
@@ -615,7 +615,7 @@ const file_wallet_proto_rawDesc = "" +
 	"\x06wallet\x18\x01 \x01(\x04R\x06wallet\x12\x1a\n" +
 	"\bexchange\x18\x02 \x01(\x04R\bexchange\x12\x12\n" +
 	"\x04coin\x18\x03 \x01(\x04R\x04coin\x12\x16\n" +
-	"\x06amount\x18\x04 \x01(\x01R\x06amount\":\n" +
+	"\x06amount\x18\x04 \x01(\tR\x06amount\":\n" +
 	"\x14CreateWalletResponse\x12\"\n" +
 	"\x06wallet\x18\x01 \x01(\v2\n" +
 	".pb.WalletR\x06wallet\"9\n" +

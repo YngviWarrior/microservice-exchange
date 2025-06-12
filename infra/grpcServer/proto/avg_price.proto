@@ -11,28 +11,28 @@ message GetAvgPriceByParityExchangeRequest {
 message GetAvgPriceByParityExchangeResponse {
 	uint64 Parity = 1;
 	uint64 Exchange = 2;
-	double Day = 3;
-	double DayRoc = 4;
+	string Day = 3;
+	string DayRoc = 4;
 	uint64 DayUpdateTimestamp = 5;
-	double Week = 6;
-	double WeekRoc = 7;
+	string Week = 6;
+	string WeekRoc = 7;
 	uint64 WeekUpdateTimestamp = 8;
-	double Month = 9;
-	double MonthRoc = 10;
+	string Month = 9;
+	string MonthRoc = 10;
 	uint64 MonthUpdateTimestamp = 11;
 }
 
 message UpdateAveragePriceRequest {
     uint64 Parity = 1;
 	uint64 Exchange = 2;
-	double Day = 3;
-	double DayRoc = 4;
+	string Day = 3;
+	string DayRoc = 4;
 	uint64 DayUpdateTimestamp = 5;
-	double Week = 6;
-	double WeekRoc = 7;
+	string Week = 6;
+	string WeekRoc = 7;
 	uint64 WeekUpdateTimestamp = 8;
-	double Month = 9;
-	double MonthRoc = 10;
+	string Month = 9;
+	string MonthRoc = 10;
 	uint64 MonthUpdateTimestamp = 11;
 }
 

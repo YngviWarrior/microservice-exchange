@@ -8,12 +8,12 @@ message Candle {
     uint64 Parity   = 1;
 	uint64 Exchange = 2;
 	uint64 Mts      = 3;
-	double Open     = 4;
-	double Close    = 5;
-	double High     = 6;
-	double Low      = 7;
-	double Volume   = 8;
-	double Roc      = 9;
+	string Open     = 4;
+	string Close    = 5;
+	string High     = 6;
+	string Low      = 7;
+	string Volume   = 8;
+	string Roc      = 9;
 }
 
 message GetCandleFirstMtsRequest {
@@ -68,7 +68,7 @@ message GetFirstPriceRequest {
 }
 
 message GetFirstPriceResponse {
-	double price = 1;
+	string price = 1;
 }
 
 message GetLastPriceRequest {
@@ -77,5 +77,5 @@ message GetLastPriceRequest {
 }
 
 message GetLastPriceResponse {
-	double price = 1;
+	string price = 1;
 }

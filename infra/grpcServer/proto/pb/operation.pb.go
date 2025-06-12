@@ -31,11 +31,11 @@ type Operation struct {
 	StrategyVariant uint64                 `protobuf:"varint,6,opt,name=strategy_variant,json=strategyVariant,proto3" json:"strategy_variant,omitempty"`
 	MtsStart        uint64                 `protobuf:"varint,7,opt,name=mts_start,json=mtsStart,proto3" json:"mts_start,omitempty"`
 	MtsFinish       uint64                 `protobuf:"varint,8,opt,name=mts_finish,json=mtsFinish,proto3" json:"mts_finish,omitempty"`
-	OpenPrice       float64                `protobuf:"fixed64,9,opt,name=open_price,json=openPrice,proto3" json:"open_price,omitempty"`
-	ClosePrice      float64                `protobuf:"fixed64,10,opt,name=close_price,json=closePrice,proto3" json:"close_price,omitempty"`
-	InvestedAmount  float64                `protobuf:"fixed64,11,opt,name=invested_amount,json=investedAmount,proto3" json:"invested_amount,omitempty"`
-	ProfitAmount    float64                `protobuf:"fixed64,12,opt,name=profit_amount,json=profitAmount,proto3" json:"profit_amount,omitempty"`
-	Profit          float64                `protobuf:"fixed64,13,opt,name=profit,proto3" json:"profit,omitempty"`
+	OpenPrice       string                 `protobuf:"bytes,9,opt,name=open_price,json=openPrice,proto3" json:"open_price,omitempty"`
+	ClosePrice      string                 `protobuf:"bytes,10,opt,name=close_price,json=closePrice,proto3" json:"close_price,omitempty"`
+	InvestedAmount  string                 `protobuf:"bytes,11,opt,name=invested_amount,json=investedAmount,proto3" json:"invested_amount,omitempty"`
+	ProfitAmount    string                 `protobuf:"bytes,12,opt,name=profit_amount,json=profitAmount,proto3" json:"profit_amount,omitempty"`
+	Profit          string                 `protobuf:"bytes,13,opt,name=profit,proto3" json:"profit,omitempty"`
 	Closed          bool                   `protobuf:"varint,14,opt,name=closed,proto3" json:"closed,omitempty"`
 	Audit           bool                   `protobuf:"varint,15,opt,name=audit,proto3" json:"audit,omitempty"`
 	Enabled         bool                   `protobuf:"varint,16,opt,name=enabled,proto3" json:"enabled,omitempty"`
@@ -131,39 +131,39 @@ func (x *Operation) GetMtsFinish() uint64 {
 	return 0
 }
 
-func (x *Operation) GetOpenPrice() float64 {
+func (x *Operation) GetOpenPrice() string {
 	if x != nil {
 		return x.OpenPrice
 	}
-	return 0
+	return ""
 }
 
-func (x *Operation) GetClosePrice() float64 {
+func (x *Operation) GetClosePrice() string {
 	if x != nil {
 		return x.ClosePrice
 	}
-	return 0
+	return ""
 }
 
-func (x *Operation) GetInvestedAmount() float64 {
+func (x *Operation) GetInvestedAmount() string {
 	if x != nil {
 		return x.InvestedAmount
 	}
-	return 0
+	return ""
 }
 
-func (x *Operation) GetProfitAmount() float64 {
+func (x *Operation) GetProfitAmount() string {
 	if x != nil {
 		return x.ProfitAmount
 	}
-	return 0
+	return ""
 }
 
-func (x *Operation) GetProfit() float64 {
+func (x *Operation) GetProfit() string {
 	if x != nil {
 		return x.Profit
 	}
-	return 0
+	return ""
 }
 
 func (x *Operation) GetClosed() bool {
@@ -211,11 +211,11 @@ type OperationJoin struct {
 	StrategyVariant     uint64                 `protobuf:"varint,6,opt,name=strategy_variant,json=strategyVariant,proto3" json:"strategy_variant,omitempty"`
 	MtsStart            uint64                 `protobuf:"varint,7,opt,name=mts_start,json=mtsStart,proto3" json:"mts_start,omitempty"`
 	MtsFinish           uint64                 `protobuf:"varint,8,opt,name=mts_finish,json=mtsFinish,proto3" json:"mts_finish,omitempty"`
-	OpenPrice           float64                `protobuf:"fixed64,9,opt,name=open_price,json=openPrice,proto3" json:"open_price,omitempty"`
-	ClosePrice          float64                `protobuf:"fixed64,10,opt,name=close_price,json=closePrice,proto3" json:"close_price,omitempty"`
-	InvestedAmount      float64                `protobuf:"fixed64,11,opt,name=invested_amount,json=investedAmount,proto3" json:"invested_amount,omitempty"`
-	ProfitAmount        float64                `protobuf:"fixed64,12,opt,name=profit_amount,json=profitAmount,proto3" json:"profit_amount,omitempty"`
-	Profit              float64                `protobuf:"fixed64,13,opt,name=profit,proto3" json:"profit,omitempty"`
+	OpenPrice           string                 `protobuf:"bytes,9,opt,name=open_price,json=openPrice,proto3" json:"open_price,omitempty"`
+	ClosePrice          string                 `protobuf:"bytes,10,opt,name=close_price,json=closePrice,proto3" json:"close_price,omitempty"`
+	InvestedAmount      string                 `protobuf:"bytes,11,opt,name=invested_amount,json=investedAmount,proto3" json:"invested_amount,omitempty"`
+	ProfitAmount        string                 `protobuf:"bytes,12,opt,name=profit_amount,json=profitAmount,proto3" json:"profit_amount,omitempty"`
+	Profit              string                 `protobuf:"bytes,13,opt,name=profit,proto3" json:"profit,omitempty"`
 	Closed              bool                   `protobuf:"varint,14,opt,name=closed,proto3" json:"closed,omitempty"`
 	Audit               bool                   `protobuf:"varint,15,opt,name=audit,proto3" json:"audit,omitempty"`
 	Enabled             bool                   `protobuf:"varint,16,opt,name=enabled,proto3" json:"enabled,omitempty"`
@@ -315,39 +315,39 @@ func (x *OperationJoin) GetMtsFinish() uint64 {
 	return 0
 }
 
-func (x *OperationJoin) GetOpenPrice() float64 {
+func (x *OperationJoin) GetOpenPrice() string {
 	if x != nil {
 		return x.OpenPrice
 	}
-	return 0
+	return ""
 }
 
-func (x *OperationJoin) GetClosePrice() float64 {
+func (x *OperationJoin) GetClosePrice() string {
 	if x != nil {
 		return x.ClosePrice
 	}
-	return 0
+	return ""
 }
 
-func (x *OperationJoin) GetInvestedAmount() float64 {
+func (x *OperationJoin) GetInvestedAmount() string {
 	if x != nil {
 		return x.InvestedAmount
 	}
-	return 0
+	return ""
 }
 
-func (x *OperationJoin) GetProfitAmount() float64 {
+func (x *OperationJoin) GetProfitAmount() string {
 	if x != nil {
 		return x.ProfitAmount
 	}
-	return 0
+	return ""
 }
 
-func (x *OperationJoin) GetProfit() float64 {
+func (x *OperationJoin) GetProfit() string {
 	if x != nil {
 		return x.Profit
 	}
-	return 0
+	return ""
 }
 
 func (x *OperationJoin) GetClosed() bool {
@@ -1093,13 +1093,13 @@ const file_operation_proto_rawDesc = "" +
 	"\n" +
 	"mts_finish\x18\b \x01(\x04R\tmtsFinish\x12\x1d\n" +
 	"\n" +
-	"open_price\x18\t \x01(\x01R\topenPrice\x12\x1f\n" +
+	"open_price\x18\t \x01(\tR\topenPrice\x12\x1f\n" +
 	"\vclose_price\x18\n" +
-	" \x01(\x01R\n" +
+	" \x01(\tR\n" +
 	"closePrice\x12'\n" +
-	"\x0finvested_amount\x18\v \x01(\x01R\x0einvestedAmount\x12#\n" +
-	"\rprofit_amount\x18\f \x01(\x01R\fprofitAmount\x12\x16\n" +
-	"\x06profit\x18\r \x01(\x01R\x06profit\x12\x16\n" +
+	"\x0finvested_amount\x18\v \x01(\tR\x0einvestedAmount\x12#\n" +
+	"\rprofit_amount\x18\f \x01(\tR\fprofitAmount\x12\x16\n" +
+	"\x06profit\x18\r \x01(\tR\x06profit\x12\x16\n" +
 	"\x06closed\x18\x0e \x01(\bR\x06closed\x12\x14\n" +
 	"\x05audit\x18\x0f \x01(\bR\x05audit\x12\x18\n" +
 	"\aenabled\x18\x10 \x01(\bR\aenabled\x12%\n" +
@@ -1116,13 +1116,13 @@ const file_operation_proto_rawDesc = "" +
 	"\n" +
 	"mts_finish\x18\b \x01(\x04R\tmtsFinish\x12\x1d\n" +
 	"\n" +
-	"open_price\x18\t \x01(\x01R\topenPrice\x12\x1f\n" +
+	"open_price\x18\t \x01(\tR\topenPrice\x12\x1f\n" +
 	"\vclose_price\x18\n" +
-	" \x01(\x01R\n" +
+	" \x01(\tR\n" +
 	"closePrice\x12'\n" +
-	"\x0finvested_amount\x18\v \x01(\x01R\x0einvestedAmount\x12#\n" +
-	"\rprofit_amount\x18\f \x01(\x01R\fprofitAmount\x12\x16\n" +
-	"\x06profit\x18\r \x01(\x01R\x06profit\x12\x16\n" +
+	"\x0finvested_amount\x18\v \x01(\tR\x0einvestedAmount\x12#\n" +
+	"\rprofit_amount\x18\f \x01(\tR\fprofitAmount\x12\x16\n" +
+	"\x06profit\x18\r \x01(\tR\x06profit\x12\x16\n" +
 	"\x06closed\x18\x0e \x01(\bR\x06closed\x12\x14\n" +
 	"\x05audit\x18\x0f \x01(\bR\x05audit\x12\x18\n" +
 	"\aenabled\x18\x10 \x01(\bR\aenabled\x12%\n" +

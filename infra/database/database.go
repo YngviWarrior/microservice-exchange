@@ -25,7 +25,7 @@ func NewDatabase() DatabaseInterface {
 	var err error
 
 	switch os.Getenv("ENVIROMENT") {
-	case "local", "testnet":
+	case "local", "testnet", "demo":
 		db, err = sql.Open("mysql", os.Getenv("DB_LOCAL"))
 	default:
 		db, err = sql.Open("mysql", os.Getenv("DB_SERVER"))

@@ -113,7 +113,7 @@ func (g *grpcServer) GetFirstPrice(ctx context.Context, in *pb.GetFirstPriceRequ
 	}
 
 	out = &pb.GetFirstPriceResponse{
-		Price: 0,
+		Price: "0",
 	}
 	out.Price = firstPrice.Close
 
@@ -133,7 +133,7 @@ func (g *grpcServer) GetLastPrice(ctx context.Context, in *pb.GetLastPriceReques
 	}
 
 	out = &pb.GetLastPriceResponse{
-		Price: 0,
+		Price: "0",
 	}
 	out.Price = lastPrice.Close
 

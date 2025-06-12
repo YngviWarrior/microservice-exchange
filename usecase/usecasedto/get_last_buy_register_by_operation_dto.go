@@ -5,7 +5,7 @@ type InputGetLastBuyRegisterByOperationDto struct {
 }
 
 type OutputGetLastBuyRegisterByOperationDto struct {
-	CoinQuantity float64
-	Fee          float64
+	CoinQuantity string
+	Fee          string
 	Status       uint64
 }

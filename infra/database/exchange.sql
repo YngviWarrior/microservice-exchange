@@ -18,7 +18,7 @@ CREATE TABLE `parity`(
     PRIMARY KEY(`parity`)
 );
 
-INSERT INTO `parity`(`symbol`, `active`) VALUES("BTCUSDT", 1),("USDTBRL", 1),("BTCBRL", 1), ("ETHUSDT", 1);
+INSERT INTO `parity`(`symbol`, `active`) VALUES("BTCUSDT", 1),("ETHUSDT", 1);
 
 CREATE TABLE `exchange` (
     `exchange` INT(11) NOT NULL auto_increment,
@@ -33,7 +33,7 @@ CREATE TABLE `wallet` (
     `wallet` BIGINT(11) auto_increment,
     `exchange` INT(11) NOT NULL,
     `coin` INT(11) NOT NULL,
-    `amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `amount` VARCHAR(32) NOT NULL DEFAULT "0",
     PRIMARY KEY(`wallet`),
     FOREIGN KEY(`exchange`) REFERENCES `exchange`(`exchange`),
     FOREIGN KEY(`coin`) REFERENCES `coin`(`coin`)
@@ -55,7 +55,7 @@ CREATE TABLE `transaction` (
     `transaction_type` INT(11) NOT NULL,
     `wallet_sent` BIGINT(11) NOT NULL,
     `wallet_received` BIGINT(11) NOT NULL,
-    `amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `amount` VARCHAR(32) NOT NULL DEFAULT "0",
     PRIMARY KEY(`transaction`),
     FOREIGN KEY(`transaction_type`) REFERENCES `transaction_type`(`transaction_type`),
     FOREIGN KEY(`wallet_sent`) REFERENCES `wallet`(`wallet`),
@@ -66,11 +66,11 @@ CREATE TABLE `candle`(
     `parity` INT(11) NOT NULL,
     `exchange` INT(11) NOT NULL,
     `mts` BIGINT(20) NOT NULL,
-    `open` DECIMAL(60,8) NOT NULL,
-    `close` DECIMAL(60,8) NOT NULL,
-    `high` DECIMAL(60,8) NOT NULL,
-    `low` DECIMAL(60,8) NOT NULL,
-    `volume` DECIMAL(60,8) NOT NULL,
+    `open` VARCHAR(32) NOT NULL,
+    `close` VARCHAR(32) NOT NULL,
+    `high` VARCHAR(32) NOT NULL,
+    `low` VARCHAR(32) NOT NULL,
+    `volume` VARCHAR(32) NOT NULL,
     PRIMARY KEY (`parity`, `exchange`, `mts`),
     FOREIGN KEY(`exchange`) REFERENCES `exchange`(`exchange`)
 );
@@ -128,11 +128,11 @@ CREATE TABLE `operation`(
     `strategy_variant` INT(11) NOT NULL,
     `mts_start` BIGINT(20) NOT NULL,
     `mts_finish` BIGINT(20) NOT NULL DEFAULT 0,
-    `open_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `close_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `invested_amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `profit_amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `profit` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `open_price` VARCHAR(32) NOT NULL DEFAULT 0,
+    `close_price` VARCHAR(32) NOT NULL DEFAULT 0,
+    `invested_amount` VARCHAR(32) NOT NULL DEFAULT 0,
+    `profit_amount` VARCHAR(32) NOT NULL DEFAULT 0,
+    `profit` VARCHAR(32) NOT NULL DEFAULT 0,
     `closed` TINYINT(1) NOT NULL DEFAULT 0,
     `audit` TINYINT(1) NOT NULL DEFAULT 0,
     `enabled` TINYINT(1) NOT NULL DEFAULT 0,
@@ -163,13 +163,13 @@ CREATE TABLE `operation_history`(
     `operation_history` BIGINT(20) auto_increment,
     `operation` BIGINT(20) NOT NULL,
     `transaction_type` INT(11) NOT NULL,
-    `coin_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `coin_quantity` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `stable_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `stable_quantity` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `fee` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `coin_price` VARCHAR(32) NOT NULL DEFAULT 0,
+    `coin_quantity` VARCHAR(32) NOT NULL DEFAULT 0,
+    `stable_price` VARCHAR(32) NOT NULL DEFAULT 0,
+    `stable_quantity` VARCHAR(32) NOT NULL DEFAULT 0,
+    `fee` VARCHAR(32) NOT NULL DEFAULT 0,
     `operation_exchange_id` VARCHAR(200) NOT NULL,
-    `operation_exchange_status` INT(11) NOT NULL DEFAULT 0,
+    `operation_exchange_status` INT(11) NOT NULL DEFAULT 1,
     PRIMARY KEY(`operation_history`),
     FOREIGN KEY (`operation`) REFERENCES `operation`(`operation`),
     FOREIGN KEY (`transaction_type`) REFERENCES `transaction_type`(`transaction_type`),
@@ -187,25 +187,25 @@ DROP TABLE IF EXISTS `average_price`;
 CREATE TABLE `average_price` (
     `parity` INT(11) NOT NULL,
     `exchange` INT(11) NOT NULL,
-    `day` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `day` VARCHAR(32) NOT NULL DEFAULT 0,
     `day_update_timestamp` BIGINT(20) NOT NULL DEFAULT 0,
-    `week` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `week` VARCHAR(32) NOT NULL DEFAULT 0,
     `week_update_timestamp` BIGINT(20) NOT NULL DEFAULT 0,
-    `month` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `month` VARCHAR(32) NOT NULL DEFAULT 0,
     `month_update_timestamp` BIGINT(20) NOT NULL DEFAULT 0,
-    `sma` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `sma` VARCHAR(32) NOT NULL DEFAULT 0,
     `sma_update_timestamp` BIGINT(20) NOT NULL DEFAULT 0,
     PRIMARY KEY (`parity`, `exchange`),
     FOREIGN KEY (`parity`) REFERENCES `parity`(`parity`),
     FOREIGN KEY (`exchange`) REFERENCES `exchange`(`exchange`)
 );
 
--- ALTER TABLE `average_price` ADD COLUMN `sma` DECIMAL(60,8) NOT NULL DEFAULT 0;
+-- ALTER TABLE `average_price` ADD COLUMN `sma` VARCHAR(32) NOT NULL DEFAULT 0;
 -- ALTER TABLE `average_price` ADD COLUMN `sma_update_timestamp` BIGINT(20) NOT NULL DEFAULT 0;
-ALTER TABLE `average_price` ADD COLUMN `day_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `day`;
-ALTER TABLE `average_price` ADD COLUMN `week_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `week`;
-ALTER TABLE `average_price` ADD COLUMN `month_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `month`;
-ALTER TABLE `average_price` ADD COLUMN `sma_roc` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `sma`;
+ALTER TABLE `average_price` ADD COLUMN `day_roc` VARCHAR(32) NOT NULL DEFAULT 0 AFTER `day`;
+ALTER TABLE `average_price` ADD COLUMN `week_roc` VARCHAR(32) NOT NULL DEFAULT 0 AFTER `week`;
+ALTER TABLE `average_price` ADD COLUMN `month_roc` VARCHAR(32) NOT NULL DEFAULT 0 AFTER `month`;
+ALTER TABLE `average_price` ADD COLUMN `sma_roc` VARCHAR(32) NOT NULL DEFAULT 0 AFTER `sma`;
 -- ALTER TABLE `average_price` DROP COLUMN `roc`;
 
 INSERT INTO `average_price`(`parity`, `exchange`)
@@ -215,14 +215,14 @@ DROP TABLE IF EXISTS `operation_meta_data_fast_trade`;
 CREATE TABLE `operation_meta_data_fast_trade` (
     `operation_meta_data_fast_trade` BIGINT(20) NOT NULL auto_increment,
     `operation` BIGINT(20) NOT NULL,
-    `minumum_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `maximum_price` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `minumum_price` VARCHAR(32) NOT NULL DEFAULT 0,
+    `maximum_price` VARCHAR(32) NOT NULL DEFAULT 0,
     `is_receding` TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (`operation_meta_data_fast_trade`),
     FOREIGN KEY (`operation`) REFERENCES `operation`(`operation`)
 );
 
-ALTER TABLE `operation_meta_data_fast_trade` ADD COLUMN `last_price` DECIMAL(60,8) NOT NULL DEFAULT 0 AFTER `maximum_price`;
+ALTER TABLE `operation_meta_data_fast_trade` ADD COLUMN `last_price` VARCHAR(32) NOT NULL DEFAULT 0 AFTER `maximum_price`;
 ALTER TABLE `operation_meta_data_fast_trade` RENAME COLUMN `minumum_price` TO `minimum_price`;
 
 DROP TABLE IF EXISTS `trade_config`;
@@ -235,9 +235,9 @@ CREATE TABLE `trade_config` (
     `parity` INT(11) NOT NULL,
     `exchange` INT(11) NOT NULL,
     `operation_quantity` INT(11) NOT NULL DEFAULT 0,
-    `operation_amount` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `default_profit_percentage` DECIMAL(60,8) NOT NULL DEFAULT 0,
-    `wallet_value_limit` DECIMAL(60,8) NOT NULL DEFAULT 0,
+    `operation_amount` VARCHAR(32) NOT NULL DEFAULT 0,
+    `default_profit_percentage` VARCHAR(32) NOT NULL DEFAULT 0,
+    `wallet_value_limit` VARCHAR(32) NOT NULL DEFAULT 0,
     `enabled` TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY(`user`, `modality`, `strategy`, `strategy_variant`, `parity`, `exchange`)
 );

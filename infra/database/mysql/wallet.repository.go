@@ -15,7 +15,7 @@ type walletRepository struct {
 type WalletRepositoryInterface interface {
 	List(*repositorydto.InputWalletDto) []*repositorydto.OutputWalletDto
 	UpdateAmount(values string) bool
-	Create(exchange uint64, coin int64, amount float64) bool
+	Create(exchange uint64, coin int64, amount string) bool
 	GetWithCoin(exchange, coin uint64) (out repositorydto.OutputWalletWithCoinDto, err error)
 	ListWithCoin(exchange uint64) (list []*repositorydto.OutputWalletWithCoinDto)
 }
@@ -64,7 +64,7 @@ func (t *walletRepository) List(in *repositorydto.InputWalletDto) (out []*reposi
 	return
 }
 
-func (t *walletRepository) Create(exchange uint64, coin int64, amount float64) bool {
+func (t *walletRepository) Create(exchange uint64, coin int64, amount string) bool {
 	query := `INSERT INTO wallet(exchange,  coin, amount) VALUES (?, ?, ?)`
 
 	stmt, err := t.Db.GetDatabase().Prepare(query)

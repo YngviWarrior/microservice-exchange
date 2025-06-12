@@ -3,33 +3,33 @@ package repositorydto
 type InputAveragePriceDto struct {
 	Parity               uint64
 	Exchange             uint64
-	Day                  float64
+	Day                  string
 	DayUpdateTimestamp   uint64
-	Week                 float64
+	Week                 string
 	WeekUpdateTimestamp  uint64
-	Month                float64
+	Month                string
 	MonthUpdateTimestamp uint64
-	Sma                  float64
+	Sma                  string
 	SmaUpdateTimestamp   uint64
-	DayRoc               float64
-	WeekRoc              float64
-	MonthRoc             float64
-	SmaRoc               float64
+	DayRoc               string
+	WeekRoc              string
+	MonthRoc             string
+	SmaRoc               string
 }
 
 type OutputAveragePriceDto struct {
 	Parity               uint64
 	Exchange             uint64
-	Day                  float64
+	Day                  string
 	DayUpdateTimestamp   uint64
-	Week                 float64
+	Week                 string
 	WeekUpdateTimestamp  uint64
-	Month                float64
+	Month                string
 	MonthUpdateTimestamp uint64
-	Sma                  float64
+	Sma                  string
 	SmaUpdateTimestamp   uint64
-	DayRoc               float64
-	WeekRoc              float64
-	MonthRoc             float64
-	SmaRoc               float64
+	DayRoc               string
+	WeekRoc              string
+	MonthRoc             string
+	SmaRoc               string
 }

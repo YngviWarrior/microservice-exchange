@@ -9,9 +9,9 @@ type InputTradeConfigDto struct {
 	Parity                  uint64
 	Exchange                uint64
 	OperationQuantity       uint64
-	OperationAmount         float64
-	DefaultProfitPercentage float64
-	WalletValueLimit        float64
+	OperationAmount         string
+	DefaultProfitPercentage string
+	WalletValueLimit        string
 	Enabled                 bool
 }
 
@@ -25,10 +25,10 @@ type OutputTradeConfigDto struct {
 	Parity                  uint64
 	Exchange                uint64
 	OperationQuantity       uint64
-	OperationAmount         float64
+	OperationAmount         string
 	Enabled                 bool
-	DefaultProfitPercentage float64
-	WalletValueLimit        float64
+	DefaultProfitPercentage string
+	WalletValueLimit        string
 	ModalityName            string
 	StrategyName            string
 	StrategyVariantName     string

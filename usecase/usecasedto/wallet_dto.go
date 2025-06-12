@@ -9,7 +9,7 @@ type OutputWalletWithCoinDto struct {
 	Wallet   uint64
 	Exchange uint64
 	Coin     uint64
-	Amount   float64
+	Amount   string
 	Symbol   string
 	Active   bool
 }
@@ -17,26 +17,26 @@ type OutputWalletWithCoinDto struct {
 type InputCreateWalletDto struct {
 	Exchange uint64
 	Coin     uint64
-	Amount   float64
+	Amount   string
 }
 
 type OutputCreateWalletDto struct {
 	Wallet   uint64
 	Exchange uint64
 	Coin     uint64
-	Amount   float64
+	Amount   string
 }
 
 type InputUpdateWalletDto struct {
 	Wallet   uint64
 	Exchange uint64
 	Coin     uint64
-	Amount   float64
+	Amount   string
 }
 
 type OutputUpdateWalletDto struct {
 	Wallet   uint64
 	Exchange uint64
 	Coin     uint64
-	Amount   float64
+	Amount   string
 }

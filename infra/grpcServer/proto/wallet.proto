@@ -7,14 +7,14 @@ message Wallet {
     uint64 wallet = 1;
     uint64 exchange = 2;
     uint64 coin = 3;
-    double amount = 4;
+    string amount = 4;
 }
 
 message WalletWithCoin {
     uint64 wallet = 1;
     uint64 exchange = 2;
     uint64 coin = 3;
-    double amount = 4;
+    string amount = 4;
     string symbol = 6;
     bool active = 7;
 }
@@ -43,7 +43,7 @@ message CreateWalletRequest {
     uint64 wallet = 1;
     uint64 exchange = 2;
     uint64 coin = 3;
-    double amount = 4;
+    string amount = 4;
 }
 
 message CreateWalletResponse {

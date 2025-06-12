@@ -3,14 +3,14 @@ package usecasedto
 type InputUpdateAveragePriceDto struct {
 	Parity               uint64
 	Exchange             uint64
-	Day                  float64
-	DayRoc               float64
+	Day                  string
+	DayRoc               string
 	DayUpdateTimestamp   uint64
-	Week                 float64
-	WeekRoc              float64
+	Week                 string
+	WeekRoc              string
 	WeekUpdateTimestamp  uint64
-	Month                float64
-	MonthRoc             float64
+	Month                string
+	MonthRoc             string
 	MonthUpdateTimestamp uint64
 }
 

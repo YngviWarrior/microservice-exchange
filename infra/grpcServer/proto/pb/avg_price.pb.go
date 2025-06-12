@@ -77,14 +77,14 @@ type GetAvgPriceByParityExchangeResponse struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	Parity               uint64                 `protobuf:"varint,1,opt,name=Parity,proto3" json:"Parity,omitempty"`
 	Exchange             uint64                 `protobuf:"varint,2,opt,name=Exchange,proto3" json:"Exchange,omitempty"`
-	Day                  float64                `protobuf:"fixed64,3,opt,name=Day,proto3" json:"Day,omitempty"`
-	DayRoc               float64                `protobuf:"fixed64,4,opt,name=DayRoc,proto3" json:"DayRoc,omitempty"`
+	Day                  string                 `protobuf:"bytes,3,opt,name=Day,proto3" json:"Day,omitempty"`
+	DayRoc               string                 `protobuf:"bytes,4,opt,name=DayRoc,proto3" json:"DayRoc,omitempty"`
 	DayUpdateTimestamp   uint64                 `protobuf:"varint,5,opt,name=DayUpdateTimestamp,proto3" json:"DayUpdateTimestamp,omitempty"`
-	Week                 float64                `protobuf:"fixed64,6,opt,name=Week,proto3" json:"Week,omitempty"`
-	WeekRoc              float64                `protobuf:"fixed64,7,opt,name=WeekRoc,proto3" json:"WeekRoc,omitempty"`
+	Week                 string                 `protobuf:"bytes,6,opt,name=Week,proto3" json:"Week,omitempty"`
+	WeekRoc              string                 `protobuf:"bytes,7,opt,name=WeekRoc,proto3" json:"WeekRoc,omitempty"`
 	WeekUpdateTimestamp  uint64                 `protobuf:"varint,8,opt,name=WeekUpdateTimestamp,proto3" json:"WeekUpdateTimestamp,omitempty"`
-	Month                float64                `protobuf:"fixed64,9,opt,name=Month,proto3" json:"Month,omitempty"`
-	MonthRoc             float64                `protobuf:"fixed64,10,opt,name=MonthRoc,proto3" json:"MonthRoc,omitempty"`
+	Month                string                 `protobuf:"bytes,9,opt,name=Month,proto3" json:"Month,omitempty"`
+	MonthRoc             string                 `protobuf:"bytes,10,opt,name=MonthRoc,proto3" json:"MonthRoc,omitempty"`
 	MonthUpdateTimestamp uint64                 `protobuf:"varint,11,opt,name=MonthUpdateTimestamp,proto3" json:"MonthUpdateTimestamp,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
@@ -134,18 +134,18 @@ func (x *GetAvgPriceByParityExchangeResponse) GetExchange() uint64 {
 	return 0
 }
 
-func (x *GetAvgPriceByParityExchangeResponse) GetDay() float64 {
+func (x *GetAvgPriceByParityExchangeResponse) GetDay() string {
 	if x != nil {
 		return x.Day
 	}
-	return 0
+	return ""
 }
 
-func (x *GetAvgPriceByParityExchangeResponse) GetDayRoc() float64 {
+func (x *GetAvgPriceByParityExchangeResponse) GetDayRoc() string {
 	if x != nil {
 		return x.DayRoc
 	}
-	return 0
+	return ""
 }
 
 func (x *GetAvgPriceByParityExchangeResponse) GetDayUpdateTimestamp() uint64 {
@@ -155,18 +155,18 @@ func (x *GetAvgPriceByParityExchangeResponse) GetDayUpdateTimestamp() uint64 {
 	return 0
 }
 
-func (x *GetAvgPriceByParityExchangeResponse) GetWeek() float64 {
+func (x *GetAvgPriceByParityExchangeResponse) GetWeek() string {
 	if x != nil {
 		return x.Week
 	}
-	return 0
+	return ""
 }
 
-func (x *GetAvgPriceByParityExchangeResponse) GetWeekRoc() float64 {
+func (x *GetAvgPriceByParityExchangeResponse) GetWeekRoc() string {
 	if x != nil {
 		return x.WeekRoc
 	}
-	return 0
+	return ""
 }
 
 func (x *GetAvgPriceByParityExchangeResponse) GetWeekUpdateTimestamp() uint64 {
@@ -176,18 +176,18 @@ func (x *GetAvgPriceByParityExchangeResponse) GetWeekUpdateTimestamp() uint64 {
 	return 0
 }
 
-func (x *GetAvgPriceByParityExchangeResponse) GetMonth() float64 {
+func (x *GetAvgPriceByParityExchangeResponse) GetMonth() string {
 	if x != nil {
 		return x.Month
 	}
-	return 0
+	return ""
 }
 
-func (x *GetAvgPriceByParityExchangeResponse) GetMonthRoc() float64 {
+func (x *GetAvgPriceByParityExchangeResponse) GetMonthRoc() string {
 	if x != nil {
 		return x.MonthRoc
 	}
-	return 0
+	return ""
 }
 
 func (x *GetAvgPriceByParityExchangeResponse) GetMonthUpdateTimestamp() uint64 {
@@ -201,14 +201,14 @@ type UpdateAveragePriceRequest struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	Parity               uint64                 `protobuf:"varint,1,opt,name=Parity,proto3" json:"Parity,omitempty"`
 	Exchange             uint64                 `protobuf:"varint,2,opt,name=Exchange,proto3" json:"Exchange,omitempty"`
-	Day                  float64                `protobuf:"fixed64,3,opt,name=Day,proto3" json:"Day,omitempty"`
-	DayRoc               float64                `protobuf:"fixed64,4,opt,name=DayRoc,proto3" json:"DayRoc,omitempty"`
+	Day                  string                 `protobuf:"bytes,3,opt,name=Day,proto3" json:"Day,omitempty"`
+	DayRoc               string                 `protobuf:"bytes,4,opt,name=DayRoc,proto3" json:"DayRoc,omitempty"`
 	DayUpdateTimestamp   uint64                 `protobuf:"varint,5,opt,name=DayUpdateTimestamp,proto3" json:"DayUpdateTimestamp,omitempty"`
-	Week                 float64                `protobuf:"fixed64,6,opt,name=Week,proto3" json:"Week,omitempty"`
-	WeekRoc              float64                `protobuf:"fixed64,7,opt,name=WeekRoc,proto3" json:"WeekRoc,omitempty"`
+	Week                 string                 `protobuf:"bytes,6,opt,name=Week,proto3" json:"Week,omitempty"`
+	WeekRoc              string                 `protobuf:"bytes,7,opt,name=WeekRoc,proto3" json:"WeekRoc,omitempty"`
 	WeekUpdateTimestamp  uint64                 `protobuf:"varint,8,opt,name=WeekUpdateTimestamp,proto3" json:"WeekUpdateTimestamp,omitempty"`
-	Month                float64                `protobuf:"fixed64,9,opt,name=Month,proto3" json:"Month,omitempty"`
-	MonthRoc             float64                `protobuf:"fixed64,10,opt,name=MonthRoc,proto3" json:"MonthRoc,omitempty"`
+	Month                string                 `protobuf:"bytes,9,opt,name=Month,proto3" json:"Month,omitempty"`
+	MonthRoc             string                 `protobuf:"bytes,10,opt,name=MonthRoc,proto3" json:"MonthRoc,omitempty"`
 	MonthUpdateTimestamp uint64                 `protobuf:"varint,11,opt,name=MonthUpdateTimestamp,proto3" json:"MonthUpdateTimestamp,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
@@ -258,18 +258,18 @@ func (x *UpdateAveragePriceRequest) GetExchange() uint64 {
 	return 0
 }
 
-func (x *UpdateAveragePriceRequest) GetDay() float64 {
+func (x *UpdateAveragePriceRequest) GetDay() string {
 	if x != nil {
 		return x.Day
 	}
-	return 0
+	return ""
 }
 
-func (x *UpdateAveragePriceRequest) GetDayRoc() float64 {
+func (x *UpdateAveragePriceRequest) GetDayRoc() string {
 	if x != nil {
 		return x.DayRoc
 	}
-	return 0
+	return ""
 }
 
 func (x *UpdateAveragePriceRequest) GetDayUpdateTimestamp() uint64 {
@@ -279,18 +279,18 @@ func (x *UpdateAveragePriceRequest) GetDayUpdateTimestamp() uint64 {
 	return 0
 }
 
-func (x *UpdateAveragePriceRequest) GetWeek() float64 {
+func (x *UpdateAveragePriceRequest) GetWeek() string {
 	if x != nil {
 		return x.Week
 	}
-	return 0
+	return ""
 }
 
-func (x *UpdateAveragePriceRequest) GetWeekRoc() float64 {
+func (x *UpdateAveragePriceRequest) GetWeekRoc() string {
 	if x != nil {
 		return x.WeekRoc
 	}
-	return 0
+	return ""
 }
 
 func (x *UpdateAveragePriceRequest) GetWeekUpdateTimestamp() uint64 {
@@ -300,18 +300,18 @@ func (x *UpdateAveragePriceRequest) GetWeekUpdateTimestamp() uint64 {
 	return 0
 }
 
-func (x *UpdateAveragePriceRequest) GetMonth() float64 {
+func (x *UpdateAveragePriceRequest) GetMonth() string {
 	if x != nil {
 		return x.Month
 	}
-	return 0
+	return ""
 }
 
-func (x *UpdateAveragePriceRequest) GetMonthRoc() float64 {
+func (x *UpdateAveragePriceRequest) GetMonthRoc() string {
 	if x != nil {
 		return x.MonthRoc
 	}
-	return 0
+	return ""
 }
 
 func (x *UpdateAveragePriceRequest) GetMonthUpdateTimestamp() uint64 {
@@ -368,28 +368,28 @@ const file_avg_price_proto_rawDesc = "" +
 	"#GetAvgPriceByParityExchangeResponse\x12\x16\n" +
 	"\x06Parity\x18\x01 \x01(\x04R\x06Parity\x12\x1a\n" +
 	"\bExchange\x18\x02 \x01(\x04R\bExchange\x12\x10\n" +
-	"\x03Day\x18\x03 \x01(\x01R\x03Day\x12\x16\n" +
-	"\x06DayRoc\x18\x04 \x01(\x01R\x06DayRoc\x12.\n" +
+	"\x03Day\x18\x03 \x01(\tR\x03Day\x12\x16\n" +
+	"\x06DayRoc\x18\x04 \x01(\tR\x06DayRoc\x12.\n" +
 	"\x12DayUpdateTimestamp\x18\x05 \x01(\x04R\x12DayUpdateTimestamp\x12\x12\n" +
-	"\x04Week\x18\x06 \x01(\x01R\x04Week\x12\x18\n" +
-	"\aWeekRoc\x18\a \x01(\x01R\aWeekRoc\x120\n" +
+	"\x04Week\x18\x06 \x01(\tR\x04Week\x12\x18\n" +
+	"\aWeekRoc\x18\a \x01(\tR\aWeekRoc\x120\n" +
 	"\x13WeekUpdateTimestamp\x18\b \x01(\x04R\x13WeekUpdateTimestamp\x12\x14\n" +
-	"\x05Month\x18\t \x01(\x01R\x05Month\x12\x1a\n" +
+	"\x05Month\x18\t \x01(\tR\x05Month\x12\x1a\n" +
 	"\bMonthRoc\x18\n" +
-	" \x01(\x01R\bMonthRoc\x122\n" +
+	" \x01(\tR\bMonthRoc\x122\n" +
 	"\x14MonthUpdateTimestamp\x18\v \x01(\x04R\x14MonthUpdateTimestamp\"\xef\x02\n" +
 	"\x19UpdateAveragePriceRequest\x12\x16\n" +
 	"\x06Parity\x18\x01 \x01(\x04R\x06Parity\x12\x1a\n" +
 	"\bExchange\x18\x02 \x01(\x04R\bExchange\x12\x10\n" +
-	"\x03Day\x18\x03 \x01(\x01R\x03Day\x12\x16\n" +
-	"\x06DayRoc\x18\x04 \x01(\x01R\x06DayRoc\x12.\n" +
+	"\x03Day\x18\x03 \x01(\tR\x03Day\x12\x16\n" +
+	"\x06DayRoc\x18\x04 \x01(\tR\x06DayRoc\x12.\n" +
 	"\x12DayUpdateTimestamp\x18\x05 \x01(\x04R\x12DayUpdateTimestamp\x12\x12\n" +
-	"\x04Week\x18\x06 \x01(\x01R\x04Week\x12\x18\n" +
-	"\aWeekRoc\x18\a \x01(\x01R\aWeekRoc\x120\n" +
+	"\x04Week\x18\x06 \x01(\tR\x04Week\x12\x18\n" +
+	"\aWeekRoc\x18\a \x01(\tR\aWeekRoc\x120\n" +
 	"\x13WeekUpdateTimestamp\x18\b \x01(\x04R\x13WeekUpdateTimestamp\x12\x14\n" +
-	"\x05Month\x18\t \x01(\x01R\x05Month\x12\x1a\n" +
+	"\x05Month\x18\t \x01(\tR\x05Month\x12\x1a\n" +
 	"\bMonthRoc\x18\n" +
-	" \x01(\x01R\bMonthRoc\x122\n" +
+	" \x01(\tR\bMonthRoc\x122\n" +
 	"\x14MonthUpdateTimestamp\x18\v \x01(\x04R\x14MonthUpdateTimestamp\"\x1c\n" +
 	"\x1aUpdateAveragePriceResponseB\x06Z\x04./pbb\x06proto3"
 

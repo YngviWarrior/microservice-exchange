@@ -26,12 +26,12 @@ type Candle struct {
 	Parity        uint64                 `protobuf:"varint,1,opt,name=Parity,proto3" json:"Parity,omitempty"`
 	Exchange      uint64                 `protobuf:"varint,2,opt,name=Exchange,proto3" json:"Exchange,omitempty"`
 	Mts           uint64                 `protobuf:"varint,3,opt,name=Mts,proto3" json:"Mts,omitempty"`
-	Open          float64                `protobuf:"fixed64,4,opt,name=Open,proto3" json:"Open,omitempty"`
-	Close         float64                `protobuf:"fixed64,5,opt,name=Close,proto3" json:"Close,omitempty"`
-	High          float64                `protobuf:"fixed64,6,opt,name=High,proto3" json:"High,omitempty"`
-	Low           float64                `protobuf:"fixed64,7,opt,name=Low,proto3" json:"Low,omitempty"`
-	Volume        float64                `protobuf:"fixed64,8,opt,name=Volume,proto3" json:"Volume,omitempty"`
-	Roc           float64                `protobuf:"fixed64,9,opt,name=Roc,proto3" json:"Roc,omitempty"`
+	Open          string                 `protobuf:"bytes,4,opt,name=Open,proto3" json:"Open,omitempty"`
+	Close         string                 `protobuf:"bytes,5,opt,name=Close,proto3" json:"Close,omitempty"`
+	High          string                 `protobuf:"bytes,6,opt,name=High,proto3" json:"High,omitempty"`
+	Low           string                 `protobuf:"bytes,7,opt,name=Low,proto3" json:"Low,omitempty"`
+	Volume        string                 `protobuf:"bytes,8,opt,name=Volume,proto3" json:"Volume,omitempty"`
+	Roc           string                 `protobuf:"bytes,9,opt,name=Roc,proto3" json:"Roc,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -87,46 +87,46 @@ func (x *Candle) GetMts() uint64 {
 	return 0
 }
 
-func (x *Candle) GetOpen() float64 {
+func (x *Candle) GetOpen() string {
 	if x != nil {
 		return x.Open
 	}
-	return 0
+	return ""
 }
 
-func (x *Candle) GetClose() float64 {
+func (x *Candle) GetClose() string {
 	if x != nil {
 		return x.Close
 	}
-	return 0
+	return ""
 }
 
-func (x *Candle) GetHigh() float64 {
+func (x *Candle) GetHigh() string {
 	if x != nil {
 		return x.High
 	}
-	return 0
+	return ""
 }
 
-func (x *Candle) GetLow() float64 {
+func (x *Candle) GetLow() string {
 	if x != nil {
 		return x.Low
 	}
-	return 0
+	return ""
 }
 
-func (x *Candle) GetVolume() float64 {
+func (x *Candle) GetVolume() string {
 	if x != nil {
 		return x.Volume
 	}
-	return 0
+	return ""
 }
 
-func (x *Candle) GetRoc() float64 {
+func (x *Candle) GetRoc() string {
 	if x != nil {
 		return x.Roc
 	}
-	return 0
+	return ""
 }
 
 type GetCandleFirstMtsRequest struct {
@@ -671,7 +671,7 @@ func (x *GetFirstPriceRequest) GetFrom() uint64 {
 
 type GetFirstPriceResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Price         float64                `protobuf:"fixed64,1,opt,name=price,proto3" json:"price,omitempty"`
+	Price         string                 `protobuf:"bytes,1,opt,name=price,proto3" json:"price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -706,11 +706,11 @@ func (*GetFirstPriceResponse) Descriptor() ([]byte, []int) {
 	return file_candle_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *GetFirstPriceResponse) GetPrice() float64 {
+func (x *GetFirstPriceResponse) GetPrice() string {
 	if x != nil {
 		return x.Price
 	}
-	return 0
+	return ""
 }
 
 type GetLastPriceRequest struct {
@@ -767,7 +767,7 @@ func (x *GetLastPriceRequest) GetExchange() uint64 {
 
 type GetLastPriceResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Price         float64                `protobuf:"fixed64,1,opt,name=price,proto3" json:"price,omitempty"`
+	Price         string                 `protobuf:"bytes,1,opt,name=price,proto3" json:"price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -802,11 +802,11 @@ func (*GetLastPriceResponse) Descriptor() ([]byte, []int) {
 	return file_candle_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *GetLastPriceResponse) GetPrice() float64 {
+func (x *GetLastPriceResponse) GetPrice() string {
 	if x != nil {
 		return x.Price
 	}
-	return 0
+	return ""
 }
 
 var File_candle_proto protoreflect.FileDescriptor
@@ -818,12 +818,12 @@ const file_candle_proto_rawDesc = "" +
 	"\x06Parity\x18\x01 \x01(\x04R\x06Parity\x12\x1a\n" +
 	"\bExchange\x18\x02 \x01(\x04R\bExchange\x12\x10\n" +
 	"\x03Mts\x18\x03 \x01(\x04R\x03Mts\x12\x12\n" +
-	"\x04Open\x18\x04 \x01(\x01R\x04Open\x12\x14\n" +
-	"\x05Close\x18\x05 \x01(\x01R\x05Close\x12\x12\n" +
-	"\x04High\x18\x06 \x01(\x01R\x04High\x12\x10\n" +
-	"\x03Low\x18\a \x01(\x01R\x03Low\x12\x16\n" +
-	"\x06Volume\x18\b \x01(\x01R\x06Volume\x12\x10\n" +
-	"\x03Roc\x18\t \x01(\x01R\x03Roc\"N\n" +
+	"\x04Open\x18\x04 \x01(\tR\x04Open\x12\x14\n" +
+	"\x05Close\x18\x05 \x01(\tR\x05Close\x12\x12\n" +
+	"\x04High\x18\x06 \x01(\tR\x04High\x12\x10\n" +
+	"\x03Low\x18\a \x01(\tR\x03Low\x12\x16\n" +
+	"\x06Volume\x18\b \x01(\tR\x06Volume\x12\x10\n" +
+	"\x03Roc\x18\t \x01(\tR\x03Roc\"N\n" +
 	"\x18GetCandleFirstMtsRequest\x12\x16\n" +
 	"\x06parity\x18\x01 \x01(\x04R\x06parity\x12\x1a\n" +
 	"\bexchange\x18\x02 \x01(\x04R\bexchange\"A\n" +
@@ -860,12 +860,12 @@ const file_candle_proto_rawDesc = "" +
 	"\bexchange\x18\x02 \x01(\x04R\bexchange\x12\x12\n" +
 	"\x04from\x18\x03 \x01(\x04R\x04from\"-\n" +
 	"\x15GetFirstPriceResponse\x12\x14\n" +
-	"\x05price\x18\x01 \x01(\x01R\x05price\"I\n" +
+	"\x05price\x18\x01 \x01(\tR\x05price\"I\n" +
 	"\x13GetLastPriceRequest\x12\x16\n" +
 	"\x06parity\x18\x01 \x01(\x04R\x06parity\x12\x1a\n" +
 	"\bexchange\x18\x02 \x01(\x04R\bexchange\",\n" +
 	"\x14GetLastPriceResponse\x12\x14\n" +
-	"\x05price\x18\x01 \x01(\x01R\x05priceB\x06Z\x04./pbb\x06proto3"
+	"\x05price\x18\x01 \x01(\tR\x05priceB\x06Z\x04./pbb\x06proto3"
 
 var (
 	file_candle_proto_rawDescOnce sync.Once
